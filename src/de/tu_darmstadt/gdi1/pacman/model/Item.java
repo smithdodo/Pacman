@@ -9,10 +9,10 @@ public abstract class Item extends MapElement{
 	
 	private boolean isEaten;
 	private boolean isFork;
-	List<Directions> forks;
+	List<int[]> forks;
 	
 	
-	public Item(Vector2f position, List<Directions> forks){
+	public Item(Vector2f position, List<int[]> forks){
 		
 		super(position);
 		this.isEaten=false;
@@ -29,10 +29,14 @@ public abstract class Item extends MapElement{
 	public void setEaten(boolean isEaten) {
 		this.isEaten = isEaten;
 	}
-
-
-	public boolean isFork() {
-		return isFork;
+	
+	public boolean isFork(){
+		if(forks.isEmpty())
+			return false;
+		else
+			return true;
 	}
+
+
 	
 }

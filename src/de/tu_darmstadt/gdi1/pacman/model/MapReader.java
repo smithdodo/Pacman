@@ -263,18 +263,19 @@ public class MapReader {
 	 *            col of MapElement[][]
 	 * @return if it is a fork road
 	 */
-	private List<Directions> forks(int i, int j) {
+	private List<int[]> forks(int i, int j) {
 		
 		//a point is a fork point, only if it has mindestens 3 neighbour walkablepoint
-		List<Directions> forks=new ArrayList<>();
-		if (isLeftWalkable(i, j))
-			forks.add(Directions.LEFT);
+		List<int[]> forks=new ArrayList<>();
+		if (isLeftWalkable(i, j)){
+			forks.add(new int[]{i,j-1});
+		}
 		if (isRightWalkable(i, j))
-			forks.add(Directions.RIGHT);
+			forks.add(new int[]{i,j+1});
 		if (isUpWalkable(i, j))
-			forks.add(Directions.UP);
+			forks.add(new int[]{i-1,j});
 		if (isDownWalkable(i, j))
-			forks.add(Directions.DOWN);
+			forks.add(new int[]{i+1,j});
 		
 		if(forks.size()<3)
 			 forks.clear();

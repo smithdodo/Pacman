@@ -9,7 +9,7 @@ public abstract class SpecialItem extends Item {
 	private long activeTime;
 	private float changedSpeed;
 
-	public SpecialItem(Vector2f position, List<Directions> forks) {
+	public SpecialItem(Vector2f position, List<int[]> forks) {
 		super(position, forks);
 	}
 

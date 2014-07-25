@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class SpeedUp extends SpecialItem{
 
-	public SpeedUp(Vector2f position,List<Directions> forks) {
+	public SpeedUp(Vector2f position,List<int[]> forks) {
 		
 		super(position,forks);
 	}
