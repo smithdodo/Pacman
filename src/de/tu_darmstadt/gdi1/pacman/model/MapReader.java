@@ -29,14 +29,16 @@ public class MapReader {
 	public int width_on_display;
 
 	private File mapFile;// path of txt file
-	private String[][] cacheMapData;
-	private MapElement[][] mapData;
-
+	private String[][] mapElementStringArray;
+	private MapElement[][] mapElementArray;
+	
+	private List<PlayerSpawnPoint> playerSpawnPoints;
 	int aPlayerSpawnPointCol, aPlayerSpawnPointRow;
 
 	public MapReader(File mapFile) {
 
 		this.mapFile = mapFile;
+		playerSpawnPoints=new LinkedList<>();
 		initHW();
 		initMapData();
 		intElementCoordinates();
@@ -68,8 +70,8 @@ public class MapReader {
 
 		height_on_display = (height - 1) * 35;
 		width_on_display = (width - 1) * 35;
-		cacheMapData = new String[height][width];
-		mapData = new MapElement[height][width];
+		mapElementStringArray = new String[height][width];
+		mapElementArray = new MapElement[height][width];
 
 	}
 
@@ -97,7 +99,7 @@ public class MapReader {
 
 				// System.out.println(mapData[row].length);
 				for (int col = 0; col < width; col++) {
-					cacheMapData[row][col] = String.valueOf(elements[col]);
+					mapElementStringArray[row][col] = String.valueOf(elements[col]);
 
 				}
 			}
@@ -122,34 +124,35 @@ public class MapReader {
 					// coordinate
 					float[] xy = { j * MAPDENSITY, i * MAPDENSITY };
 					// add coordinates in to right category
-					if (cacheMapData[i][j].equals("X")) {
-						mapData[i][j] = new Wall(new Vector2f(xy), getWallType(
+					if (mapElementStringArray[i][j].equals("X")) {
+						mapElementArray[i][j] = new Wall(new Vector2f(xy), getWallType(
 								i, j));
-					} else if (cacheMapData[i][j].equals(" ")) {
-						mapData[i][j] = new Dot(new Vector2f(xy), forks(i, j));
+					} else if (mapElementStringArray[i][j].equals(" ")) {
+						mapElementArray[i][j] = new Dot(new Vector2f(xy), forks(i, j));
 						item++;
-					} else if (cacheMapData[i][j].equals("P")) {
-						mapData[i][j] = new PlayerSpawnPoint(new Vector2f(xy));
+					} else if (mapElementStringArray[i][j].equals("P")) {
+						mapElementArray[i][j] = new PlayerSpawnPoint(new Vector2f(xy));
+						playerSpawnPoints.add((PlayerSpawnPoint)mapElementArray[i][j]);
+						aPlayerSpawnPointRow=i;
+						aPlayerSpawnPointCol=j;
 						ps++;
-						aPlayerSpawnPointCol = j;
-						aPlayerSpawnPointRow = i;
-					} else if (cacheMapData[i][j].equals("G")) {
-						mapData[i][j] = new GhostSpawnPoint(new Vector2f(xy));
+					} else if (mapElementStringArray[i][j].equals("G")) {
+						mapElementArray[i][j] = new GhostSpawnPoint(new Vector2f(xy));
 						gs++;
-					} else if (cacheMapData[i][j].equals("B"))
-						mapData[i][j] = new InvisibleWall(new Vector2f(xy));
-					else if (cacheMapData[i][j].equals("S")) {
-						mapData[i][j] = new SpeedUp(new Vector2f(xy), forks(i, j));
+					} else if (mapElementStringArray[i][j].equals("B"))
+						mapElementArray[i][j] = new InvisibleWall(new Vector2f(xy));
+					else if (mapElementStringArray[i][j].equals("S")) {
+						mapElementArray[i][j] = new SpeedUp(new Vector2f(xy), forks(i, j));
 						item++;
-					} else if (cacheMapData[i][j].equals("T"))
-						mapData[i][j] = new Teleporter(new Vector2f(xy));
-					else if (cacheMapData[i][j].equals("U")) {
-						mapData[i][j] = new PowerUp(new Vector2f(xy), forks(i, j));
+					} else if (mapElementStringArray[i][j].equals("T"))
+						mapElementArray[i][j] = new Teleporter(new Vector2f(xy));
+					else if (mapElementStringArray[i][j].equals("U")) {
+						mapElementArray[i][j] = new PowerUp(new Vector2f(xy), forks(i, j));
 						item++;
 					} else
 						// thrwo invalidLevelCharacterException
 						throw new InvalidLevelCharacterException(
-								cacheMapData[i][j].charAt(0));
+								mapElementStringArray[i][j].charAt(0));
 
 				}
 			}
@@ -171,16 +174,16 @@ public class MapReader {
 		int[][] tempMap = new int[height][width];
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				if (mapData[i][j] instanceof Item
-						|| mapData[i][j] instanceof Teleporter
-						|| mapData[i][j] instanceof PlayerSpawnPoint)
+				if (mapElementArray[i][j] instanceof Item
+						|| mapElementArray[i][j] instanceof Teleporter
+						|| mapElementArray[i][j] instanceof PlayerSpawnPoint)
 					tempMap[i][j] = 1;
 				else
 					tempMap[i][j] = 0;
 			}
 		}
 
-		eatAllItems(tempMap, aPlayerSpawnPointRow, aPlayerSpawnPointCol);
+		reachAllValidPoint(tempMap, aPlayerSpawnPointRow, aPlayerSpawnPointCol);
 
 		int unreachablePoint = 0;
 		for (int i = 0; i < height; i++) {
@@ -206,51 +209,51 @@ public class MapReader {
 
 	}
 
-	private void eatAllItems(int[][] tempMap, int i, int j) {
+	private void reachAllValidPoint(int[][] tempMap, int i, int j) {
 
 		tempMap[i][j] = 0;
 
 		if (j > 0
 				&& tempMap[i][j - 1] == 1
-				&& (mapData[i][j - 1] instanceof Item
-						|| mapData[i][j - 1] instanceof Teleporter || mapData[i][j - 1] instanceof PlayerSpawnPoint)) {
-			eatAllItems(tempMap, i, j - 1);
+				&& (mapElementArray[i][j - 1] instanceof Item
+						|| mapElementArray[i][j - 1] instanceof Teleporter || mapElementArray[i][j - 1] instanceof PlayerSpawnPoint)) {
+			reachAllValidPoint(tempMap, i, j - 1);
 		}
 		if (j + 1 < width
 				&& tempMap[i][j + 1] == 1
-				&& (mapData[i][j + 1] instanceof Item
-						|| mapData[i][j + 1] instanceof Teleporter || mapData[i][j + 1] instanceof PlayerSpawnPoint)) {
-			eatAllItems(tempMap, i, j + 1);
+				&& (mapElementArray[i][j + 1] instanceof Item
+						|| mapElementArray[i][j + 1] instanceof Teleporter || mapElementArray[i][j + 1] instanceof PlayerSpawnPoint)) {
+			reachAllValidPoint(tempMap, i, j + 1);
 		}
 		if (i - 1 >= 0
 				&& tempMap[i - 1][j] == 1
-				&& (mapData[i - 1][j] instanceof Item
-						|| mapData[i - 1][j] instanceof Teleporter || mapData[i][j - 1] instanceof PlayerSpawnPoint)) {
-			eatAllItems(tempMap, i - 1, j);
+				&& (mapElementArray[i - 1][j] instanceof Item
+						|| mapElementArray[i - 1][j] instanceof Teleporter || mapElementArray[i][j - 1] instanceof PlayerSpawnPoint)) {
+			reachAllValidPoint(tempMap, i - 1, j);
 		}
 		if (i + 1 < height
 				&& tempMap[i + 1][j] == 1
-				&& (mapData[i + 1][j] instanceof Item
-						|| mapData[i + 1][j] instanceof Teleporter || mapData[i + 1][j] instanceof PlayerSpawnPoint)) {
-			eatAllItems(tempMap, i + 1, j);
+				&& (mapElementArray[i + 1][j] instanceof Item
+						|| mapElementArray[i + 1][j] instanceof Teleporter || mapElementArray[i + 1][j] instanceof PlayerSpawnPoint)) {
+			reachAllValidPoint(tempMap, i + 1, j);
 		}
 
 		if (i == 0 && tempMap[height - 1][j] == 1
-				&& !(mapData[height - 1][j] instanceof Wall)
-				&& !(mapData[height - 1][j] instanceof InvisibleWall)) {
-			eatAllItems(tempMap, height - 1, j);
+				&& !(mapElementArray[height - 1][j] instanceof Wall)
+				&& !(mapElementArray[height - 1][j] instanceof InvisibleWall)) {
+			reachAllValidPoint(tempMap, height - 1, j);
 		} else if (i == height - 1 && tempMap[0][j] == 1
-				&& !(mapData[0][j] instanceof Wall)
-				&& !(mapData[0][j] instanceof InvisibleWall)) {
-			eatAllItems(tempMap, 0, j);
+				&& !(mapElementArray[0][j] instanceof Wall)
+				&& !(mapElementArray[0][j] instanceof InvisibleWall)) {
+			reachAllValidPoint(tempMap, 0, j);
 		} else if (j == 0 && tempMap[i][width - 1] == 1
-				&& !(mapData[i][width - 1] instanceof Wall)
-				&& !(mapData[i][width - 1] instanceof InvisibleWall)) {
-			eatAllItems(tempMap, i, width - 1);
+				&& !(mapElementArray[i][width - 1] instanceof Wall)
+				&& !(mapElementArray[i][width - 1] instanceof InvisibleWall)) {
+			reachAllValidPoint(tempMap, i, width - 1);
 		} else if (j == width - 1 && tempMap[i][0] == 1
-				&& !(mapData[i][0] instanceof Wall)
-				&& !(mapData[i][0] instanceof Wall)) {
-			eatAllItems(tempMap, i, 0);
+				&& !(mapElementArray[i][0] instanceof Wall)
+				&& !(mapElementArray[i][0] instanceof Wall)) {
+			reachAllValidPoint(tempMap, i, 0);
 		}
 	}
 
@@ -287,8 +290,8 @@ public class MapReader {
 		if (j == 0) {
 			return false;
 		} else {
-			return (cacheMapData[i][j - 1].equals("P")
-					|| cacheMapData[i][j - 1].equals("S") || cacheMapData[i][j - 1]
+			return (mapElementStringArray[i][j - 1].equals("P")
+					|| mapElementStringArray[i][j - 1].equals("S") || mapElementStringArray[i][j - 1]
 					.equals("U"));
 		}
 	}
@@ -297,8 +300,8 @@ public class MapReader {
 		if (j == width - 1) {
 			return false;
 		} else {
-			return (cacheMapData[i][j + 1].equals("P")
-					|| cacheMapData[i][j + 1].equals("S") || cacheMapData[i][j + 1]
+			return (mapElementStringArray[i][j + 1].equals("P")
+					|| mapElementStringArray[i][j + 1].equals("S") || mapElementStringArray[i][j + 1]
 					.equals("U"));
 		}
 	}
@@ -307,8 +310,8 @@ public class MapReader {
 		if (i == 0) {
 			return false;
 		} else {
-			return (cacheMapData[i - 1][j].equals("P")
-					|| cacheMapData[i - 1][j].equals("S") || cacheMapData[i - 1][j]
+			return (mapElementStringArray[i - 1][j].equals("P")
+					|| mapElementStringArray[i - 1][j].equals("S") || mapElementStringArray[i - 1][j]
 					.equals("U"));
 		}
 	}
@@ -317,8 +320,8 @@ public class MapReader {
 		if (i == height - 1) {
 			return false;
 		} else {
-			return (cacheMapData[i + 1][j].equals("P")
-					|| cacheMapData[i + 1][j].equals("S") || cacheMapData[i + 1][j]
+			return (mapElementStringArray[i + 1][j].equals("P")
+					|| mapElementStringArray[i + 1][j].equals("S") || mapElementStringArray[i + 1][j]
 					.equals("U"));
 		}
 	}
@@ -379,7 +382,7 @@ public class MapReader {
 		if (j == 0) {
 			return false;
 		} else {
-			return cacheMapData[i][j - 1].equals("X");
+			return mapElementStringArray[i][j - 1].equals("X");
 		}
 
 	}
@@ -388,7 +391,7 @@ public class MapReader {
 		if (j == width - 1) {
 			return false;
 		} else {
-			return cacheMapData[i][j + 1].equals("X");
+			return mapElementStringArray[i][j + 1].equals("X");
 		}
 	}
 
@@ -396,7 +399,7 @@ public class MapReader {
 		if (i == 0) {
 			return false;
 		} else {
-			return cacheMapData[i - 1][j].equals("X");
+			return mapElementStringArray[i - 1][j].equals("X");
 		}
 	}
 
@@ -404,7 +407,7 @@ public class MapReader {
 		if (i == height - 1) {
 			return false;
 		} else {
-			return cacheMapData[i + 1][j].equals("X");
+			return mapElementStringArray[i + 1][j].equals("X");
 		}
 	}
 
@@ -414,7 +417,7 @@ public class MapReader {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				sb.append(cacheMapData[i][j]);
+				sb.append(mapElementStringArray[i][j]);
 			}
 			sb.append("\n");
 		}
@@ -422,7 +425,11 @@ public class MapReader {
 	}
 
 	public MapElement[][] getMapData() {
-		return mapData;
+		return mapElementArray;
+	}
+
+	public List<PlayerSpawnPoint> getPlayerSpawnPoints() {
+		return playerSpawnPoints;
 	}
 
 }

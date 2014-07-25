@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class HomeMenue extends BasicGameState{
+public class HomeMenu extends BasicGameState{
 	
 	Shape startButton;
 	Image background;

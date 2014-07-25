@@ -1,38 +1,80 @@
 package de.tu_darmstadt.gdi1.pacman.model;
 
+import java.util.List;
+
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Figur {
-
-	private Vector2f currentPosition;
-	private Vector2f nextPosition;
-
-	private float speed;
-	private Direction currentDirection;
-	private Direction turnDirection;
 	
-	private final int RADIUS = 10;
-	private Shape hitBox;
+	protected MapElement[][] mapElementArray;
+	//it has the current coordinate of this figur on the screen
+	protected Vector2f currentPosition;
+	//index of the element in MapElementArray, which the figur is moving towards;
+	protected int checkPointRow, checkPointCol;
 
-	private boolean isAte;
+	protected float speed;
+	protected Direction currentDirection;
+	protected Direction turnDirection;
 	
-	public Figur(Vector2f startPosition) {
+	protected final int RADIUS = 17;
+	protected Shape hitBox;
+	
+	public Figur(Vector2f startPosition, MapElement[][] mapElementArray) {
+		this.mapElementArray=mapElementArray;
 		this.hitBox = new Circle (startPosition.x, startPosition.y, this.RADIUS);
 		this.currentPosition = startPosition;
-		this.nextPosition = startPosition;
+		checkPointRow=((int)startPosition.y)/35;
+		checkPointCol=((int)startPosition.x)/35;
 		this.speed = 0;
-		this.isAte = false;
+		this.currentDirection=Direction.RIGHT;
+		this.turnDirection=Direction.STOP;
+	}
+	
+	public abstract void update(Direction turnDirection, int delta);
+	
+	protected void updateCurrentPosition(int delta) {
+		
+		speed=delta*0.15f;
+		
+		switch (currentDirection) {
+		case LEFT:
+			currentPosition.x-=speed;
+			if(currentPosition.x<checkPointCol*35)
+				currentPosition.x=checkPointCol*35;
+			break;
+		case RIGHT:
+			currentPosition.x+=speed;
+			if(currentPosition.x>checkPointCol*35)
+				currentPosition.x=checkPointCol*35;
+			break;
+		case UP:
+			currentPosition.y-=speed;
+			if(currentPosition.y<checkPointRow*35)
+				currentPosition.y=checkPointRow*35;
+			break;
+		case DOWN:
+			currentPosition.y+=speed;
+			if(currentPosition.y>checkPointRow*35)
+				currentPosition.y=checkPointRow*35;
+			break;
+
+		default:
+			break;
+		}
+		//update hit box
+		hitBox.setLocation(currentPosition);
+		
 	}
 
-	public void autoMove (MapElement[][] mapElement) {
-		switch (currentDirection) {
+	/*public void autoMove (MapElement[][] mapElementArray, Direction turnDirection) {
+		switch (turnDirection) {
 		case LEFT: 
 			if (nextPosition == currentPosition){
-				if (!(mapElement[(int) nextPosition.x - 1][(int) nextPosition.y] instanceof Wall)) {
-					nextPosition = new Vector2f(nextPosition.x - 1,
-							nextPosition.y);
+				if (!(mapElementArray[(int) nextPosition.x][(int) nextPosition.y-1] instanceof Wall)) {
+					//set destination
+					nextPosition.y-=1;
 					currentPosition = new Vector2f(currentPosition.x - speed,
 							currentPosition.y);
 					if (currentPosition.x < nextPosition.x)
@@ -49,7 +91,7 @@ public abstract class Figur {
 			break;
 		case RIGHT:
 			if (nextPosition == currentPosition){
-				if (!(mapElement[(int) nextPosition.x + 1][(int) nextPosition.y] instanceof Wall)) {
+				if (!(mapElementArray[(int) nextPosition.x + 1][(int) nextPosition.y] instanceof Wall)) {
 					nextPosition = new Vector2f(nextPosition.x + 1,
 							nextPosition.y);
 					currentPosition = new Vector2f(currentPosition.x + speed,
@@ -68,7 +110,7 @@ public abstract class Figur {
 			break;
 		case DOWN:
 			if (nextPosition == currentPosition){
-				if (!(mapElement[(int) nextPosition.x][(int) nextPosition.y + 1] instanceof Wall)) {
+				if (!(mapElementArray[(int) nextPosition.x][(int) nextPosition.y + 1] instanceof Wall)) {
 					nextPosition = new Vector2f(nextPosition.x,
 							nextPosition.y + 1);
 					currentPosition = new Vector2f(currentPosition.x,
@@ -87,7 +129,7 @@ public abstract class Figur {
 			break;
 		case UP:
 			if (nextPosition == currentPosition){
-				if (!(mapElement[(int) nextPosition.x][(int) nextPosition.y - 1] instanceof Wall)) {
+				if (!(mapElementArray[(int) nextPosition.x][(int) nextPosition.y - 1] instanceof Wall)) {
 					nextPosition = new Vector2f(nextPosition.x,
 							nextPosition.y - 1);
 					currentPosition = new Vector2f(currentPosition.x,
@@ -105,11 +147,7 @@ public abstract class Figur {
 			hitBox.setCenterY(currentPosition.y);
 			break;
 		}
-	}
-
-	public Vector2f getNextPosition() {
-		return this.nextPosition;
-	}
+	}*/
 	
 	public Vector2f getCurrentPosition() {
 		return this.currentPosition;
@@ -143,12 +181,9 @@ public abstract class Figur {
 		this.speed = speed;
 	}
 
-	public boolean isAte() {
-		return isAte;
-	}
 
-	public void setAte(boolean isAte) {
-		this.isAte = isAte;
+	public void setCurrentPosition(Vector2f currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 
 }

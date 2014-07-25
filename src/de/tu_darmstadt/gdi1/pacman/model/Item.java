@@ -30,11 +30,8 @@ public abstract class Item extends MapElement{
 		this.isEaten = isEaten;
 	}
 	
-	public boolean isFork(){
-		if(forks.isEmpty())
-			return false;
-		else
-			return true;
+	public List<int[]> getForks(){
+			return forks;
 	}
 
 

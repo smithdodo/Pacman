@@ -1,9 +1,9 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
 import java.util.LinkedList;
-
 import java.util.List;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,7 +23,7 @@ public class Game extends BasicGameState {
 	MapElement[][] me;
 	
 	List<Image> wallImages;
-	Image dot, powerUp, speedUp,invisibleWall, teleporter;
+	Image dot, powerUp, speedUp,invisibleWall, teleporter, pacman;
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
@@ -42,6 +42,15 @@ public class Game extends BasicGameState {
 		speedUp=new Image("res/pictures/theme1/entities/speedup.png");
 		teleporter=new Image("res/pictures/theme1/entities/teleporter.png");
 		invisibleWall=new Image("res/pictures/theme1/map/B.png");
+		pacman=new Image("res/pictures/theme1/entities/P0.png");
+		
+	}
+	
+	@Override
+	public void update(GameContainer gc, StateBasedGame arg1, int delta)
+			throws SlickException {
+		
+		model.update(gc, delta);
 		
 	}
 	
@@ -68,16 +77,12 @@ public class Game extends BasicGameState {
 			}
 			
 		}
+		
+		g.drawImage(pacman, model.getPacmanPosition().x, model.getPacmanPosition().y);
 		g.translate(-setoff.x, -setoff.y);
 
 	}
 
-	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
-			throws SlickException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getID() {
