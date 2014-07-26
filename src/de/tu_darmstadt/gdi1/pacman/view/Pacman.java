@@ -13,7 +13,7 @@ public class Pacman extends StateBasedGame{
 
 public final static int HOMEMENUE=0;
 public final static int GAME=1;
-public final static int GAMEMENUE=1;
+public final static int GAMEMENUE=2;
 
 
 	public Pacman() throws SlickException
@@ -28,5 +28,6 @@ public final static int GAMEMENUE=1;
 	{
 		addState(new HomeMenu());
 		addState(new Game());
+		addState(new GameMenu());
 	}
 }

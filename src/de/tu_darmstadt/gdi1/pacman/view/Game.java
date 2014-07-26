@@ -3,6 +3,7 @@ package de.tu_darmstadt.gdi1.pacman.view;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -51,6 +52,9 @@ public class Game extends BasicGameState {
 			throws SlickException {
 		
 		model.update(gc, delta);
+		
+		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))
+			arg1.enterState(Pacman.GAMEMENUE);
 		
 	}
 	
