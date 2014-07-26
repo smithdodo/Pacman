@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GameMenu extends BasicGameState {
 
 	Shape restartButton;
-	Shape mainMenuButton;
+	Shape homeMenuButton;
 	Shape resumeButton;
 
 	Image background;
@@ -23,7 +23,7 @@ public class GameMenu extends BasicGameState {
 			throws SlickException {
 
 		restartButton = new Rectangle(240, 40, 120, 40);
-		mainMenuButton = new Rectangle(240, 95, 120, 40);
+		homeMenuButton = new Rectangle(240, 95, 120, 40);
 		resumeButton = new Rectangle(240, 150, 120, 40);
 		background = new Image("res/pictures/theme1/ui/background.jpg");
 	}
@@ -48,13 +48,13 @@ public class GameMenu extends BasicGameState {
 		g.drawString("RESTART", 245, 50);
 
 		// draw back to main menu button
-		if (mainMenuButton.contains(gc.getInput().getMouseX(), gc.getInput()
+		if (homeMenuButton.contains(gc.getInput().getMouseX(), gc.getInput()
 				.getMouseY())) {
 			g.setColor(Color.yellow);
-			g.fill(mainMenuButton);
+			g.fill(homeMenuButton);
 		} else {
 			g.setColor(Color.white);
-			g.fill(mainMenuButton);
+			g.fill(homeMenuButton);
 		}
 
 		g.setColor(Color.black);
@@ -85,6 +85,12 @@ public class GameMenu extends BasicGameState {
 			arg1.getState(Pacman.GAME).init(gc, arg1);
 			arg1.enterState(Pacman.GAME);
 		}
+		// restart game
+				if (homeMenuButton.contains(gc.getInput().getMouseX(), gc.getInput()
+						.getMouseY())
+						&& gc.getInput().isMousePressed(0)){
+					arg1.enterState(Pacman.HOMEMENUE);
+				}
 		// start game
 		if (resumeButton.contains(gc.getInput().getMouseX(), gc.getInput()
 				.getMouseY())

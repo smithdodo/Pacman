@@ -73,11 +73,13 @@ public abstract class Figur {
 							&& isPointWalkable(checkPointRow-1, checkPointCol)) {
 						checkPointRow -= 1;
 						currentDirection = turnDirection;
-					} else if (checkPointCol == 0
+					} else if (checkPointRow == 0
 							&& isPointWalkable(mapArrayHeight-1, checkPointCol)) {
-						checkPointCol = mapArrayHeight-1;
+						checkPointRow = mapArrayHeight-1;
 						currentDirection = turnDirection;
 					}
+					else
+						System.out.println("can't go up!");
 					break;
 				case DOWN:
 					if (checkPointRow<mapArrayHeight-1
@@ -86,7 +88,7 @@ public abstract class Figur {
 						currentDirection = turnDirection;
 					} else if (checkPointRow == mapArrayHeight-1
 							&& isPointWalkable(0, checkPointCol)) {
-						checkPointCol = 0;
+						checkPointRow = 0;
 						currentDirection = turnDirection;
 					}
 					break;
@@ -171,6 +173,7 @@ public abstract class Figur {
 //				currentPosition.y=mapElementArray[0][checkPointCol].getPosition().y;
 			if(currentPosition.y>checkPointRow*35)
 				currentPosition.y=checkPointRow*35;
+			System.out.println("cant go throw down: check pointRow: "+checkPointRow);
 			break;
 
 		default:

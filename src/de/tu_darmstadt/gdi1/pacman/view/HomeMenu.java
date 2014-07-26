@@ -28,8 +28,10 @@ public class HomeMenu extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame arg1, int arg2)
 			throws SlickException {
 		//start game
-		if(startButton.contains(gc.getInput().getMouseX(),gc.getInput().getMouseY())&&gc.getInput().isMousePressed(0))
+		if(startButton.contains(gc.getInput().getMouseX(),gc.getInput().getMouseY())&&gc.getInput().isMousePressed(0)){
+			arg1.getState(Pacman.GAME).init(gc, arg1);
 			arg1.enterState(Pacman.GAME);
+		}
 	}
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g)
