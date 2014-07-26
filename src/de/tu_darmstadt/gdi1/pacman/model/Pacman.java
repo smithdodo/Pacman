@@ -2,7 +2,7 @@ package de.tu_darmstadt.gdi1.pacman.model;
 
 import org.newdawn.slick.geom.Vector2f;
 
-public class Pacman extends Figur {
+public class Pacman extends Figur_old_strategy {
 
 	private int lives;
 

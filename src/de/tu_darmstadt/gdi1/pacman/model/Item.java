@@ -5,18 +5,14 @@ import java.util.List;
 import org.newdawn.slick.geom.Vector2f;
 
 
-public abstract class Item extends MapElement{
+public abstract class Item extends Road{
 	
 	private boolean isEaten;
-	private boolean isFork;
-	List<int[]> forks;
 	
-	
-	public Item(Vector2f position, List<int[]> forks){
+	public Item(Vector2f position, List<Direction> forks){
 		
-		super(position);
+		super(position,forks);
 		this.isEaten=false;
-		this.forks=forks;
 		
 	}
 
@@ -30,9 +26,6 @@ public abstract class Item extends MapElement{
 		this.isEaten = isEaten;
 	}
 	
-	public List<int[]> getForks(){
-			return forks;
-	}
 
 
 	

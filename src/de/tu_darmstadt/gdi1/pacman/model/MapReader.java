@@ -128,10 +128,10 @@ public class MapReader {
 						mapElementArray[i][j] = new Wall(new Vector2f(xy), getWallType(
 								i, j));
 					} else if (mapElementStringArray[i][j].equals(" ")) {
-						mapElementArray[i][j] = new Dot(new Vector2f(xy), forks(i, j));
+						mapElementArray[i][j] = new Dot(new Vector2f(xy), getForks(i, j));
 						item++;
 					} else if (mapElementStringArray[i][j].equals("P")) {
-						mapElementArray[i][j] = new PlayerSpawnPoint(new Vector2f(xy));
+						mapElementArray[i][j] = new PlayerSpawnPoint(new Vector2f(xy), getForks(i, j));
 						playerSpawnPoints.add((PlayerSpawnPoint)mapElementArray[i][j]);
 						aPlayerSpawnPointRow=i;
 						aPlayerSpawnPointCol=j;
@@ -142,12 +142,12 @@ public class MapReader {
 					} else if (mapElementStringArray[i][j].equals("B"))
 						mapElementArray[i][j] = new InvisibleWall(new Vector2f(xy));
 					else if (mapElementStringArray[i][j].equals("S")) {
-						mapElementArray[i][j] = new SpeedUp(new Vector2f(xy), forks(i, j));
+						mapElementArray[i][j] = new SpeedUp(new Vector2f(xy), getForks(i, j));
 						item++;
 					} else if (mapElementStringArray[i][j].equals("T"))
 						mapElementArray[i][j] = new Teleporter(new Vector2f(xy));
 					else if (mapElementStringArray[i][j].equals("U")) {
-						mapElementArray[i][j] = new PowerUp(new Vector2f(xy), forks(i, j));
+						mapElementArray[i][j] = new PowerUp(new Vector2f(xy), getForks(i, j));
 						item++;
 					} else
 						// thrwo invalidLevelCharacterException
@@ -260,30 +260,46 @@ public class MapReader {
 	/**
 	 * check if a given point is a fork road
 	 * 
+	 * def: a fork is a point, that a player/ghost can turn into different direction
+	 * (not including turning back), and specially, we consider a dead end also a fork
+	 * 
+	 * if size is 0, means it is not a fork
+	 * 
 	 * @param i
 	 *            row of MapElement[][]
 	 * @param j
 	 *            col of MapElement[][]
 	 * @return if it is a fork road
 	 */
-	private List<int[]> forks(int i, int j) {
+	private List<Direction> getForks(int i, int j) {
 		
-		//a point is a fork point, only if it has mindestens 3 neighbour walkablepoint
-		List<int[]> forks=new ArrayList<>();
-		if (isLeftWalkable(i, j)){
-			forks.add(new int[]{i,j-1});
-		}
+		List<Direction> forks=new LinkedList<>();
+		if (isLeftWalkable(i, j))
+			forks.add(Direction.LEFT);
 		if (isRightWalkable(i, j))
-			forks.add(new int[]{i,j+1});
+			forks.add(Direction.RIGHT);
 		if (isUpWalkable(i, j))
-			forks.add(new int[]{i-1,j});
+			forks.add(Direction.UP);
 		if (isDownWalkable(i, j))
-			forks.add(new int[]{i+1,j});
+			forks.add(Direction.DOWN);
 		
-		if(forks.size()<3)
-			 forks.clear();
+		//if this point is between a straight road, it is not a fork
+		if(forks.size()==2){
+			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
+				return forks;
+			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))
+				return forks;
+			else if(forks.contains(Direction.UP)&&!forks.contains(Direction.DOWN))
+				return forks;
+			else if(forks.contains(Direction.DOWN)&&!forks.contains(Direction.UP))
+				return forks;
+			else {
+				forks.clear();
+				return forks;
+			}
+		}else
+			return forks;
 		
-		return forks;
 	}
 
 	private boolean isLeftWalkable(int i, int j) {

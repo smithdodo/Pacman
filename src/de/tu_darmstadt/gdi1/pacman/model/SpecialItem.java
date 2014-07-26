@@ -9,7 +9,7 @@ public abstract class SpecialItem extends Item {
 	private long activeTime;
 	private float changedSpeed;
 
-	public SpecialItem(Vector2f position, List<int[]> forks) {
+	public SpecialItem(Vector2f position, List<Direction> forks) {
 		super(position, forks);
 	}
 
@@ -21,13 +21,6 @@ public abstract class SpecialItem extends Item {
 		this.activeTime = activeTime;
 	}
 
-	public float getChangedSpeed() {
-		return changedSpeed;
-	}
-
-	public void setChangedSpeed(float changedSpeed) {
-		this.changedSpeed = changedSpeed;
-
-	}
+	//public abstract void setEffect();
 
 }

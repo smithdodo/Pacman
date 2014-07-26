@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class PowerUp extends SpecialItem {
 
-	public PowerUp(Vector2f position, List<int[]> forks) {
+	public PowerUp(Vector2f position, List<Direction> forks) {
 
 		super(position, forks);
 

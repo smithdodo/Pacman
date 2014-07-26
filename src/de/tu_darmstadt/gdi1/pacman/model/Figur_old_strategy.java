@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
-public abstract class Figur {
+public abstract class Figur_old_strategy {
 	
 	protected MapElement[][] mapElementArray;
 	//it has the current coordinate of this figur on the screen
@@ -22,7 +22,7 @@ public abstract class Figur {
 	protected final int RADIUS = 17;
 	protected Shape hitBox;
 	
-	public Figur(Vector2f startPosition, MapElement[][] mapElementArray) {
+	public Figur_old_strategy(Vector2f startPosition, MapElement[][] mapElementArray) {
 		this.mapElementArray=mapElementArray;
 		this.hitBox = new Circle (startPosition.x, startPosition.y, this.RADIUS);
 		this.currentPosition = startPosition;
