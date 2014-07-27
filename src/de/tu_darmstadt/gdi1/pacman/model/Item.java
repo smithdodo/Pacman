@@ -6,14 +6,11 @@ import org.newdawn.slick.geom.Vector2f;
 
 
 public abstract class Item extends Road{
-	
+
 	private boolean isEaten;
 	
-	public Item(Vector2f position, List<Direction> forks){
-		
-		super(position,forks);
-		this.isEaten=false;
-		
+	public Item(Vector2f position, List<Direction> forksP, List<Direction> forksG) {
+		super(position, forksP, forksG);
 	}
 
 

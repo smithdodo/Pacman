@@ -19,7 +19,7 @@ public abstract class Figur {
 	protected Direction currentDirection;
 	protected Direction turnDirection;
 	
-	protected final int RADIUS = 17;
+	protected final float RADIUS = 17.5f;
 	protected Shape hitBox;
 	
 	public Figur(Vector2f startPosition, MapElement[][] mapElementArray) {
@@ -37,78 +37,15 @@ public abstract class Figur {
 	}
 	
 	public abstract void update(Direction turnDirection, int delta);
-	protected abstract boolean isPointWalkable(int row, int col);
 	
-
-	public void updateCheckPoint(Direction turnDirection){
-		
-		//figur can turn back any time
-		switch (turnDirection) {
-		case LEFT:
-			if(currentDirection==Direction.RIGHT){
-				currentDirection=Direction.RIGHT;
-				setCheckPointToNextFork();
-			}
-			break;
-		case RIGHT:
-			if(currentDirection==Direction.LEFT){
-				currentDirection=Direction.LEFT;
-				setCheckPointToNextFork();
-			}
-			break;
-		case UP:
-			if(currentDirection==Direction.DOWN){
-				currentDirection=Direction.DOWN;
-				setCheckPointToNextFork();
-			}
-			break;
-		case DOWN:
-			if(currentDirection==Direction.UP){
-				currentDirection=Direction.UP;
-				setCheckPointToNextFork();
-			}
-			break;
-		default:
-			break;
-		}
-		
-		//a figur can turn it direction(not including turning back) only when it arrives a check point
-		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
-				checkPointRow * 35))) {
-			
-			switch (turnDirection) {
-			case LEFT:
-				if(checkPointCol==0&&mapElementArray[checkPointRow][mapArrayWidth-1] instanceof Road){
-					checkPointCol=mapArrayWidth-1;
-					currentDirection=Direction.LEFT;
-				}
-				else if (((Road)mapElementArray[checkPointRow][checkPointCol]).getForks().contains(Direction.LEFT)) {
-					
-				}
-				break;
-			case RIGHT:
-				if(checkPointCol==mapArrayWidth-1&&mapElementArray[checkPointRow][0] instanceof Road)
-					checkPointCol=0;
-				else
-					setCheckPointToNextFork();
-				break;
-			case UP:
-				if(checkPointRow==0&&mapElementArray[mapArrayHeight-1][checkPointCol] instanceof Road)
-					checkPointRow=mapArrayHeight-1;
-				else
-					setCheckPointToNextFork();
-				break;
-			case DOWN:
-				if(checkPointRow==mapArrayHeight-1&&mapElementArray[0][checkPointCol] instanceof Road)
-					checkPointRow=0;
-				else
-					setCheckPointToNextFork();
-				break;
-			default:
-				break;
-			}
-		}
-	}
+	/**
+	 * check if figur can turn to given direction at current position
+	 * 
+	 * @param turn 
+	 *             the direction that figur wants to turn
+	 * @return boolean
+	 */
+	protected abstract boolean canTurnToDirection(Direction turn);
 	
 	/**
 	 * if the next element along current moving direction is a Fork point, then set the check point to it
@@ -119,51 +56,140 @@ public abstract class Figur {
 	 * @param checkpointCol
 	 * @param currentDirection
 	 */
-	private void setCheckPointToNextFork(){
+	protected abstract void setCheckPointToNextFork();
+
+	public void updateCheckPoint(Direction turnDirection){
+	
+			switch (turnDirection) {
+			case LEFT:
+				if(checkPointCol==0&&mapElementArray[checkPointRow][mapArrayWidth-1] instanceof Road){
+					checkPointCol=mapArrayWidth-1;
+					currentDirection=turnDirection;
+				}
+				else if (canTurnToDirection(turnDirection)) {
+					currentDirection=turnDirection;
+					setCheckPointToNextFork();
+				}else {
+					setCheckPointToNextFork();
+				}
+				break;
+			case RIGHT:
+				if(checkPointCol==mapArrayWidth-1&&mapElementArray[checkPointRow][0] instanceof Road){
+					checkPointCol=0;
+					currentDirection=turnDirection;
+				}
+				else if(canTurnToDirection(turnDirection)){
+					currentDirection=turnDirection;
+					setCheckPointToNextFork();
+				}else {
+					setCheckPointToNextFork();
+				}
+				break;
+			case UP:
+				if(checkPointRow==0&&mapElementArray[mapArrayHeight-1][checkPointCol] instanceof Road)
+					checkPointRow=mapArrayHeight-1;
+				else if (canTurnToDirection(turnDirection)) {
+					currentDirection=turnDirection;
+					setCheckPointToNextFork();
+				}else {
+					setCheckPointToNextFork();
+				}
+				break;
+			case DOWN:
+				if(checkPointRow==mapArrayHeight-1&&mapElementArray[0][checkPointCol] instanceof Road)
+					checkPointRow=0;
+				else if (canTurnToDirection(turnDirection)) {
+					currentDirection=turnDirection;
+					setCheckPointToNextFork();
+				}else {
+					setCheckPointToNextFork();
+				}
+				break;
+			default:
+				break;
+			}
+	}
+	
+	/**
+	 * refresh figurs position on screen
+	 * @param delta
+	 */
+	protected void updateCurrentPosition(int delta) {
+		
+		speed=delta*0.15f;
 		
 		switch (currentDirection) {
 		case LEFT:
-			while(!((Road)mapElementArray[checkPointRow][checkPointCol-1]).getForks().isEmpty()){
-				checkPointCol-=1;
-			}
+			currentPosition.x-=speed;
+			if(currentPosition.x<checkPointCol*35)
+				currentPosition.x=checkPointCol*35;
 			break;
 		case RIGHT:
-			while(!((Road)mapElementArray[checkPointRow][checkPointCol+11]).getForks().isEmpty()){
-				checkPointCol+=1;
-			}
+			currentPosition.x+=speed;
+			if(currentPosition.x>checkPointCol*35)
+				currentPosition.x=checkPointCol*35;
 			break;
 		case UP:
-			while(!((Road)mapElementArray[checkPointRow][checkPointCol-1]).getForks().isEmpty()){
-				checkPointRow-=1;
-			}
+			currentPosition.y-=speed;
+			if(currentPosition.y<checkPointRow*35)
+				currentPosition.y=checkPointRow*35;
 			break;
 		case DOWN:
-			while(!((Road)mapElementArray[checkPointRow][checkPointCol-1]).getForks().isEmpty()){
-				checkPointRow+=1;
-			}
+			currentPosition.y+=speed;
+			if(currentPosition.y>checkPointRow*35)
+				currentPosition.y=checkPointRow*35;
 			break;
 
 		default:
 			break;
 		}
+		//update hit box
+		hitBox.setLocation(currentPosition);
+		
 	}
 	
 	/**
-	 * check if figur can turn to given direction at current position
-	 * 
-	 * @param turn 
-	 *             the direction that figur wants to turn
-	 * @return boolean
+	 * some getter and setter that ghost and pacman both need
+	 * @return
 	 */
-	private boolean canTurnToDirection(Direction turn) {
-		
-		if(((Road)mapElementArray[checkPointRow][checkPointCol]).getForks().contains(turn))
-			return true;
-		else
-			return false;
-		
-		
-		
+	public Vector2f getCurrentPosition() {
+		return currentPosition;
+	}
+
+	public int getCheckPointRow() {
+		return checkPointRow;
+	}
+
+	public void setCheckPointRow(int checkPointRow) {
+		this.checkPointRow = checkPointRow;
+	}
+
+	public int getCheckPointCol() {
+		return checkPointCol;
+	}
+
+	public void setCheckPointCol(int checkPointCol) {
+		this.checkPointCol = checkPointCol;
+	}
+
+	public Direction getCurrentDirection() {
+		return currentDirection;
+	}
+
+	public void setCurrentDirection(Direction currentDirection) {
+		this.currentDirection = currentDirection;
+	}
+
+	public Shape getHitBox() {
+		return hitBox;
+	}
+
+	public void setHitBox(Shape hitBox) {
+		this.hitBox = hitBox;
+	}
+
+	public float getSpeed() {
+		return speed;
 	}
 	
 }

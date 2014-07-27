@@ -7,9 +7,9 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Dot extends Item{
 
-	public Dot(Vector2f position, List<Direction> forks) {
+	public Dot(Vector2f position, List<Direction> forksP, List<Direction> forksG) {
 		
-		super(position, forks);
+		super(position, forksP, forksG);
 		
 	}
 	

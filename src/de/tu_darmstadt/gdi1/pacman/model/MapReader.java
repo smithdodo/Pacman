@@ -33,12 +33,14 @@ public class MapReader {
 	private MapElement[][] mapElementArray;
 	
 	private List<PlayerSpawnPoint> playerSpawnPoints;
+	private List<GhostSpawnPoint> ghostSpawnPoints;
 	int aPlayerSpawnPointCol, aPlayerSpawnPointRow;
 
 	public MapReader(File mapFile) {
 
 		this.mapFile = mapFile;
 		playerSpawnPoints=new LinkedList<>();
+		ghostSpawnPoints=new LinkedList<>();
 		initHW();
 		initMapData();
 		intElementCoordinates();
@@ -128,26 +130,27 @@ public class MapReader {
 						mapElementArray[i][j] = new Wall(new Vector2f(xy), getWallType(
 								i, j));
 					} else if (mapElementStringArray[i][j].equals(" ")) {
-						mapElementArray[i][j] = new Dot(new Vector2f(xy), getForks(i, j));
+						mapElementArray[i][j] = new Dot(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 						item++;
 					} else if (mapElementStringArray[i][j].equals("P")) {
-						mapElementArray[i][j] = new PlayerSpawnPoint(new Vector2f(xy), getForks(i, j));
+						mapElementArray[i][j] = new PlayerSpawnPoint(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 						playerSpawnPoints.add((PlayerSpawnPoint)mapElementArray[i][j]);
 						aPlayerSpawnPointRow=i;
 						aPlayerSpawnPointCol=j;
 						ps++;
 					} else if (mapElementStringArray[i][j].equals("G")) {
-						mapElementArray[i][j] = new GhostSpawnPoint(new Vector2f(xy));
+						mapElementArray[i][j] = new GhostSpawnPoint(new Vector2f(xy),getForksForPacman(i, j), getForksForGhost(i, j));
+						ghostSpawnPoints.add((GhostSpawnPoint)mapElementArray[i][j]);
 						gs++;
 					} else if (mapElementStringArray[i][j].equals("B"))
-						mapElementArray[i][j] = new InvisibleWall(new Vector2f(xy));
+						mapElementArray[i][j] = new InvisibleWall(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 					else if (mapElementStringArray[i][j].equals("S")) {
-						mapElementArray[i][j] = new SpeedUp(new Vector2f(xy), getForks(i, j));
+						mapElementArray[i][j] = new SpeedUp(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 						item++;
 					} else if (mapElementStringArray[i][j].equals("T"))
-						mapElementArray[i][j] = new Teleporter(new Vector2f(xy));
+						mapElementArray[i][j] = new Teleporter(new Vector2f(xy),getForksForPacman(i, j), getForksForGhost(i, j));
 					else if (mapElementStringArray[i][j].equals("U")) {
-						mapElementArray[i][j] = new PowerUp(new Vector2f(xy), getForks(i, j));
+						mapElementArray[i][j] = new PowerUp(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 						item++;
 					} else
 						// thrwo invalidLevelCharacterException
@@ -260,18 +263,27 @@ public class MapReader {
 	/**
 	 * check if a given point is a fork road
 	 * 
-	 * def: a fork is a point, that a player/ghost can turn into different direction
-	 * (not including turning back), and specially, we consider a dead end also a fork
+	 * def: a fork is a point, that a player can turn into different direction
+	 * (not including turning back). And specially, we consider a dead end also a fork, at which figur can only turn back.
 	 * 
 	 * if size is 0, means it is not a fork
 	 * 
+	 * consider this situation:
+	 * XXXXXXXXXXX
+	 *   GGGB    P
+	 * XX XX XXXX 
+	 *            
+	 * XXXXXXXXXXX
+	 * 
+	 * if we want ghost to have a better AI, we need a new fork list which contains more turn choince.
+	 * it would be a lot easier that we build 2 fork list, one for pacman and one for ghost
 	 * @param i
 	 *            row of MapElement[][]
 	 * @param j
 	 *            col of MapElement[][]
 	 * @return if it is a fork road
 	 */
-	private List<Direction> getForks(int i, int j) {
+	private List<Direction> getForksForPacman(int i, int j) {
 		
 		List<Direction> forks=new LinkedList<>();
 		if (isLeftWalkable(i, j))
@@ -283,7 +295,40 @@ public class MapReader {
 		if (isDownWalkable(i, j))
 			forks.add(Direction.DOWN);
 		
-		//if this point is between a straight road, it is not a fork
+		//if this point is between a straight road, it is not a fork, unless it's a spawn point
+		if(forks.size()==2&&!mapElementStringArray[i][j].equals("P")){
+			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
+				return forks;
+			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))
+				return forks;
+			else if(forks.contains(Direction.UP)&&!forks.contains(Direction.DOWN))
+				return forks;
+			else if(forks.contains(Direction.DOWN)&&!forks.contains(Direction.UP))
+				return forks;
+			else {
+				forks.clear();
+				return forks;
+			}
+		}else
+			return forks;
+		
+	}
+	
+	private List<Direction> getForksForGhost(int i, int j) {
+		
+		List<Direction> forks=new LinkedList<>();
+		if(i>0&&i<height-1&&j>0&&j<width-1){
+		if (isLeftWalkable(i, j)||mapElementStringArray[i][j-1].equals("G")||mapElementStringArray[i][j-1].equals("B"))
+			forks.add(Direction.LEFT);
+		if (isRightWalkable(i, j)||mapElementStringArray[i][j+1].equals("G")||mapElementStringArray[i][j+1].equals("B"))
+			forks.add(Direction.RIGHT);
+		if (isUpWalkable(i, j)||mapElementStringArray[i-1][j].equals("G")||mapElementStringArray[i-1][j].equals("B"))
+			forks.add(Direction.UP);
+		if (isDownWalkable(i, j)||mapElementStringArray[i+1][j].equals("G")||mapElementStringArray[i+1][j].equals("B"))
+			forks.add(Direction.DOWN);
+		}
+		
+		//if this point is between a straight road, it is not a fork, unless it's a spawn point
 		if(forks.size()==2){
 			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
 				return forks;
@@ -306,9 +351,9 @@ public class MapReader {
 		if (j == 0) {
 			return false;
 		} else {
-			return (mapElementStringArray[i][j - 1].equals("P")
+			return (mapElementStringArray[i][j - 1].equals(" ")||mapElementStringArray[i][j - 1].equals("P")
 					|| mapElementStringArray[i][j - 1].equals("S") || mapElementStringArray[i][j - 1]
-					.equals("U"));
+					.equals("U")||mapElementStringArray[i][j - 1].equals("T"));
 		}
 	}
 
@@ -316,9 +361,9 @@ public class MapReader {
 		if (j == width - 1) {
 			return false;
 		} else {
-			return (mapElementStringArray[i][j + 1].equals("P")
+			return (mapElementStringArray[i][j + 1].equals(" ")||mapElementStringArray[i][j + 1].equals("P")
 					|| mapElementStringArray[i][j + 1].equals("S") || mapElementStringArray[i][j + 1]
-					.equals("U"));
+					.equals("U")||mapElementStringArray[i][j + 1].equals("T"));
 		}
 	}
 
@@ -326,9 +371,9 @@ public class MapReader {
 		if (i == 0) {
 			return false;
 		} else {
-			return (mapElementStringArray[i - 1][j].equals("P")
-					|| mapElementStringArray[i - 1][j].equals("S") || mapElementStringArray[i - 1][j]
-					.equals("U"));
+			return (mapElementStringArray[i-1][j].equals(" ")||mapElementStringArray[i-1][j].equals("P")
+					|| mapElementStringArray[i-1][j].equals("S") || mapElementStringArray[i-1][j]
+					.equals("U")||mapElementStringArray[i-1][j].equals("T"));
 		}
 	}
 
@@ -336,9 +381,9 @@ public class MapReader {
 		if (i == height - 1) {
 			return false;
 		} else {
-			return (mapElementStringArray[i + 1][j].equals("P")
-					|| mapElementStringArray[i + 1][j].equals("S") || mapElementStringArray[i + 1][j]
-					.equals("U"));
+			return (mapElementStringArray[i+1][j].equals(" ")||mapElementStringArray[i+1][j].equals("P")
+					|| mapElementStringArray[i+1][j].equals("S") || mapElementStringArray[i+1][j]
+					.equals("U")||mapElementStringArray[i+1][j].equals("T"));
 		}
 	}
 
@@ -446,6 +491,10 @@ public class MapReader {
 
 	public List<PlayerSpawnPoint> getPlayerSpawnPoints() {
 		return playerSpawnPoints;
+	}
+
+	public List<GhostSpawnPoint> getGhostSpawnPoints() {
+		return ghostSpawnPoints;
 	}
 
 }

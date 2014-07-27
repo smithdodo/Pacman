@@ -1,13 +1,14 @@
 package de.tu_darmstadt.gdi1.pacman.model;
 
+import java.util.List;
+
 import org.newdawn.slick.geom.Vector2f;
 
-public class InvisibleWall extends MapElement {
+public class InvisibleWall extends Road {
 
-	public InvisibleWall(Vector2f position) {
+	public InvisibleWall(Vector2f position, List<Direction> forksP, List<Direction> forksG) {
 		
-		super(position);
-		
+		super(position, forksP, forksG);	
 	}
-
+	
 }

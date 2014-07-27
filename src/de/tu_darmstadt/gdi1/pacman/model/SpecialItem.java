@@ -7,11 +7,12 @@ import org.newdawn.slick.geom.Vector2f;
 public abstract class SpecialItem extends Item {
 
 	private long activeTime;
-	private float changedSpeed;
-
-	public SpecialItem(Vector2f position, List<Direction> forks) {
-		super(position, forks);
-	}
+	
+	public SpecialItem(Vector2f position, List<Direction> forksP,List<Direction> forksG) {
+		
+		super(position, forksP, forksG);
+		
+		}
 
 	public long getActiveTime() {
 		return activeTime;

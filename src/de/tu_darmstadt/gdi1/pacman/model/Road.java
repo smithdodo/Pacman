@@ -6,21 +6,23 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Road extends MapElement{
 	
-	List<Direction> forks;
-
+	List<Direction> forksForPacman;
+	List<Direction> forksForGhost;
 	
-	public Road(Vector2f position, List<Direction> forks) {
+	public Road(Vector2f position, List<Direction> forksP, List<Direction> forksG) {
 		
 		super(position);
-		this.forks=forks;
-		
+		this.forksForPacman=forksP;
+		this.forksForGhost=forksG;
+	}
+
+	public List<Direction> getForksForPacman() {
+		return forksForPacman;
 	}
 
 
-	public List<Direction> getForks() {
-		
-		return forks;
-		
+	public List<Direction> getForksForGhost() {
+		return forksForGhost;
 	}
 	
 	

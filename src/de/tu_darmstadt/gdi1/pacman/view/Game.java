@@ -24,7 +24,7 @@ public class Game extends BasicGameState {
 	MapElement[][] me;
 	
 	List<Image> wallImages;
-	Image dot, powerUp, speedUp,invisibleWall, teleporter, pacman;
+	Image dot, powerUp, speedUp,invisibleWall, teleporter, pacman, pinky;
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
@@ -44,6 +44,7 @@ public class Game extends BasicGameState {
 		teleporter=new Image("res/pictures/theme1/entities/teleporter.png");
 		invisibleWall=new Image("res/pictures/theme1/map/B.png");
 		pacman=new Image("res/pictures/theme1/entities/P0.png");
+		pinky=new Image("res/pictures/theme1/entities/G1.png");
 		
 	}
 	
@@ -83,6 +84,7 @@ public class Game extends BasicGameState {
 		}
 		
 		g.drawImage(pacman, model.getPacmanPosition().x, model.getPacmanPosition().y);
+		g.drawImage(pinky, model.getPinkyPosition().x, model.getPinkyPosition().y);
 		g.translate(-setoff.x, -setoff.y);
 
 	}

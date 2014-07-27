@@ -15,6 +15,7 @@ public class Model {
 	public int height, width;
 	
 	private Pacman pacman;
+	private Ghost pinky;
 	
 	Random random;
 	Direction turnDirection=Direction.STOP;
@@ -31,6 +32,8 @@ public class Model {
 		int ps=random.nextInt(mapReader.getPlayerSpawnPoints().size());
 		Vector2f playerStartPoint=mapReader.getPlayerSpawnPoints().get(ps).getPosition();
 		pacman=new Pacman(playerStartPoint, mapElementArray);
+		Vector2f ghostStartPoint=mapReader.getGhostSpawnPoints().get(0).getPosition();
+		pinky=new Ghost(ghostStartPoint, mapElementArray, random);
 		
 	}
 	
@@ -43,7 +46,9 @@ public class Model {
 	}
 
 	public MapElement[][] getMapElements() {
+		
 		return mapElementArray;
+		
 	}
 	
 	public void update(GameContainer gc, int delta) {
@@ -57,10 +62,16 @@ public class Model {
 		else if(gc.getInput().isKeyPressed(Keyboard.KEY_DOWN))
 			turnDirection=Direction.DOWN;
 		pacman.update(turnDirection, delta);
+		
+		pinky.update(turnDirection, delta);
 	}
 	
 	public Vector2f getPacmanPosition(){
 		return pacman.getCurrentPosition();
+	}
+	
+	public Vector2f getPinkyPosition() {
+		return pinky.getCurrentPosition();
 	}
 	
 	public Shape getHitbox(){
