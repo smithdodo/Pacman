@@ -30,7 +30,6 @@ public abstract class Figur {
 		checkPointCol=((int)startPosition.x)/35;
 		mapArrayHeight=mapElementArray.length;
 		mapArrayWidth=mapElementArray[0].length;
-		System.out.println("maparray height: "+mapArrayHeight+" width: "+mapArrayWidth);
 		this.speed = 0;
 		this.currentDirection=Direction.RIGHT;
 		this.turnDirection=Direction.STOP;
@@ -81,6 +80,7 @@ public abstract class Figur {
 				else if(canTurnToDirection(turnDirection)){
 					currentDirection=turnDirection;
 					setCheckPointToNextFork();
+
 				}else {
 					setCheckPointToNextFork();
 				}

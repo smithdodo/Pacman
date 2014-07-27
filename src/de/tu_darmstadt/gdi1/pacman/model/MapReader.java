@@ -275,7 +275,7 @@ public class MapReader {
 	 *            
 	 * XXXXXXXXXXX
 	 * 
-	 * if we want ghost to have a better AI, we need a new fork list which contains more turn choince.
+	 * if we want ghost to move more intelligentlly, we need a new fork list which contains more turn choince.
 	 * it would be a lot easier that we build 2 fork list, one for pacman and one for ghost
 	 * @param i
 	 *            row of MapElement[][]
@@ -286,13 +286,13 @@ public class MapReader {
 	private List<Direction> getForksForPacman(int i, int j) {
 		
 		List<Direction> forks=new LinkedList<>();
-		if (isLeftWalkable(i, j))
+		if (isLeftWalkableP(i, j))
 			forks.add(Direction.LEFT);
-		if (isRightWalkable(i, j))
+		if (isRightWalkableP(i, j))
 			forks.add(Direction.RIGHT);
-		if (isUpWalkable(i, j))
+		if (isUpWalkableP(i, j))
 			forks.add(Direction.UP);
-		if (isDownWalkable(i, j))
+		if (isDownWalkableP(i, j))
 			forks.add(Direction.DOWN);
 		
 		//if this point is between a straight road, it is not a fork, unless it's a spawn point
@@ -309,24 +309,68 @@ public class MapReader {
 				forks.clear();
 				return forks;
 			}
-		}else
+		}else{
 			return forks;
+		}
 		
 	}
+	/**
+	 * check if element on given direction is for pacman walkable
+	 * @param i
+	 * @param j
+	 * @return
+	 */
+	private boolean isLeftWalkableP(int i, int j) {
+		if (j == 0) {
+			return false;
+		} else {
+			return (mapElementStringArray[i][j - 1].equals(" ")||mapElementStringArray[i][j - 1].equals("P")
+					|| mapElementStringArray[i][j - 1].equals("S") || mapElementStringArray[i][j - 1]
+					.equals("U")||mapElementStringArray[i][j - 1].equals("T"));
+		}
+	}
+
+	private boolean isRightWalkableP(int i, int j) {
+		if (j == width - 1) {
+			return false;
+		} else {
+			return (mapElementStringArray[i][j + 1].equals(" ")||mapElementStringArray[i][j + 1].equals("P")
+					|| mapElementStringArray[i][j + 1].equals("S") || mapElementStringArray[i][j + 1]
+					.equals("U")||mapElementStringArray[i][j + 1].equals("T"));
+		}
+	}
+
+	private boolean isUpWalkableP(int i, int j) {
+		if (i == 0) {
+			return false;
+		} else {
+			return (mapElementStringArray[i-1][j].equals(" ")||mapElementStringArray[i-1][j].equals("P")
+					|| mapElementStringArray[i-1][j].equals("S") || mapElementStringArray[i-1][j]
+					.equals("U")||mapElementStringArray[i-1][j].equals("T"));
+		}
+	}
+
+	private boolean isDownWalkableP(int i, int j) {
+		if (i == height - 1) {
+			return false;
+		} else {
+			return (mapElementStringArray[i+1][j].equals(" ")||mapElementStringArray[i+1][j].equals("P")
+					|| mapElementStringArray[i+1][j].equals("S") || mapElementStringArray[i+1][j]
+					.equals("U")||mapElementStringArray[i+1][j].equals("T"));
+		}
+	}
 	
-	private List<Direction> getForksForGhost(int i, int j) {
+private List<Direction> getForksForGhost(int i, int j) {
 		
 		List<Direction> forks=new LinkedList<>();
-		if(i>0&&i<height-1&&j>0&&j<width-1){
-		if (isLeftWalkable(i, j)||mapElementStringArray[i][j-1].equals("G")||mapElementStringArray[i][j-1].equals("B"))
+		if (isLeftWalkableG(i, j))
 			forks.add(Direction.LEFT);
-		if (isRightWalkable(i, j)||mapElementStringArray[i][j+1].equals("G")||mapElementStringArray[i][j+1].equals("B"))
+		if (isRightWalkableG(i, j))
 			forks.add(Direction.RIGHT);
-		if (isUpWalkable(i, j)||mapElementStringArray[i-1][j].equals("G")||mapElementStringArray[i-1][j].equals("B"))
+		if (isUpWalkableG(i, j))
 			forks.add(Direction.UP);
-		if (isDownWalkable(i, j)||mapElementStringArray[i+1][j].equals("G")||mapElementStringArray[i+1][j].equals("B"))
+		if (isDownWalkableG(i, j))
 			forks.add(Direction.DOWN);
-		}
 		
 		//if this point is between a straight road, it is not a fork, unless it's a spawn point
 		if(forks.size()==2){
@@ -339,53 +383,65 @@ public class MapReader {
 			else if(forks.contains(Direction.DOWN)&&!forks.contains(Direction.UP))
 				return forks;
 			else {
+				//System.out.println("the road r/c: "+i+" "+j+" has fork: "+forks.toString()+" has been cleared.");
 				forks.clear();
 				return forks;
 			}
-		}else
+		}else{
+			System.out.println("the road r/c: "+i+" "+j+"has fork: "+forks.toString());
 			return forks;
+		}
 		
 	}
-
-	private boolean isLeftWalkable(int i, int j) {
-		if (j == 0) {
-			return false;
-		} else {
-			return (mapElementStringArray[i][j - 1].equals(" ")||mapElementStringArray[i][j - 1].equals("P")
-					|| mapElementStringArray[i][j - 1].equals("S") || mapElementStringArray[i][j - 1]
-					.equals("U")||mapElementStringArray[i][j - 1].equals("T"));
-		}
+/**
+ * check if element in given direction is for ghost walkable
+ * @param i
+ * @param j
+ * @return
+ */
+private boolean isLeftWalkableG(int i, int j) {
+	if (j == 0) {
+		return false;
+	} else {
+		return (mapElementStringArray[i][j - 1].equals(" ")||mapElementStringArray[i][j - 1].equals("P")
+				|| mapElementStringArray[i][j - 1].equals("S") || mapElementStringArray[i][j - 1]
+				.equals("U")||mapElementStringArray[i][j - 1].equals("T")||mapElementStringArray[i][j - 1].equals("G")
+				||mapElementStringArray[i][j - 1].equals("B"));
 	}
+}
 
-	private boolean isRightWalkable(int i, int j) {
-		if (j == width - 1) {
-			return false;
-		} else {
-			return (mapElementStringArray[i][j + 1].equals(" ")||mapElementStringArray[i][j + 1].equals("P")
-					|| mapElementStringArray[i][j + 1].equals("S") || mapElementStringArray[i][j + 1]
-					.equals("U")||mapElementStringArray[i][j + 1].equals("T"));
-		}
+private boolean isRightWalkableG(int i, int j) {
+	if (j == width - 1) {
+		return false;
+	} else {
+		return (mapElementStringArray[i][j + 1].equals(" ")||mapElementStringArray[i][j + 1].equals("P")
+				|| mapElementStringArray[i][j + 1].equals("S") || mapElementStringArray[i][j + 1]
+				.equals("U")||mapElementStringArray[i][j + 1].equals("T")||mapElementStringArray[i][j + 1].equals("G")
+				||mapElementStringArray[i][j + 1].equals("B"));
 	}
+}
 
-	private boolean isUpWalkable(int i, int j) {
-		if (i == 0) {
-			return false;
-		} else {
-			return (mapElementStringArray[i-1][j].equals(" ")||mapElementStringArray[i-1][j].equals("P")
-					|| mapElementStringArray[i-1][j].equals("S") || mapElementStringArray[i-1][j]
-					.equals("U")||mapElementStringArray[i-1][j].equals("T"));
-		}
+private boolean isUpWalkableG(int i, int j) {
+	if (i == 0) {
+		return false;
+	} else {
+		return (mapElementStringArray[i-1][j].equals(" ")||mapElementStringArray[i-1][j].equals("P")
+				|| mapElementStringArray[i-1][j].equals("S") || mapElementStringArray[i-1][j]
+				.equals("U")||mapElementStringArray[i-1][j].equals("T")||mapElementStringArray[i-1][j].equals("G")
+				||mapElementStringArray[i-1][j].equals("B"));
 	}
+}
 
-	private boolean isDownWalkable(int i, int j) {
-		if (i == height - 1) {
-			return false;
-		} else {
-			return (mapElementStringArray[i+1][j].equals(" ")||mapElementStringArray[i+1][j].equals("P")
-					|| mapElementStringArray[i+1][j].equals("S") || mapElementStringArray[i+1][j]
-					.equals("U")||mapElementStringArray[i+1][j].equals("T"));
-		}
+private boolean isDownWalkableG(int i, int j) {
+	if (i == height - 1) {
+		return false;
+	} else {
+		return (mapElementStringArray[i+1][j].equals(" ")||mapElementStringArray[i+1][j].equals("P")
+				|| mapElementStringArray[i+1][j].equals("S") || mapElementStringArray[i+1][j]
+				.equals("U")||mapElementStringArray[i+1][j].equals("T")||mapElementStringArray[i+1][j].equals("G")
+				||mapElementStringArray[i+1][j].equals("B"));
 	}
+}
 
 	private WallType getWallType(int i, int j) {
 
