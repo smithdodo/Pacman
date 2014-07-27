@@ -385,7 +385,7 @@ private List<Direction> getForksForGhost(int i, int j) {
 			forks.add(Direction.DOWN);
 		
 		//it is not a fork, if this point is between a straight road, unless it's a spawn point
-		if(forks.size()==2){
+		if(forks.size()==2&&!mapElementStringArray[i][j].equals("G")){
 			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
 				return forks;
 			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))

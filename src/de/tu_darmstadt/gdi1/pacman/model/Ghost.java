@@ -40,7 +40,7 @@ public class Ghost extends Figur {
 	private void setRandomDirection(){
 		
 		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
-		//System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
+//		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
 		Direction aRandomDirection = null;
 		//ghost won't turn back at a fork, unless it is a dead end
@@ -89,7 +89,7 @@ public class Ghost extends Figur {
 				aRandomDirection=forks.get(0);
 			}
 			
-		}else {
+		}else if(size==1){
 			aRandomDirection=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost().get(0);
 		}
 		
