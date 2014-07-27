@@ -37,6 +37,12 @@ public abstract class Figur {
 	
 	public void update(Direction turnDirection, int delta){}
 	
+	/*
+	 * 
+	 * check if the element at given indext for pacman/ghost walkable
+	 */
+	protected abstract boolean isElementWalkable(int row, int col);
+	
 	/**
 	 * check if figur can turn to given direction at current position
 	 * 
@@ -61,7 +67,7 @@ public abstract class Figur {
 		//System.out.println("updateCheckPoint-> recieve turnDir->"+turnDirection);
 			switch (turnDirection) {
 			case LEFT:
-				if(checkPointCol==0&&mapElementArray[checkPointRow][mapArrayWidth-1] instanceof Road){
+				if(checkPointCol==0&&isElementWalkable(checkPointRow, mapArrayWidth-1)){
 					checkPointCol=mapArrayWidth-1;
 					currentDirection=turnDirection;
 				}
@@ -73,7 +79,7 @@ public abstract class Figur {
 				}
 				break;
 			case RIGHT:
-				if(checkPointCol==mapArrayWidth-1&&mapElementArray[checkPointRow][0] instanceof Road){
+				if(checkPointCol==mapArrayWidth-1&&isElementWalkable(checkPointRow, 0)){
 					checkPointCol=0;
 					currentDirection=turnDirection;
 				}
@@ -86,7 +92,7 @@ public abstract class Figur {
 				}
 				break;
 			case UP:
-				if(checkPointRow==0&&mapElementArray[mapArrayHeight-1][checkPointCol] instanceof Road){
+				if(checkPointRow==0&&isElementWalkable(mapArrayHeight-1, checkPointCol)){
 					checkPointRow=mapArrayHeight-1;
 					currentDirection=turnDirection;
 				}
@@ -98,7 +104,7 @@ public abstract class Figur {
 				}
 				break;
 			case DOWN:
-				if(checkPointRow==mapArrayHeight-1&&mapElementArray[0][checkPointCol] instanceof Road)
+				if(checkPointRow==mapArrayHeight-1&&isElementWalkable(0, checkPointCol))
 					checkPointRow=0;
 				else if (canTurnToDirection(turnDirection)) {
 					currentDirection=turnDirection;

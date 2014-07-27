@@ -62,7 +62,6 @@ public class Model {
 		else if(gc.getInput().isKeyPressed(Keyboard.KEY_DOWN))
 			turnDirection=Direction.DOWN;
 		pacman.update(turnDirection, delta);
-		
 		pinky.update(delta);
 	}
 	

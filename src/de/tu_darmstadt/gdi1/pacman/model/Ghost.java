@@ -28,7 +28,6 @@ public class Ghost extends Figur {
 				checkPointRow * 35))) {
 			setRandomDirection();
 			updateCheckPoint(this.turnDirection);
-			System.out.println("cp: "+checkPointRow+" "+checkPointCol);
 		}
 		updateCurrentPosition(delta);
 		
@@ -41,7 +40,7 @@ public class Ghost extends Figur {
 	private void setRandomDirection(){
 		
 		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
-		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
+		//System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
 		Direction aRandomDirection = null;
 		//ghost won't turn back at a fork, unless it is a dead end
@@ -96,6 +95,18 @@ public class Ghost extends Figur {
 		
 		turnDirection=aRandomDirection;
 	}
+	
+	/*
+	 * 
+	 * check if the element at given indext for pacman/ghost walkable
+	 * 
+	 * @return yes/no
+	 */
+	protected boolean isElementWalkable(int row, int col){
+		
+		return mapElementArray[row][col] instanceof Road;
+		
+	}
 
 	/**
 	 * check if figur can turn to given direction at current position
@@ -132,28 +143,28 @@ public class Ghost extends Figur {
 			while(((Road)mapElementArray[checkPointRow][checkPointCol-1]).getForksForGhost().isEmpty())
 				checkPointCol-=1;
 			checkPointCol-=1;
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+			//System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case RIGHT:
 			while(((Road)mapElementArray[checkPointRow][checkPointCol+1]).getForksForGhost().isEmpty())
 				checkPointCol+=1;
 			checkPointCol+=1;
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+			//System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case UP:
 			while(((Road)mapElementArray[checkPointRow-1][checkPointCol]).getForksForGhost().isEmpty())
 				checkPointRow-=1;
 			checkPointRow-=1; 
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+//			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case DOWN:
 			while(((Road)mapElementArray[checkPointRow+1][checkPointCol]).getForksForGhost().isEmpty())
 				checkPointRow+=1;
 			checkPointRow+=1;
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+//			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		default:
-			System.out.println("setCheckPointToNextFork-> did'n update");
+//			System.out.println("setCheckPointToNextFork-> did'n update");
 			break;
 		}
 		}catch(Exception e){

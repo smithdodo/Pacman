@@ -66,6 +66,20 @@ public class Pacman extends Figur {
 			break;
 		}
 	}
+	
+	/*
+	 * 
+	 * check if the element at given indext for pacman/ghost walkable
+	 */
+	protected boolean isElementWalkable(int row, int col){
+		
+		if(mapElementArray[row][col] instanceof Road&&!(mapElementArray[row][col] instanceof GhostSpawnPoint)
+				&&!(mapElementArray[row][col] instanceof InvisibleWall))
+			return true;
+		else 
+			return false;
+	
+	}
 
 	/**
 	 * check if pacman can turn to given direction at current position
