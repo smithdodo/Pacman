@@ -63,7 +63,7 @@ public class Model {
 			turnDirection=Direction.DOWN;
 		pacman.update(turnDirection, delta);
 		
-		pinky.update(turnDirection, delta);
+		pinky.update(delta);
 	}
 	
 	public Vector2f getPacmanPosition(){

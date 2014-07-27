@@ -140,6 +140,7 @@ public class MapReader {
 						ps++;
 					} else if (mapElementStringArray[i][j].equals("G")) {
 						mapElementArray[i][j] = new GhostSpawnPoint(new Vector2f(xy),getForksForPacman(i, j), getForksForGhost(i, j));
+						System.out.println(((Road)mapElementArray[i][j]).getForksForGhost().toString()+" i/j: "+i+" "+j);
 						ghostSpawnPoints.add((GhostSpawnPoint)mapElementArray[i][j]);
 						gs++;
 					} else if (mapElementStringArray[i][j].equals("B"))
@@ -201,6 +202,14 @@ public class MapReader {
 			if (unreachablePoint > 0) {
 				System.out
 						.println(unreachablePoint + " points are unreachable");
+				
+				//show which points are unachievable
+				for (int i = 0; i < height; i++) {
+					for (int j = 0; j <width; j++) {
+						System.err.print(tempMap[i][j]);
+					}
+					System.err.println();
+				}
 				throw new ReachabilityException();
 			}
 		} catch (ReachabilityException e) {
@@ -243,19 +252,23 @@ public class MapReader {
 
 		if (i == 0 && tempMap[height - 1][j] == 1
 				&& !(mapElementArray[height - 1][j] instanceof Wall)
-				&& !(mapElementArray[height - 1][j] instanceof InvisibleWall)) {
+				&& !(mapElementArray[height - 1][j] instanceof InvisibleWall)
+				&& !(mapElementArray[height - 1][j] instanceof GhostSpawnPoint)) {
 			reachAllValidPoint(tempMap, height - 1, j);
 		} else if (i == height - 1 && tempMap[0][j] == 1
 				&& !(mapElementArray[0][j] instanceof Wall)
-				&& !(mapElementArray[0][j] instanceof InvisibleWall)) {
+				&& !(mapElementArray[0][j] instanceof InvisibleWall)
+				&& !(mapElementArray[0][j] instanceof GhostSpawnPoint)) {
 			reachAllValidPoint(tempMap, 0, j);
 		} else if (j == 0 && tempMap[i][width - 1] == 1
 				&& !(mapElementArray[i][width - 1] instanceof Wall)
-				&& !(mapElementArray[i][width - 1] instanceof InvisibleWall)) {
+				&& !(mapElementArray[i][width - 1] instanceof InvisibleWall)
+				&& !(mapElementArray[i][width - 1] instanceof GhostSpawnPoint)) {
 			reachAllValidPoint(tempMap, i, width - 1);
 		} else if (j == width - 1 && tempMap[i][0] == 1
 				&& !(mapElementArray[i][0] instanceof Wall)
-				&& !(mapElementArray[i][0] instanceof Wall)) {
+				&& !(mapElementArray[i][0] instanceof InvisibleWall)
+				&& !(mapElementArray[i][0] instanceof GhostSpawnPoint)) {
 			reachAllValidPoint(tempMap, i, 0);
 		}
 	}
@@ -309,9 +322,8 @@ public class MapReader {
 				forks.clear();
 				return forks;
 			}
-		}else{
-			return forks;
 		}
+			return forks;
 		
 	}
 	/**
@@ -372,7 +384,7 @@ private List<Direction> getForksForGhost(int i, int j) {
 		if (isDownWalkableG(i, j))
 			forks.add(Direction.DOWN);
 		
-		//if this point is between a straight road, it is not a fork, unless it's a spawn point
+		//it is not a fork, if this point is between a straight road, unless it's a spawn point
 		if(forks.size()==2){
 			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
 				return forks;
@@ -387,10 +399,10 @@ private List<Direction> getForksForGhost(int i, int j) {
 				forks.clear();
 				return forks;
 			}
-		}else{
-			System.out.println("the road r/c: "+i+" "+j+"has fork: "+forks.toString());
-			return forks;
 		}
+		
+		return forks;
+		
 		
 	}
 /**

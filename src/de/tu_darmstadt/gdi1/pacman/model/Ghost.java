@@ -23,12 +23,12 @@ public class Ghost extends Figur {
 	
 	
 
-	@Override
-	public void update(Direction turnDirection, int delta) {
-		
+	public void update(int delta) {
 		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
 				checkPointRow * 35))) {
-		updateCheckPoint(getRandomDirection());
+			setRandomDirection();
+			updateCheckPoint(this.turnDirection);
+			System.out.println("cp: "+checkPointRow+" "+checkPointCol);
 		}
 		updateCurrentPosition(delta);
 		
@@ -38,9 +38,10 @@ public class Ghost extends Figur {
 	 * get a random direction from a checkpoint's forklist
 	 * 
 	 */
-	private Direction getRandomDirection(){
+	private void setRandomDirection(){
 		
 		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
+		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
 		Direction aRandomDirection = null;
 		//ghost won't turn back at a fork, unless it is a dead end
@@ -81,10 +82,9 @@ public class Ghost extends Figur {
 				aRandomDirection=Direction.RIGHT;
 			}
 			else if (checkPointRow==0&&mapElementArray[mapArrayHeight-1][checkPointCol] instanceof Road) {
-				System.out.println("checked");
 				aRandomDirection=Direction.UP;
 			}else if (checkPointRow==mapArrayHeight-1&&mapElementArray[0][checkPointCol] instanceof Road) {
-				aRandomDirection=Direction.UP;
+				aRandomDirection=Direction.DOWN;
 			}
 			else {
 				aRandomDirection=forks.get(0);
@@ -93,7 +93,8 @@ public class Ghost extends Figur {
 		}else {
 			aRandomDirection=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost().get(0);
 		}
-		return aRandomDirection;
+		
+		turnDirection=aRandomDirection;
 	}
 
 	/**

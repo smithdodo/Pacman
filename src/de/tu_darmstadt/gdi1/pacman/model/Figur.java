@@ -35,7 +35,7 @@ public abstract class Figur {
 		this.turnDirection=Direction.STOP;
 	}
 	
-	public abstract void update(Direction turnDirection, int delta);
+	public void update(Direction turnDirection, int delta){}
 	
 	/**
 	 * check if figur can turn to given direction at current position
@@ -58,7 +58,7 @@ public abstract class Figur {
 	protected abstract void setCheckPointToNextFork();
 
 	public void updateCheckPoint(Direction turnDirection){
-	
+		//System.out.println("updateCheckPoint-> recieve turnDir->"+turnDirection);
 			switch (turnDirection) {
 			case LEFT:
 				if(checkPointCol==0&&mapElementArray[checkPointRow][mapArrayWidth-1] instanceof Road){
@@ -86,8 +86,10 @@ public abstract class Figur {
 				}
 				break;
 			case UP:
-				if(checkPointRow==0&&mapElementArray[mapArrayHeight-1][checkPointCol] instanceof Road)
+				if(checkPointRow==0&&mapElementArray[mapArrayHeight-1][checkPointCol] instanceof Road){
 					checkPointRow=mapArrayHeight-1;
+					currentDirection=turnDirection;
+				}
 				else if (canTurnToDirection(turnDirection)) {
 					currentDirection=turnDirection;
 					setCheckPointToNextFork();
