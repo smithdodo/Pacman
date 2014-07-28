@@ -31,9 +31,7 @@ public class Ghost extends Figur {
 		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
 				checkPointRow * 35))) {
 			setRandomDirection();
-			System.out.println("turnD->"+turnDirection);
 			updateCheckPoint(this.turnDirection);
-			System.out.println("Ghost.update()->"+currentDirection);
 		}
 		updateCurrentPosition(delta);
 		
