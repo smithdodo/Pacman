@@ -1,13 +1,14 @@
 package de.tu_darmstadt.gdi1.pacman.model;
 
 import java.util.List;
+import java.util.Set;
 
 import org.newdawn.slick.geom.Vector2f;
 
 public class Road extends MapElement{
 	
-	List<Direction> forksForPacman;
-	List<Direction> forksForGhost;
+	protected List<Direction> forksForPacman;
+	protected List<Direction> forksForGhost;
 	
 	public Road(Vector2f position, List<Direction> forksP, List<Direction> forksG) {
 		

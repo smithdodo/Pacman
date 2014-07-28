@@ -21,6 +21,7 @@ public class Game extends BasicGameState {
 	Vector2f setoff;
 	
 	private Model model;
+	de.tu_darmstadt.gdi1.pacman.model.Pacman pac;
 	MapElement[][] me;
 	
 	List<Image> wallImages;
@@ -32,6 +33,7 @@ public class Game extends BasicGameState {
 		
 		model=new Model("res/levels/testMap.txt");
 		me=model.getMapElements();
+		pac=model.getPacman();
 		setoff=new Vector2f((700-model.mapReader.width_on_display)/2-17.5f,30+(420-model.mapReader.height_on_display)/2-17.5f);
 		
 		wallImages=new LinkedList<>();
@@ -83,8 +85,20 @@ public class Game extends BasicGameState {
 			
 		}
 		
+		for(int i=0;i<model.getGhostsSize();i++){
+			Ghost gs=model.getGhosts().get(i);
+			Vector2f p=gs.getCurrentPosition();
+			g.setColor(Color.green);
+			g.translate(17.5f, 17.5f);
+			g.drawLine(p.x, p.y, gs.getCheckPointCol()*35, gs.getCheckPointRow()*35);
+			g.translate(-17.5f, -17.5f);
+			g.drawImage(pinky, p.x, p.y);
+			
+		}
 		g.drawImage(pacman, model.getPacmanPosition().x, model.getPacmanPosition().y);
-		g.drawImage(pinky, model.getPinkyPosition().x, model.getPinkyPosition().y);
+		g.translate(17.5f, 17.5f);
+		g.drawLine(model.getPacmanPosition().x, model.getPacmanPosition().y, pac.getCheckPointCol()*35, pac.getCheckPointRow()*35);
+		g.translate(-17.5f, -17.5f);
 		g.translate(-setoff.x, -setoff.y);
 
 	}

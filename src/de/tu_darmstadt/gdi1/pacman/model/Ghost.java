@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.newdawn.slick.geom.Vector2f;
 
 public class Ghost extends Figur {
 	
 	Random random;
+	private int spawnPoingRow, spawnPointCol;
 	//a list that stores all fork direction of a checkpoint
 	private List<Direction> forks;
 
@@ -18,6 +20,8 @@ public class Ghost extends Figur {
 		
 		super(startPosition, mapElementArray);
 		this.random=random;
+		spawnPoingRow=checkPointRow;
+		spawnPointCol=checkPointCol;
 		
 	}
 	
@@ -27,7 +31,9 @@ public class Ghost extends Figur {
 		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
 				checkPointRow * 35))) {
 			setRandomDirection();
+			System.out.println("turnD->"+turnDirection);
 			updateCheckPoint(this.turnDirection);
+			System.out.println("Ghost.update()->"+currentDirection);
 		}
 		updateCurrentPosition(delta);
 		
@@ -40,7 +46,7 @@ public class Ghost extends Figur {
 	private void setRandomDirection(){
 		
 		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
-//		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
+		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
 		Direction aRandomDirection = null;
 		//ghost won't turn back at a fork, unless it is a dead end
@@ -67,30 +73,6 @@ public class Ghost extends Figur {
 				} while (aRandomDirection==Direction.UP);
 				break;
 			}
-		}else if (size==1&&currentDirection!=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost().get(0)) {
-			//check if this point can go to the other end of map
-			//like:
-			//XXXXXXXXX
-			//  GXXXX  
-			//XXXXXXXXX
-			//ghost born at left side could go to right side
-			if(checkPointCol==0&&mapElementArray[checkPointRow][mapArrayWidth-1] instanceof Road){
-					aRandomDirection=Direction.LEFT;
-			}
-			else if (checkPointCol==mapArrayWidth-1&&mapElementArray[checkPointRow][0] instanceof Road) {
-				aRandomDirection=Direction.RIGHT;
-			}
-			else if (checkPointRow==0&&mapElementArray[mapArrayHeight-1][checkPointCol] instanceof Road) {
-				aRandomDirection=Direction.UP;
-			}else if (checkPointRow==mapArrayHeight-1&&mapElementArray[0][checkPointCol] instanceof Road) {
-				aRandomDirection=Direction.DOWN;
-			}
-			else {
-				aRandomDirection=forks.get(0);
-			}
-			
-		}else if(size==1){
-			aRandomDirection=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost().get(0);
 		}
 		
 		turnDirection=aRandomDirection;

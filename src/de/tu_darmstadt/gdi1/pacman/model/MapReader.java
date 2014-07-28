@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class MapReader {
 		initHW();
 		initMapData();
 		intElementCoordinates();
+		addDirectionToRandPaar();
 		isAllAreaAchievable();
 
 	}
@@ -140,7 +142,6 @@ public class MapReader {
 						ps++;
 					} else if (mapElementStringArray[i][j].equals("G")) {
 						mapElementArray[i][j] = new GhostSpawnPoint(new Vector2f(xy),getForksForPacman(i, j), getForksForGhost(i, j));
-						System.out.println(((Road)mapElementArray[i][j]).getForksForGhost().toString()+" i/j: "+i+" "+j);
 						ghostSpawnPoints.add((GhostSpawnPoint)mapElementArray[i][j]);
 						gs++;
 					} else if (mapElementStringArray[i][j].equals("B"))
@@ -538,6 +539,79 @@ private boolean isDownWalkableG(int i, int j) {
 		} else {
 			return mapElementStringArray[i + 1][j].equals("X");
 		}
+	}
+	
+	/**
+	 * find out all point, from which figur can go from one side of map to the other
+	 * and add right directions to forksForPacman list and forksForGhost list
+	 * 
+	 * z.B. 
+	 * XXXXXXXXXX
+	 * @        @
+	 * XXXXXXXXXX
+	 * the 2 '@' symbol have after initElementCoordinate only one direction in fork list:LEFT(RIGHT)
+	 * LEFT and RIGHT will be added to their forks list after this method
+	 * 
+	 */
+	private void addDirectionToRandPaar(){
+		
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if(i==0&&mapElementArray[i][j] instanceof Road&&mapElementArray[height-1][j] instanceof Road){
+					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.UP);
+					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.DOWN);
+					((Road)mapElementArray[height-1][j]).getForksForGhost().add(Direction.UP);
+					((Road)mapElementArray[height-1][j]).getForksForGhost().add(Direction.DOWN);
+					//check if this point is also for pacman walkable
+					//to reduce the code, we used a different if here
+					if(isUpWalkableP(1, j)&&isDownWalkableP(height-2, j)){
+						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.UP);
+						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.DOWN);
+						((Road)mapElementArray[height-1][j]).getForksForPacman().add(Direction.UP);
+						((Road)mapElementArray[height-1][j]).getForksForPacman().add(Direction.DOWN);
+					}
+					removeDuplicateDirection(i, j);
+					removeDuplicateDirection(height-1, j);
+				}
+				if(j==0&&mapElementArray[i][j] instanceof Road&&mapElementArray[i][width-1] instanceof Road){
+					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.UP);
+					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.DOWN);
+					((Road)mapElementArray[i][width-1]).getForksForGhost().add(Direction.UP);
+					((Road)mapElementArray[i][width-1]).getForksForGhost().add(Direction.DOWN);
+					//check if this point is also for pacman walkable
+					//to reduce the code, we used a different if here
+					if(isUpWalkableP(1, j)&&isDownWalkableP(height-2, j)){
+						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.UP);
+						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.DOWN);
+						((Road)mapElementArray[i][width-1]).getForksForPacman().add(Direction.UP);
+						((Road)mapElementArray[i][width-1]).getForksForPacman().add(Direction.DOWN);
+					}
+					removeDuplicateDirection(i, j);
+					removeDuplicateDirection(i, width-1);
+				}
+			}
+			
+		}
+	}
+	
+	/**
+	 * delet duplicate fork directions of a Road Object
+	 * duplicate directions in forksForGhost list may affect ghost's random turning choice
+	 * all directions(except turning back) should have same chance to get choosen
+	 * 
+	 */
+	private void removeDuplicateDirection(int row, int col){
+		//remove duplicate fork direction in forkForPacman(dosen't really matter if there are duplicate
+		//because pac man don't get turn direction randomly, but ghost does
+		HashSet<Direction> t_P = new HashSet<Direction>(((Road)mapElementArray[row][col]).getForksForPacman());
+		((Road)mapElementArray[row][col]).getForksForPacman().clear();
+		((Road)mapElementArray[row][col]).getForksForPacman().addAll(t_P);
+		
+		//remove duplicate fork direction in forkForGhos
+		HashSet<Direction> t_G = new HashSet<Direction>(((Road)mapElementArray[row][col]).getForksForGhost());
+		((Road)mapElementArray[row][col]).getForksForGhost().clear();
+		((Road)mapElementArray[row][col]).getForksForGhost().addAll(t_G);
+
 	}
 
 	@Override

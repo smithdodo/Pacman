@@ -63,6 +63,11 @@ public abstract class Figur {
 	 */
 	protected abstract void setCheckPointToNextFork();
 
+	/**
+	 * update the check point
+	 * 
+	 * @param turnDirection
+	 */
 	public void updateCheckPoint(Direction turnDirection){
 		//System.out.println("updateCheckPoint-> recieve turnDir->"+turnDirection);
 			switch (turnDirection) {
@@ -104,8 +109,10 @@ public abstract class Figur {
 				}
 				break;
 			case DOWN:
-				if(checkPointRow==mapArrayHeight-1&&isElementWalkable(0, checkPointCol))
+				if(checkPointRow==mapArrayHeight-1&&isElementWalkable(0, checkPointCol)){
 					checkPointRow=0;
+					currentDirection=turnDirection;
+				}
 				else if (canTurnToDirection(turnDirection)) {
 					currentDirection=turnDirection;
 					setCheckPointToNextFork();

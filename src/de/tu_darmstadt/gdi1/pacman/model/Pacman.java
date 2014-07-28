@@ -71,7 +71,7 @@ public class Pacman extends Figur {
 	 * 
 	 * check if the element at given indext for pacman/ghost walkable
 	 */
-	protected boolean isElementWalkable(int row, int col){
+	public boolean isElementWalkable(int row, int col){
 		
 		if(mapElementArray[row][col] instanceof Road&&!(mapElementArray[row][col] instanceof GhostSpawnPoint)
 				&&!(mapElementArray[row][col] instanceof InvisibleWall))
@@ -94,9 +94,13 @@ public class Pacman extends Figur {
 //		System.out.print("try to turn: "+turn+" this point contains: ");
 //		System.out.println(((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForPacman().toString());
 		if(((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForPacman().contains(turn)){
+			
+//			System.out.println("canTurnToDirection--> "+checkPointRow+" "+checkPointCol);
 			return true;
 		}
 		else{
+//			System.out.println("canTurnToDirection--> can't turn"+checkPointRow+" "+checkPointCol);
+
 			return false;
 		}
 		
@@ -117,27 +121,35 @@ public class Pacman extends Figur {
 		try{
 			switch (currentDirection) {
 		case LEFT:
+			if(isElementWalkable(checkPointRow, checkPointCol-1)){
 			while(((Road)mapElementArray[checkPointRow][checkPointCol-1]).getForksForPacman().isEmpty())
 				checkPointCol-=1;
 			checkPointCol-=1;
+			}
 			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case RIGHT:
+			if(isElementWalkable(checkPointRow, checkPointCol+1)){
 			while(((Road)mapElementArray[checkPointRow][checkPointCol+1]).getForksForPacman().isEmpty())
 				checkPointCol+=1;
 			checkPointCol+=1;
+			}
 			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case UP:
+			if(isElementWalkable(checkPointRow-1, checkPointCol)){
 			while(((Road)mapElementArray[checkPointRow-1][checkPointCol]).getForksForPacman().isEmpty())
 				checkPointRow-=1;
 			checkPointRow-=1;
+			}
 			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case DOWN:
+			if(isElementWalkable(checkPointRow+1, checkPointCol)){
 			while(((Road)mapElementArray[checkPointRow+1][checkPointCol]).getForksForPacman().isEmpty())
 				checkPointRow+=1;
 			checkPointRow+=1;
+			}
 			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		default:
