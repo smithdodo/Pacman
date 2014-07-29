@@ -11,9 +11,15 @@ public class PowerUp extends SpecialItem {
 		super(position, forksP, forksG);	
 		
 	}
-	
-	public void setEffect(){
-		
+
+	@Override
+	public void activateItem(Pacman p) {
+
+		if (!super.isEaten) {
+			p.setPowerUp(true);
+			p.setTimeStillPoweredUp(5000);
+		}
+		super.isEaten = true;
 	}
 
 }

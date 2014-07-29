@@ -12,5 +12,12 @@ public class Dot extends Item{
 		super(position, forksP, forksG);
 		
 	}
+
+	@Override
+	public void activateItem(Pacman p) {
+		
+		super.isEaten=true;
+		
+	}
 	
 }

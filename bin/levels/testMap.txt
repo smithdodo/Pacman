@@ -1,9 +1,6 @@
-XXXXXX     XXXXXX XX
-                    
-                    
-GGGGGGGGGGG GGGGGGGG
-TTTTTTTTTP          
-                    
-                    
-X                   
-XXXXXX     XXXXXXXXX
+XXXXXXXXXXXXXXXX 
+     G   SSSSSSP 
+                 
+   SSSSS         
+                 
+XXXXXXXXXXXXXXXX 

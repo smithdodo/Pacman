@@ -3,21 +3,44 @@ package de.tu_darmstadt.gdi1.pacman.model;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Pacman extends Figur {
-	
-	//the next element in mapElementArray that pacman looking(aiming) at
-	private int nextElementRow, nextElementCol;
+
 	private int lives;
+	private boolean isPowerUp;
+	private boolean isSpeedUp;
+	private long timeStillPoweredUp;
+	private long timeStillSpeededUp;
+	private int speedUpFactor;//how much will pacman speeded up
 
 	public Pacman(Vector2f startPosition, MapElement[][] mapElementArray) {
 		
 		super(startPosition, mapElementArray);
-		nextElementRow=checkPointRow;
-		nextElementCol=checkPointCol;
 		this.lives = 3;
+		isPowerUp=false;
+		isSpeedUp=false;
+		timeStillPoweredUp=0;
+		timeStillSpeededUp=0;
+		speedUpFactor=1;
+		
 	}
 
 	@Override
 	public void update(Direction turnDirection, int delta) {
+
+		//update speedUp
+		if(timeStillSpeededUp>0){
+			timeStillSpeededUp-=delta;
+		}else {
+			speedUpFactor=1;
+			isSpeedUp=false;
+		}
+		
+		//update powerUp
+		if(timeStillPoweredUp>0){
+			timeStillPoweredUp-=delta;
+		}else {
+			isSpeedUp=false;
+		}
+		
 		
 		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
 				checkPointRow * 35))) {
@@ -25,7 +48,7 @@ public class Pacman extends Figur {
 		}else {
 			updateTurnAround(turnDirection);
 		}
-		updateCurrentPosition(delta);
+		updateCurrentPosition(delta*this.speedUpFactor);
 		eatDot();
 		
 	}
@@ -126,7 +149,7 @@ public class Pacman extends Figur {
 				checkPointCol-=1;
 			checkPointCol-=1;
 			}
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+//			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case RIGHT:
 			if(isElementWalkable(checkPointRow, checkPointCol+1)){
@@ -134,7 +157,7 @@ public class Pacman extends Figur {
 				checkPointCol+=1;
 			checkPointCol+=1;
 			}
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+//			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case UP:
 			if(isElementWalkable(checkPointRow-1, checkPointCol)){
@@ -142,7 +165,7 @@ public class Pacman extends Figur {
 				checkPointRow-=1;
 			checkPointRow-=1;
 			}
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+//			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		case DOWN:
 			if(isElementWalkable(checkPointRow+1, checkPointCol)){
@@ -150,7 +173,7 @@ public class Pacman extends Figur {
 				checkPointRow+=1;
 			checkPointRow+=1;
 			}
-			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
+//			System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 			break;
 		default:
 			System.out.println("setCheckPointToNextFork-> did'n update");
@@ -162,10 +185,10 @@ public class Pacman extends Figur {
 	}
 	
 	/**
-	 * check if pacman eats a dot when it moves
+	 * give pacman a radar to detect if it eats the item ahead
 	 * 
-	 * pacman only "look" at the first one element ahead of it, if this element
-	 * is a dot, use Shape.intersected method to calculate if pacman eats it.
+	 * pacman only "look" at the first element ahead of it, if this element
+	 * is a item, use Shape.intersected method to calculate if pacman eats it.
 	 * 
 	 * we use nextElementRow and nextElementCol to store the index of this element that pacman always aim at
 	 * 
@@ -174,6 +197,10 @@ public class Pacman extends Figur {
 	 * 
 	 */
 	private void eatDot(){
+		
+		//the next element in mapElementArray that pacman looking(aiming) at
+		int nextElementRow=checkPointRow, nextElementCol=checkPointCol;
+		
 		//pacman always looks ahead, so we need to calculate this element's index first
 		switch (currentDirection) {
 		case LEFT:
@@ -182,39 +209,92 @@ public class Pacman extends Figur {
 			break;
 		case RIGHT:
 			nextElementRow=(int)currentPosition.y/35;
-			nextElementCol=Math.min((int)currentPosition.x/35+1, mapArrayWidth);
+			nextElementCol=(int)currentPosition.x/35+1;
+			//if nextElementCol out of array bounds
+			if(nextElementCol==mapArrayWidth&&mapElementArray[nextElementRow][0] instanceof Road){
+				nextElementCol=0;
+			}else if(nextElementCol==mapArrayWidth){
+				nextElementCol=mapArrayWidth-1;
+			}
 			break;
 		case UP:
 			nextElementRow=(int)currentPosition.y/35;
 			nextElementCol=(int)currentPosition.x/35;
 			break;
 		case DOWN:
-			nextElementRow=Math.min((int)currentPosition.y/35+1, mapArrayHeight);
+			nextElementRow=(int)currentPosition.y/35+1;
 			nextElementCol=(int)currentPosition.x/35;
+			//if nextElementCol out of array bounds
+			if(nextElementRow==mapArrayHeight&&mapElementArray[0][nextElementRow] instanceof Road){
+				nextElementRow=0;
+			}else if(nextElementRow==mapArrayHeight){
+				nextElementRow=mapArrayHeight-1;
+			}
 			break;
 		default:
 			break;
 		}
-		//TODO debug
+		
 		//if it is a dot and pacman hits it, set eaten
-		try{
 		if(mapElementArray[nextElementRow][nextElementCol] instanceof Item){
 			if(hitBox.contains(((Item)mapElementArray[nextElementRow][nextElementCol]).getPosition().x,
 					((Item)mapElementArray[nextElementRow][nextElementCol]).getPosition().y)){
-				((Item)mapElementArray[nextElementRow][nextElementCol]).setEaten(true);
+				((Item)mapElementArray[nextElementRow][nextElementCol]).activateItem(this);
 			}
 		}
-		}catch(Exception e){
-			System.out.println("nr: "+nextElementRow+" nc: "+nextElementCol);
-		}
+
 		
 	}
 	
 	public String toString() {
-		String statusString = "current position" + currentPosition.toString()
+		String statusString = "current position: " + currentPosition.toString()
 				+ "heading: " + currentDirection + " checkpoint row: "
 				+ checkPointRow + " checkpoint col: " + checkPointCol;
 		return statusString;
+	}
+
+	public boolean isPowerUp() {
+		return isPowerUp;
+	}
+
+	public void setPowerUp(boolean isPowerUp) {
+		this.isPowerUp = isPowerUp;
+	}
+
+	public boolean isSpeedUp() {
+		return isSpeedUp;
+	}
+
+	public void setSpeedUp(boolean isSpeedUp) {
+		this.isSpeedUp = isSpeedUp;
+	}
+
+	public long getTimeStillPoweredUp() {
+		return timeStillPoweredUp;
+	}
+
+	public void setTimeStillPoweredUp(long timeStillPoweredUp) {
+		this.timeStillPoweredUp = timeStillPoweredUp;
+	}
+
+	public long getTimeStillSpeededUp() {
+		return timeStillSpeededUp;
+	}
+
+	public void setTimeStillSpeededUp(long timeStillSpeededUp) {
+		this.timeStillSpeededUp = timeStillSpeededUp;
+	}
+
+	public int getLives() {
+		return lives;
+	}
+
+	public int getSpeedUpFactor() {
+		return speedUpFactor;
+	}
+
+	public void setSpeedUpFactor(int speedUpFactor) {
+		this.speedUpFactor = speedUpFactor;
 	}
 
 

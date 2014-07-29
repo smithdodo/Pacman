@@ -33,7 +33,6 @@ public class Game extends BasicGameState {
 		
 		model=new Model("res/levels/testMap.txt");
 		me=model.getMapElements();
-		System.out.println(me[7][0].toString()+"-----------");
 		pac=model.getPacman();
 		setoff=new Vector2f((700-model.mapReader.width_on_display)/2-17.5f,30+(420-model.mapReader.height_on_display)/2-17.5f);
 		
