@@ -574,17 +574,17 @@ private boolean isDownWalkableG(int i, int j) {
 					removeDuplicateDirection(height-1, j);
 				}
 				if(j==0&&mapElementArray[i][j] instanceof Road&&mapElementArray[i][width-1] instanceof Road){
-					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.UP);
-					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.DOWN);
-					((Road)mapElementArray[i][width-1]).getForksForGhost().add(Direction.UP);
-					((Road)mapElementArray[i][width-1]).getForksForGhost().add(Direction.DOWN);
+					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.LEFT);
+					((Road)mapElementArray[i][j]).getForksForGhost().add(Direction.RIGHT);
+					((Road)mapElementArray[i][width-1]).getForksForGhost().add(Direction.LEFT);
+					((Road)mapElementArray[i][width-1]).getForksForGhost().add(Direction.RIGHT);
 					//check if this point is also for pacman walkable
 					//to reduce the code, we used a different if here
 					if(isUpWalkableP(1, j)&&isDownWalkableP(height-2, j)){
-						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.UP);
-						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.DOWN);
-						((Road)mapElementArray[i][width-1]).getForksForPacman().add(Direction.UP);
-						((Road)mapElementArray[i][width-1]).getForksForPacman().add(Direction.DOWN);
+						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.LEFT);
+						((Road)mapElementArray[i][j]).getForksForPacman().add(Direction.RIGHT);
+						((Road)mapElementArray[i][width-1]).getForksForPacman().add(Direction.LEFT);
+						((Road)mapElementArray[i][width-1]).getForksForPacman().add(Direction.RIGHT);
 					}
 					removeDuplicateDirection(i, j);
 					removeDuplicateDirection(i, width-1);

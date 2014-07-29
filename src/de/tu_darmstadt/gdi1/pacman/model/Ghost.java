@@ -71,8 +71,10 @@ public class Ghost extends Figur {
 				} while (aRandomDirection==Direction.UP);
 				break;
 			}
+		}else {
+			aRandomDirection=forks.get(0);
+
 		}
-		
 		turnDirection=aRandomDirection;
 	}
 	
