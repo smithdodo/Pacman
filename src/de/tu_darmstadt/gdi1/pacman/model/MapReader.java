@@ -173,9 +173,15 @@ public class MapReader {
 			System.out.println(e);
 		}
 	}
-
+	
+	/**
+	 * check if all area of the map is valid
+	 * 
+	 * @return
+	 */
 	private boolean isAllAreaAchievable() {
-		// mark all point that the player could reach as 1, else as 0
+		
+		// mark all points that the player should reach as 1, else as 0
 		int[][] tempMap = new int[height][width];
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -187,9 +193,11 @@ public class MapReader {
 					tempMap[i][j] = 0;
 			}
 		}
-
+		
+		//try to reach all area
 		reachAllValidPoint(tempMap, aPlayerSpawnPointRow, aPlayerSpawnPointCol);
-
+		
+		//check if all area have been reached
 		int unreachablePoint = 0;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -198,23 +206,22 @@ public class MapReader {
 				}
 			}
 		}
-
+		
 		try {
 			if (unreachablePoint > 0) {
 				System.out
 						.println(unreachablePoint + " points are unreachable");
-				
-				//show which points are unachievable
-				for (int i = 0; i < height; i++) {
-					for (int j = 0; j <width; j++) {
-						System.err.print(tempMap[i][j]);
-					}
-					System.err.println();
-				}
 				throw new ReachabilityException();
 			}
 		} catch (ReachabilityException e) {
 			System.out.println(e);
+			//print out map with invalid area
+			for (int i = 0; i < height; i++) {
+				for (int j = 0; j <width; j++) {
+					System.err.print(tempMap[i][j]);
+				}
+			}
+				System.err.println();
 			return false;
 		}
 
@@ -222,10 +229,18 @@ public class MapReader {
 
 	}
 
+	/**
+	 * simulate pacman to reach all area of this map, points that has been reached will be marked as 0
+	 * 1 in map(here is 2 dimensional array) means point that pacman should reach
+	 * @param tempMap
+	 * @param i row
+	 * @param j col
+	 */
 	private void reachAllValidPoint(int[][] tempMap, int i, int j) {
 
 		tempMap[i][j] = 0;
-
+		
+		//moving in edge
 		if (j > 0
 				&& tempMap[i][j - 1] == 1
 				&& (mapElementArray[i][j - 1] instanceof Item
@@ -250,7 +265,8 @@ public class MapReader {
 						|| mapElementArray[i + 1][j] instanceof Teleporter || mapElementArray[i + 1][j] instanceof PlayerSpawnPoint)) {
 			reachAllValidPoint(tempMap, i + 1, j);
 		}
-
+		
+		//moving at edge, must consider if this point is a RandPaar
 		if (i == 0 && tempMap[height - 1][j] == 1
 				&& !(mapElementArray[height - 1][j] instanceof Wall)
 				&& !(mapElementArray[height - 1][j] instanceof InvisibleWall)
@@ -406,6 +422,7 @@ private List<Direction> getForksForGhost(int i, int j) {
 		
 		
 	}
+
 /**
  * check if element in given direction is for ghost walkable
  * @param i
@@ -456,6 +473,12 @@ private boolean isDownWalkableG(int i, int j) {
 	}
 }
 
+/**
+ * check which type does this wall belong to, from 16 different types
+ * @param i row
+ * @param j col
+ * @return type of wall
+ */
 	private WallType getWallType(int i, int j) {
 
 		if (isLeftWall(i, j) && isRightWall(i, j) && isUpWall(i, j)
@@ -542,8 +565,8 @@ private boolean isDownWalkableG(int i, int j) {
 	}
 	
 	/**
-	 * find out all point, from which figur can go from one side of map to the other
-	 * and add right directions to forksForPacman list and forksForGhost list
+	 * find out all points, from which figur can go from one side of map to the other
+	 * and add richtige directions to forksForPacman list and forksForGhost list
 	 * 
 	 * z.B. 
 	 * XXXXXXXXXX
