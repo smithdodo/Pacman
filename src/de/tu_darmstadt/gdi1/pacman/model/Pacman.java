@@ -33,6 +33,7 @@ public class Pacman extends Figur {
 		else
 			updateCurrentPosition(delta*3);//pacman can only eat maximal 2 speedup at a time
 		updateRadar();
+
 		
 	}
 	
@@ -189,7 +190,8 @@ public class Pacman extends Figur {
 			break;
 		case RIGHT:
 			radarElementRow=(int)currentPosition.y/35;
-			radarElementCol=(int)currentPosition.x/35+1;
+			if(currentPosition.x!=0)
+				radarElementCol=(int)currentPosition.x/35+1;
 			//if nextElementCol out of array bounds
 			if(radarElementCol==mapArrayWidth&&mapElementArray[radarElementRow][0] instanceof Road){
 				radarElementCol=0;
@@ -202,10 +204,16 @@ public class Pacman extends Figur {
 			radarElementCol=(int)currentPosition.x/35;
 			break;
 		case DOWN:
-			radarElementRow=(int)currentPosition.y/35+1;
+			if(currentPosition.y==0){
+				System.out.println(this.toString());
+			}
+			if(currentPosition.y!=0)
+				radarElementRow=(int)currentPosition.y/35+1;
 			radarElementCol=(int)currentPosition.x/35;
+			
+				
 			//if nextElementCol out of array bounds
-			if(radarElementRow==mapArrayHeight&&mapElementArray[0][radarElementRow] instanceof Road){
+			if(radarElementRow==mapArrayHeight&&mapElementArray[0][radarElementCol] instanceof Road){
 				radarElementRow=0;
 			}else if(radarElementRow==mapArrayHeight){
 				radarElementRow=mapArrayHeight-1;

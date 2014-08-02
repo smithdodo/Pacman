@@ -55,6 +55,7 @@ public class Model {
 	}
 	
 	public void update(GameContainer gc, int delta) {
+		
 		MapElement t=mapElementArray[pacman.getRadarElementRow()][pacman.getRadarElementCol()];
 		if(pacman.getHitBox().contains(t.getPosition().x, t.getPosition().y)){
 			if(t instanceof Dot)
