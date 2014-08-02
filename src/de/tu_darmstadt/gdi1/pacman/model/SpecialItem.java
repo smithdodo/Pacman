@@ -6,19 +6,21 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class SpecialItem extends Item {
 
-	private long activeTime;
+	protected long activeTime;
 	
 	public SpecialItem(Vector2f position, List<Direction> forksP,List<Direction> forksG) {
 		
 		super(position, forksP, forksG);
 		
 		}
-
+	
+	public abstract void update(Pacman p, List<Ghost> g, int delta);
+	
 	public long getActiveTime() {
 		return activeTime;
 	}
 
-	public void setActiveTime(long activeTime) {
+	protected void setActiveTime(long activeTime) {
 		this.activeTime = activeTime;
 	}
 

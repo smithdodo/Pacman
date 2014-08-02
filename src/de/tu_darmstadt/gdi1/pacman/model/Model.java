@@ -2,6 +2,7 @@ package de.tu_darmstadt.gdi1.pacman.model;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,7 +21,9 @@ public class Model {
 	
 	private Pacman pacman;
 	private List<Ghost> ghosts;
-	private int ghostsSize;
+	private int numberofGhost;
+	
+	private List<SpecialItem> specialItems;
 	
 	Random random;
 	Direction turnDirection=Direction.STOP;
@@ -33,15 +36,35 @@ public class Model {
 		height=mapReader.height;
 		width=mapReader.width;
 		random=new Random();
+		specialItems=new LinkedList<>();
 		
 		pacman=new Pacman(getRandomPlayerSpawnPoint(), mapElementArray);
-		ghostsSize=mapReader.getGhostSpawnPoints().size();
+		numberofGhost=mapReader.getGhostSpawnPoints().size();
 		Vector2f ghostStartPoint=mapReader.getGhostSpawnPoints().get(0).getPosition();
 		ghosts=new ArrayList<>();
 		initGhosts();
 	}
 	
+	private void initGhosts(){
+		
+		//TODO use iterater
+		for (int i=0; i < numberofGhost; i++) {
+			ghosts.add(new Ghost(mapReader.getGhostSpawnPoints().get(i).getPosition(), mapElementArray, random));
+		}
+		
+	}
+	
 	public void update(GameContainer gc, int delta) {
+		MapElement t=mapElementArray[pacman.getRadarElementRow()][pacman.getRadarElementCol()];
+		if(pacman.getHitBox().contains(t.getPosition().x, t.getPosition().y)){
+			if(t instanceof Dot)
+				((Dot)t).setEaten(true);
+			else if(t instanceof SpecialItem)
+				specialItems.add((SpecialItem) t);
+			//TODO teleport
+		}
+		
+		updateAllSpecialItem(delta);
 		
 		if(gc.getInput().isKeyPressed(Keyboard.KEY_LEFT))
 			turnDirection=Direction.LEFT;
@@ -53,22 +76,19 @@ public class Model {
 			turnDirection=Direction.DOWN;
 		pacman.update(turnDirection, delta);
 		
-		for (int i = 0; i < ghostsSize; i++) {
+		for (int i = 0; i < numberofGhost; i++) {
 			
-			ghosts.get(i).update(delta);
-			
-		}
-		
-		
+			ghosts.get(i).update(delta);		
 	}
+		
+}
 	
-	private void initGhosts(){
+	private void updateAllSpecialItem(int delta){
 		
-		//TODO use iterater
-		for (int i=0; i < ghostsSize; i++) {
-			ghosts.add(new Ghost(mapReader.getGhostSpawnPoints().get(i).getPosition(), mapElementArray, random));
+		for(SpecialItem s:specialItems){
+				s.update(pacman, ghosts, delta);
 		}
-		
+	
 	}
 	
 	private Vector2f getRandomPlayerSpawnPoint(){
@@ -100,7 +120,7 @@ public class Model {
 	}
 
 	public int getGhostsSize() {
-		return ghostsSize;
+		return numberofGhost;
 	}
 
 	public List<Ghost> getGhosts() {

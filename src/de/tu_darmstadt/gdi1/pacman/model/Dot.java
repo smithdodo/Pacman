@@ -15,9 +15,9 @@ public class Dot extends Item{
 
 	@Override
 	public void activateItem(Pacman p) {
-		
-		super.isEaten=true;
+		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

@@ -20,6 +20,11 @@ public abstract class Item extends Road implements ActivateItem{
 	
 	}
 
+	public void setEaten(boolean isEaten) {
+		this.isEaten = isEaten;
+	}
+	
+
 	
 
 

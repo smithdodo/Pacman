@@ -5,42 +5,22 @@ import org.newdawn.slick.geom.Vector2f;
 public class Pacman extends Figur {
 
 	private int lives;
-	private boolean isPowerUp;
-	private boolean isSpeedUp;
-	private long timeStillPoweredUp;
-	private long timeStillSpeededUp;
+	//the index of next element on pacman's radar
+	int radarElementRow, radarElementCol;
 	private int speedUpFactor;//how much will pacman speeded up
 
 	public Pacman(Vector2f startPosition, MapElement[][] mapElementArray) {
 		
 		super(startPosition, mapElementArray);
 		this.lives = 3;
-		isPowerUp=false;
-		isSpeedUp=false;
-		timeStillPoweredUp=0;
-		timeStillSpeededUp=0;
-		speedUpFactor=1;
+		this.radarElementRow=checkPointRow;
+		this.radarElementCol=checkPointCol;
+		speedUpFactor=1;//max. is 4
 		
 	}
 
 	@Override
-	public void update(Direction turnDirection, int delta) {
-
-		//update speedUp
-		if(timeStillSpeededUp>0){
-			timeStillSpeededUp-=delta;
-		}else {
-			speedUpFactor=1;
-			isSpeedUp=false;
-		}
-		
-		//update powerUp
-		if(timeStillPoweredUp>0){
-			timeStillPoweredUp-=delta;
-		}else {
-			isSpeedUp=false;
-		}
-		
+	public void update(Direction turnDirection, int delta) {		
 		
 		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
 				checkPointRow * 35))) {
@@ -48,8 +28,11 @@ public class Pacman extends Figur {
 		}else {
 			updateTurnAround(turnDirection);
 		}
-		updateCurrentPosition(delta*this.speedUpFactor);
-		eatDot();
+		if(this.speedUpFactor<4)
+			updateCurrentPosition(delta*this.speedUpFactor);
+		else
+			updateCurrentPosition(delta*3);//pacman can only eat maximal 2 speedup at a time
+		updateRadar();
 		
 	}
 	
@@ -196,52 +179,49 @@ public class Pacman extends Figur {
 	 * 
 	 * 
 	 */
-	private void eatDot(){
-		
-		//the next element in mapElementArray that pacman looking(aiming) at
-		int nextElementRow=checkPointRow, nextElementCol=checkPointCol;
+	private void updateRadar(){
 		
 		//pacman always looks ahead, so we need to calculate this element's index first
 		switch (currentDirection) {
 		case LEFT:
-			nextElementRow=(int)currentPosition.y/35;
-			nextElementCol=(int)currentPosition.x/35;
+			radarElementRow=(int)currentPosition.y/35;
+			radarElementCol=(int)currentPosition.x/35;
 			break;
 		case RIGHT:
-			nextElementRow=(int)currentPosition.y/35;
-			nextElementCol=(int)currentPosition.x/35+1;
+			radarElementRow=(int)currentPosition.y/35;
+			radarElementCol=(int)currentPosition.x/35+1;
 			//if nextElementCol out of array bounds
-			if(nextElementCol==mapArrayWidth&&mapElementArray[nextElementRow][0] instanceof Road){
-				nextElementCol=0;
-			}else if(nextElementCol==mapArrayWidth){
-				nextElementCol=mapArrayWidth-1;
+			if(radarElementCol==mapArrayWidth&&mapElementArray[radarElementRow][0] instanceof Road){
+				radarElementCol=0;
+			}else if(radarElementCol==mapArrayWidth){
+				radarElementCol=mapArrayWidth-1;
 			}
 			break;
 		case UP:
-			nextElementRow=(int)currentPosition.y/35;
-			nextElementCol=(int)currentPosition.x/35;
+			radarElementRow=(int)currentPosition.y/35;
+			radarElementCol=(int)currentPosition.x/35;
 			break;
 		case DOWN:
-			nextElementRow=(int)currentPosition.y/35+1;
-			nextElementCol=(int)currentPosition.x/35;
+			radarElementRow=(int)currentPosition.y/35+1;
+			radarElementCol=(int)currentPosition.x/35;
 			//if nextElementCol out of array bounds
-			if(nextElementRow==mapArrayHeight&&mapElementArray[0][nextElementRow] instanceof Road){
-				nextElementRow=0;
-			}else if(nextElementRow==mapArrayHeight){
-				nextElementRow=mapArrayHeight-1;
+			if(radarElementRow==mapArrayHeight&&mapElementArray[0][radarElementRow] instanceof Road){
+				radarElementRow=0;
+			}else if(radarElementRow==mapArrayHeight){
+				radarElementRow=mapArrayHeight-1;
 			}
 			break;
 		default:
 			break;
 		}
 		
-		//if it is a dot and pacman hits it, set eaten
+		/*//if it is a dot and pacman hits it, set eaten
 		if(mapElementArray[nextElementRow][nextElementCol] instanceof Item){
 			if(hitBox.contains(((Item)mapElementArray[nextElementRow][nextElementCol]).getPosition().x,
 					((Item)mapElementArray[nextElementRow][nextElementCol]).getPosition().y)){
 				((Item)mapElementArray[nextElementRow][nextElementCol]).activateItem(this);
 			}
-		}
+		}*/
 
 		
 	}
@@ -253,48 +233,25 @@ public class Pacman extends Figur {
 		return statusString;
 	}
 
-	public boolean isPowerUp() {
-		return isPowerUp;
-	}
-
-	public void setPowerUp(boolean isPowerUp) {
-		this.isPowerUp = isPowerUp;
-	}
-
-	public boolean isSpeedUp() {
-		return isSpeedUp;
-	}
-
-	public void setSpeedUp(boolean isSpeedUp) {
-		this.isSpeedUp = isSpeedUp;
-	}
-
-	public long getTimeStillPoweredUp() {
-		return timeStillPoweredUp;
-	}
-
-	public void setTimeStillPoweredUp(long timeStillPoweredUp) {
-		this.timeStillPoweredUp = timeStillPoweredUp;
-	}
-
-	public long getTimeStillSpeededUp() {
-		return timeStillSpeededUp;
-	}
-
-	public void setTimeStillSpeededUp(long timeStillSpeededUp) {
-		this.timeStillSpeededUp = timeStillSpeededUp;
-	}
 
 	public int getLives() {
 		return lives;
 	}
 
-	public int getSpeedUpFactor() {
-		return speedUpFactor;
-	}
-
 	public void setSpeedUpFactor(int speedUpFactor) {
 		this.speedUpFactor = speedUpFactor;
+	}
+
+	public int getRadarElementRow() {
+		return radarElementRow;
+	}
+
+	public int getRadarElementCol() {
+		return radarElementCol;
+	}
+
+	public int getSpeedUpFactor() {
+		return speedUpFactor;
 	}
 
 
