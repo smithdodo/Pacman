@@ -4,18 +4,19 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
+import de.tu_darmstadt.gdi1.pacman.model.Figur;
 import de.tu_darmstadt.gdi1.pacman.model.GhostSpawnPoint;
 import de.tu_darmstadt.gdi1.pacman.model.InvisibleWall;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.Road;
 
-public class UpdatePacmanPosition {
+public abstract class UpdateFigurPosition {
 
 	int height;
 	int width;
 
-	Pacman pacman;
+	Figur figur;
 	int checkPointRow;
 	int checkPointCol;
 	int speedUpFactor = 1;
@@ -26,11 +27,11 @@ public class UpdatePacmanPosition {
 	MapElement[][] mapElementArray;
 
 
-	public UpdatePacmanPosition(Pacman pacman, int speedUpFactor,
+	public UpdateFigurPosition(Figur figur, int speedUpFactor,
 			MapElement[][] m) {
 
 		super();
-		this.pacman=pacman;
+		this.figur=figur;
 		this.mapElementArray = m;
 		height = mapElementArray.length;
 		try {
@@ -39,11 +40,11 @@ public class UpdatePacmanPosition {
 			width = 0;
 			e.printStackTrace();
 		}
-		this.currentPosition = pacman.getCurrentPosition();
-		this.checkPointRow = pacman.getCheckPointRow();
-		this.checkPointCol = pacman.getCheckPointCol();
-		this.currentDirection = pacman.getCurrentDirection();
-		this.hitBox = pacman.getHitBox();
+		this.currentPosition = figur.getCurrentPosition();
+		this.checkPointRow = figur.getCheckPointRow();
+		this.checkPointCol = figur.getCheckPointCol();
+		this.currentDirection = figur.getCurrentDirection();
+		this.hitBox = figur.getHitBox();
 
 	}
 
@@ -60,10 +61,10 @@ public class UpdatePacmanPosition {
 			updateCurrentPosition(delta * 3);// pacman can only eat maximal 2
 												// speedup at a time
 		
-		pacman.setCheckPointRow(checkPointRow);
-		pacman.setCheckPointCol(checkPointCol);
-		pacman.setCurrentDirection(currentDirection);
-		pacman.setCurrentPosition(currentPosition);
+		figur.setCheckPointRow(checkPointRow);
+		figur.setCheckPointCol(checkPointCol);
+		figur.setCurrentDirection(currentDirection);
+		figur.setCurrentPosition(currentPosition);
 		System.out.println("can turn -> "+((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForPacman().toString()+"@"+checkPointRow+" "+checkPointCol);
 		
 	}
@@ -73,7 +74,7 @@ public class UpdatePacmanPosition {
 	 * 
 	 * @param turnDirection
 	 */
-	public void updateCheckPoint(Direction turnDirection) {
+	private void updateCheckPoint(Direction turnDirection) {
 //		System.out.println("updateCheckPoint-> recieve turnDir->"+turnDirection);
 		switch (turnDirection) {
 		case LEFT:
@@ -135,16 +136,7 @@ public class UpdatePacmanPosition {
 	 * 
 	 * check if the element at given indext for pacman/ghost walkable
 	 */
-	protected boolean isElementWalkable(int row, int col) {
-
-		if (mapElementArray[row][col] instanceof Road
-				&& !(mapElementArray[row][col] instanceof GhostSpawnPoint)
-				&& !(mapElementArray[row][col] instanceof InvisibleWall))
-			return true;
-		else
-			return false;
-
-	}
+	protected abstract boolean isElementWalkable(int row, int col);
 
 	/**
 	 * check if pacman can turn to given direction at current position
@@ -153,17 +145,7 @@ public class UpdatePacmanPosition {
 	 *            the direction that figur wants to turn
 	 * @return boolean
 	 */
-	private boolean canTurnToDirection(Direction turn) {
-		if (((Road) mapElementArray[checkPointRow][checkPointCol])
-				.getForksForPacman().contains(turn)) {
-
-			return true;
-		} else {
-
-			return false;
-		}
-
-	}
+	protected abstract boolean canTurnToDirection(Direction turn);
 
 	/**
 	 * if the next element along current moving direction is a Fork point, then

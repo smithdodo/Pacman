@@ -25,17 +25,6 @@ public class Ghost extends Figur {
 	}
 	
 	
-
-	public void update(int delta) {
-		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
-				checkPointRow * 35))) {
-			setRandomDirection();
-			updateCheckPoint(this.turnDirection);
-		}
-		updateCurrentPosition(delta);
-		
-	}
-	
 	/**
 	 * get a random direction from a checkpoint's forklist
 	 * 
@@ -96,16 +85,7 @@ public class Ghost extends Figur {
 	 *             the direction that figur wants to turn
 	 * @return boolean
 	 */
-	@Override
-	protected boolean canTurnToDirection(Direction turn) {
-		if(((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost().contains(turn)){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
-	}
+	
 
 	/**
 	 * if the next element along current moving direction is a Fork point, then set the check point to it
