@@ -37,7 +37,7 @@ public class GenerateRandomDirectionForGhost {
 		Direction turnDirection;
 		List<Direction> forks=new ArrayList<>();
 		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
-//		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
+		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
 		Direction aRandomDirection = null;
 		//ghost won't turn back at a fork, unless it is a dead end

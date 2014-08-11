@@ -65,7 +65,6 @@ public abstract class UpdateFigurPosition {
 		figur.setCheckPointCol(checkPointCol);
 		figur.setCurrentDirection(currentDirection);
 		figur.setCurrentPosition(currentPosition);
-		System.out.println("can turn -> "+((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForPacman().toString()+"@"+checkPointRow+" "+checkPointCol);
 		
 	}
 
@@ -75,7 +74,6 @@ public abstract class UpdateFigurPosition {
 	 * @param turnDirection
 	 */
 	private void updateCheckPoint(Direction turnDirection) {
-//		System.out.println("updateCheckPoint-> recieve turnDir->"+turnDirection);
 		switch (turnDirection) {
 		case LEFT:
 			if (checkPointCol == 0
@@ -169,7 +167,6 @@ public abstract class UpdateFigurPosition {
 							.getForksForPacman().isEmpty())
 						checkPointCol -= 1;
 					checkPointCol -= 1;
-					System.out.println("set to left->"+checkPointCol);
 				}
 				// System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 				break;
@@ -253,8 +250,6 @@ public abstract class UpdateFigurPosition {
 	protected void updateCurrentPosition(int delta) {
 
 		float speed = delta * 0.15f;
-//		System.out.println("checkpoint-->: "+checkPointRow+" "+checkPointCol);
-//		System.out.println("current direction: "+currentDirection);
 
 		switch (currentDirection) {
 		case LEFT:
@@ -265,7 +260,6 @@ public abstract class UpdateFigurPosition {
 		case RIGHT:
 			currentPosition.x += speed;
 			if (currentPosition.x > checkPointCol * 35){
-//				System.out.println("ubertreten checkpoint col: "+checkPointCol);
 				currentPosition.x = checkPointCol * 35;
 			}
 

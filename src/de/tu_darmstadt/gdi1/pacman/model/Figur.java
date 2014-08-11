@@ -23,7 +23,6 @@ public abstract class Figur {
 	protected Shape hitBox;
 	
 	public Figur(Vector2f startPosition) {
-		this.mapElementArray=mapElementArray;
 		this.hitBox = new Circle (startPosition.x, startPosition.y, this.RADIUS);
 		this.currentPosition = startPosition;
 		checkPointRow=((int)startPosition.y)/35;

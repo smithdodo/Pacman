@@ -12,15 +12,12 @@ import org.newdawn.slick.geom.Vector2f;
 public class Ghost extends Figur {
 	
 	Random random;
-	private int spawnPoingRow, spawnPointCol;
 	//a list that stores all fork direction of a checkpoint
 	private List<Direction> forks;
 
 	public Ghost(Vector2f startPosition) {
 		
 		super(startPosition);
-		spawnPoingRow=checkPointRow;
-		spawnPointCol=checkPointCol;
 		
 	}
 	

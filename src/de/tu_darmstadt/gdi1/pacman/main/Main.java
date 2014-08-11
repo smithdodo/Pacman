@@ -6,7 +6,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import de.tu_darmstadt.gdi1.pacman.model.MapReader;
-import de.tu_darmstadt.gdi1.pacman.model.Model;
 import de.tu_darmstadt.gdi1.pacman.view.Pacman;
 
 public class Main

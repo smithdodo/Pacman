@@ -335,9 +335,7 @@ public class MapReader {
 		}else if(j==width-1&&isLeftWalkableP(i, 1)&isDownWalkableP(i-1, 0)&&isUpWalkableP(i+1, 0)){
 			forks.add(Direction.RIGHT);
 		}
-		
-		System.out.println(i+" "+j+" forks for p: "+forks.toString());
-		
+				
 		//if this point is between a straight road, it is not a fork, unless it's a spawn point
 		if(forks.size()==2&&!(i==0&&j==0)&&!(i==0&&j==width-1)&&!(i==height-1&&j==0)&&!(i==height-1&&j==width-1)&&!mapElementStringArray[i][j].equals("P")){
 			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
@@ -424,6 +422,9 @@ private List<Direction> getForksForGhost(int i, int j) {
 		}else if(j==width-1&&isLeftWalkableG(i, 1)&isDownWalkableG(i-1, 0)&&isUpWalkableG(i+1, 0)){
 			forks.add(Direction.RIGHT);
 		}
+		
+		System.out.println(i+" "+j+" forks for G: "+forks.toString());
+
 		
 		//it is not a fork, if this point is between a straight road, unless it's a spawn point
 		if(forks.size()==2&&!mapElementStringArray[i][j].equals("G")){
