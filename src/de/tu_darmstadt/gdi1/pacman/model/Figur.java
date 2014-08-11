@@ -22,14 +22,12 @@ public abstract class Figur {
 	protected final float RADIUS = 17.5f;
 	protected Shape hitBox;
 	
-	public Figur(Vector2f startPosition, MapElement[][] mapElementArray) {
+	public Figur(Vector2f startPosition) {
 		this.mapElementArray=mapElementArray;
 		this.hitBox = new Circle (startPosition.x, startPosition.y, this.RADIUS);
 		this.currentPosition = startPosition;
 		checkPointRow=((int)startPosition.y)/35;
 		checkPointCol=((int)startPosition.x)/35;
-		mapArrayHeight=mapElementArray.length;
-		mapArrayWidth=mapElementArray[0].length;
 		this.speed = 0;
 		this.currentDirection=Direction.RIGHT;
 		this.turnDirection=Direction.STOP;
@@ -205,6 +203,10 @@ public abstract class Figur {
 
 	public float getSpeed() {
 		return speed;
+	}
+
+	public void setCurrentPosition(Vector2f currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 	
 }

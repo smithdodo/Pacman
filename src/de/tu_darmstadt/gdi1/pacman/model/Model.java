@@ -48,9 +48,7 @@ public class Model {
 	private void initGhosts(){
 		
 		//TODO use iterater
-		for (int i=0; i < numberofGhost; i++) {
-			ghosts.add(new Ghost(mapReader.getGhostSpawnPoints().get(i).getPosition(), mapElementArray, random));
-		}
+		
 		
 	}
 	
@@ -75,6 +73,7 @@ public class Model {
 			turnDirection=Direction.UP;
 		else if(gc.getInput().isKeyPressed(Keyboard.KEY_DOWN))
 			turnDirection=Direction.DOWN;
+		
 		pacman.update(turnDirection, delta);
 		
 		for (int i = 0; i < numberofGhost; i++) {
@@ -92,13 +91,6 @@ public class Model {
 	
 	}
 	
-	private Vector2f getRandomPlayerSpawnPoint(){
-		
-		int ps=random.nextInt(mapReader.getPlayerSpawnPoints().size());
-		Vector2f aPlayerStartPoint=mapReader.getPlayerSpawnPoints().get(ps).getPosition();
-		return aPlayerStartPoint;
-
-	}
 	
 	public Pacman getPacman(){
 		return pacman;

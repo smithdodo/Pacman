@@ -9,9 +9,9 @@ public class Pacman extends Figur {
 	int radarElementRow, radarElementCol;
 	private int speedUpFactor;//how much will pacman speeded up
 
-	public Pacman(Vector2f startPosition, MapElement[][] mapElementArray) {
+	public Pacman(Vector2f startPosition) {
 		
-		super(startPosition, mapElementArray);
+		super(startPosition);
 		this.lives = 3;
 		this.radarElementRow=checkPointRow;
 		this.radarElementCol=checkPointCol;

@@ -16,10 +16,9 @@ public class Ghost extends Figur {
 	//a list that stores all fork direction of a checkpoint
 	private List<Direction> forks;
 
-	public Ghost(Vector2f startPosition, MapElement[][] mapElementArray, Random random) {
+	public Ghost(Vector2f startPosition) {
 		
-		super(startPosition, mapElementArray);
-		this.random=random;
+		super(startPosition);
 		spawnPoingRow=checkPointRow;
 		spawnPointCol=checkPointCol;
 		

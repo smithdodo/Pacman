@@ -42,15 +42,15 @@ public class MapReader {
 		this.mapFile = mapFile;
 		playerSpawnPoints=new LinkedList<>();
 		ghostSpawnPoints=new LinkedList<>();
-		initHW();
+		initArrayHeightAndWidth();
 		initMapData();
 		intElementCoordinates();
-		addDirectionToRandPaar();
+//		addDirectionToRandPaar();
 		isAllAreaAchievable();
 
 	}
 
-	private void initHW() {
+	private void initArrayHeightAndWidth() {
 
 		height = 0;
 		width = 0;
@@ -325,8 +325,21 @@ public class MapReader {
 		if (isDownWalkableP(i, j))
 			forks.add(Direction.DOWN);
 		
+		//check if it is a rand paar(edge that teleport pacman to the otherside of map)
+		if(i==0&&isDownWalkableP(height-2, j)&&isLeftWalkableP(height-1, j+1)&&isRightWalkableP(height-1, j-1)){
+			forks.add(Direction.UP);
+		}else if(i==height-1&&isUpWalkableP(1, j)&&isLeftWalkableP(0, j+1)&&isRightWalkableP(0, j-1)){
+			forks.add(Direction.DOWN);
+		}else if(j==0&&isRightWalkableP(i, width-2)&isDownWalkableP(i-1, j)&&isUpWalkableP(i+1, j)){
+			forks.add(Direction.LEFT);
+		}else if(j==width-1&&isLeftWalkableP(i, 1)&isDownWalkableP(i-1, 0)&&isUpWalkableP(i+1, 0)){
+			forks.add(Direction.RIGHT);
+		}
+		
+		System.out.println(i+" "+j+" forks for p: "+forks.toString());
+		
 		//if this point is between a straight road, it is not a fork, unless it's a spawn point
-		if(forks.size()==2&&!mapElementStringArray[i][j].equals("P")){
+		if(forks.size()==2&&!(i==0&&j==0)&&!(i==0&&j==width-1)&&!(i==height-1&&j==0)&&!(i==height-1&&j==width-1)&&!mapElementStringArray[i][j].equals("P")){
 			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
 				return forks;
 			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))
@@ -400,6 +413,17 @@ private List<Direction> getForksForGhost(int i, int j) {
 			forks.add(Direction.UP);
 		if (isDownWalkableG(i, j))
 			forks.add(Direction.DOWN);
+		
+		//check if it is a rand paar(edge that teleport pacman to the otherside of map)
+		if(i==0&&isDownWalkableG(height-2, j)&&isLeftWalkableG(height-1, j+1)&&isRightWalkableG(height-1, j-1)){
+			forks.add(Direction.UP);
+		}else if(i==height-1&&isUpWalkableG(1, j)&&isLeftWalkableG(0, j+1)&&isRightWalkableG(0, j-1)){
+			forks.add(Direction.DOWN);
+		}else if(j==0&&isRightWalkableG(i, width-2)&isDownWalkableG(i-1, j)&&isUpWalkableG(i+1, j)){
+			forks.add(Direction.LEFT);
+		}else if(j==width-1&&isLeftWalkableG(i, 1)&isDownWalkableG(i-1, 0)&&isUpWalkableG(i+1, 0)){
+			forks.add(Direction.RIGHT);
+		}
 		
 		//it is not a fork, if this point is between a straight road, unless it's a spawn point
 		if(forks.size()==2&&!mapElementStringArray[i][j].equals("G")){
@@ -660,6 +684,14 @@ private boolean isDownWalkableG(int i, int j) {
 
 	public List<GhostSpawnPoint> getGhostSpawnPoints() {
 		return ghostSpawnPoints;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
 	}
 
 }
