@@ -403,8 +403,10 @@ public class MapReader {
 private List<Direction> getForksForGhost(int i, int j) {
 		
 		List<Direction> forks=new LinkedList<>();
-		if (isLeftWalkableG(i, j))
+		if (isLeftWalkableG(i, j)){
 			forks.add(Direction.LEFT);
+			System.out.println("->isLeftWalkableG: ->yes: "+i+" "+j);
+			}
 		if (isRightWalkableG(i, j))
 			forks.add(Direction.RIGHT);
 		if (isUpWalkableG(i, j))

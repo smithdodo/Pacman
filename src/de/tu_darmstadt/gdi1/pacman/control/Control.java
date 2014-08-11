@@ -8,7 +8,7 @@ import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.Road;
-import de.tu_darmstadt.gdi1.pacman.service.GenerateRandomDirectionForGhost;
+import de.tu_darmstadt.gdi1.pacman.service.GenerateDirection;
 import de.tu_darmstadt.gdi1.pacman.service.UpdateFigurPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdateGhostPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdatePacmanPosition;
@@ -47,13 +47,10 @@ public class Control {
 		
 		for(Ghost g:ghosts){
 			UpdateGhostPosition updater=new UpdateGhostPosition(g, 1, mapElements);
-//			if(!((Road)mapElements[g.getCheckPointRow()][g.getCheckPointCol()]).getForksForGhost().isEmpty()){
-				GenerateRandomDirectionForGhost grd=new GenerateRandomDirectionForGhost(g, mapElements, random);
-				Direction turnDirection=grd.generateATurnDirection();
-				updater.update(turnDirection, delta);
-//			}else {
-//				updater.update(g.getCurrentDirection(), delta);
-//			}
+			GenerateDirection grd=new GenerateDirection(g, mapElements, random, pacman);
+			Direction turnDirection=grd.generateDirection();
+			updater.update(turnDirection, delta);
+
 			
 
 		}
