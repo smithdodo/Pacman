@@ -95,6 +95,7 @@ public class Game extends BasicGameState {
 		control.updatePacmanPosition(turnDirection, delta);
 			
 		control.updateGhostPosition(delta);
+		control.PacmanEatItem();
 		
 		
 		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))

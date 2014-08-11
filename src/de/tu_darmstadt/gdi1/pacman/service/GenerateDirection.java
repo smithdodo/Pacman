@@ -58,8 +58,6 @@ public class GenerateDirection {
 		}else if(ghost.getCurrentPosition().equals(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition())){
 			return randomDirection();
 		}else {
-//			System.out.println("returned currentDirection->"+ghost.getCurrentPosition().toString()+" "
-//					+ "checkpoint->@"+checkPointRow+" "+checkPointCol+" "+mapElementArray[checkPointRow][checkPointCol].toString());
 			return currentDirection;
 		}
 		
@@ -82,7 +80,6 @@ public class GenerateDirection {
 					checkPointCol--;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().x<=pacman.getCurrentPosition().x){
 						result=true;
-						System.out.println("pacman is on left");
 					}
 				}
 			}
@@ -139,7 +136,7 @@ public class GenerateDirection {
 		Direction turnDirection;
 		List<Direction> forks=new ArrayList<>();
 		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
-		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
+//		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
 		Direction aRandomDirection = null;
 		//ghost won't turn back at a fork, unless it is a dead end

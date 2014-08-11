@@ -8,6 +8,7 @@ import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.Road;
+import de.tu_darmstadt.gdi1.pacman.service.ActivateItem;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateDirection;
 import de.tu_darmstadt.gdi1.pacman.service.UpdateFigurPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdateGhostPosition;
@@ -51,8 +52,12 @@ public class Control {
 			Direction turnDirection=grd.generateDirection();
 			updater.update(turnDirection, delta);
 		}
-		System.out.println(mapElements[1][8].getPosition().toString());
 		
+	}
+	
+	public void PacmanEatItem() {
+		ActivateItem ai=new ActivateItem(pacman, mapElements);
+		ai.activateItem();
 	}
 
 }
