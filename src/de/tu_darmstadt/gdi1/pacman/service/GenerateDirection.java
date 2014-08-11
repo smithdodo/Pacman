@@ -45,7 +45,7 @@ public class GenerateDirection {
 	
 	/**
 	 * return a direction that ghost should turn to
-	 * if ghost sees pacman, it will chase him
+	 * if ghost sees pacman, it will chase him(turn keep moving in current direction, no turning)
 	 * if not, ghost will just turn into a random direction
 	 * 
 	 * @return Direction
@@ -75,7 +75,7 @@ public class GenerateDirection {
 		switch (currentDirection) {
 		
 		case LEFT:
-			if(pacman.getCurrentPosition().y==ghost.getCurrentPosition().y&&pacman.getCurrentPosition().x>ghost.getCurrentPosition().x){
+			if(pacman.getCurrentPosition().y==ghost.getCurrentPosition().y&&pacman.getCurrentPosition().x<ghost.getCurrentPosition().x){
 				while (checkPointCol>0&&mapElementArray[checkPointRow][checkPointCol-1] instanceof Road) {
 					checkPointCol--;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().x<=pacman.getCurrentPosition().x){
@@ -83,22 +83,44 @@ public class GenerateDirection {
 						System.out.println("pacman is on left");
 					}
 				}
-			}else {
-				result=false;
 			}
+			
 			return result;
 		
 		case RIGHT:
-			if(pacman.getCurrentPosition().y==ghost.getCurrentPosition().y&&pacman.getCurrentPosition().x<ghost.getCurrentPosition().x){
+			if(pacman.getCurrentPosition().y==ghost.getCurrentPosition().y&&pacman.getCurrentPosition().x>ghost.getCurrentPosition().x){
 				while (checkPointCol<width-1&&mapElementArray[checkPointRow][checkPointCol+1] instanceof Road) {
 					checkPointCol++;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().x>=pacman.getCurrentPosition().x){
 						result=true;
 					}
 				}
-			}else {
-				result=false;
 			}
+			
+			return result;
+			
+		case UP:
+			if (pacman.getCurrentPosition().x==ghost.getCurrentPosition().x&&pacman.getCurrentPosition().y<ghost.getCurrentPosition().y) {
+				while(checkPointRow>0&&mapElementArray[checkPointRow-1][checkPointCol] instanceof Road){
+					checkPointRow--;
+					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().y<=pacman.getCurrentPosition().y){
+						result=true;
+					}
+				}
+			}
+			
+			return result;
+			
+		case DOWN:
+			if (pacman.getCurrentPosition().x==ghost.getCurrentPosition().x&&pacman.getCurrentPosition().y>ghost.getCurrentPosition().y) {
+				while(checkPointRow<height-1&&mapElementArray[checkPointRow+1][checkPointCol] instanceof Road){
+					checkPointRow++;
+					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().y>=pacman.getCurrentPosition().y){
+						result=true;
+					}
+				}
+			}
+			
 			return result;
 
 		default:

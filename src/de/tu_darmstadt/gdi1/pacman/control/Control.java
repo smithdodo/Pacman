@@ -50,10 +50,8 @@ public class Control {
 			GenerateDirection grd=new GenerateDirection(g, mapElements, random, pacman);
 			Direction turnDirection=grd.generateDirection();
 			updater.update(turnDirection, delta);
-
-			
-
 		}
+		
 	}
 
 }
