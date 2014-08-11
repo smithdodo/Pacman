@@ -8,26 +8,24 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Figur {
 	
-	protected MapElement[][] mapElementArray;
-	//it has the current coordinate of this figur on the screen
+	//current coordinate of this figur on the screen
 	protected Vector2f currentPosition;
 	//index of the element in MapElementArray, which the figur is moving towards to;
 	protected int checkPointRow, checkPointCol;
-	int mapArrayHeight, mapArrayWidth;
 
-	protected float speed;
 	protected Direction currentDirection;
 	protected Direction turnDirection;
 	
 	protected final float RADIUS = 17.5f;
+	//collision detect
 	protected Shape hitBox;
 	
 	public Figur(Vector2f startPosition) {
 		this.hitBox = new Circle (startPosition.x, startPosition.y, this.RADIUS);
-		this.currentPosition = startPosition;
+		this.currentPosition = startPosition.copy();
 		checkPointRow=((int)startPosition.y)/35;
 		checkPointCol=((int)startPosition.x)/35;
-		this.speed = 0;
+//		this.speed = 0;
 		this.currentDirection=Direction.RIGHT;
 		this.turnDirection=Direction.STOP;
 	}
@@ -73,9 +71,6 @@ public abstract class Figur {
 		this.hitBox = hitBox;
 	}
 
-	public float getSpeed() {
-		return speed;
-	}
 
 	public void setCurrentPosition(Vector2f currentPosition) {
 		this.currentPosition = currentPosition;

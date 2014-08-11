@@ -58,6 +58,8 @@ public class GenerateDirection {
 		}else if(ghost.getCurrentPosition().equals(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition())){
 			return randomDirection();
 		}else {
+//			System.out.println("returned currentDirection->"+ghost.getCurrentPosition().toString()+" "
+//					+ "checkpoint->@"+checkPointRow+" "+checkPointCol+" "+mapElementArray[checkPointRow][checkPointCol].toString());
 			return currentDirection;
 		}
 		
@@ -129,7 +131,7 @@ public class GenerateDirection {
 	}
 	
 	/**
-	 * get a random direction from a checkpoint's forklist
+	 * generate a random direction from a checkpoint's forklist
 	 * 
 	 */
 	public Direction randomDirection(){

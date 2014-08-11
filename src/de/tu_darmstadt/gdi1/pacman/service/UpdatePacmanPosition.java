@@ -43,7 +43,7 @@ public class UpdatePacmanPosition extends UpdateFigurPosition{
 	@Override
 	protected boolean isFork(int row, int col) {
 		
-		return ((Road)mapElementArray[row][col]).getForksForPacman().isEmpty();
+		return !((Road)mapElementArray[row][col]).getForksForPacman().isEmpty();
 
 	}
 

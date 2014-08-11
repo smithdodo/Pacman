@@ -44,13 +44,14 @@ public class Control {
 	}
 	
 	public void updateGhostPosition(int delta){
-		
+		//update all ghosts' position
 		for(Ghost g:ghosts){
 			UpdateGhostPosition updater=new UpdateGhostPosition(g, 1, mapElements);
 			GenerateDirection grd=new GenerateDirection(g, mapElements, random, pacman);
 			Direction turnDirection=grd.generateDirection();
 			updater.update(turnDirection, delta);
 		}
+		System.out.println(mapElements[1][8].getPosition().toString());
 		
 	}
 
