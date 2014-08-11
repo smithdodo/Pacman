@@ -47,13 +47,13 @@ public class Control {
 		
 		for(Ghost g:ghosts){
 			UpdateGhostPosition updater=new UpdateGhostPosition(g, 1, mapElements);
-			if(!((Road)mapElements[g.getCheckPointRow()][g.getCheckPointCol()]).getForksForGhost().isEmpty()){
+//			if(!((Road)mapElements[g.getCheckPointRow()][g.getCheckPointCol()]).getForksForGhost().isEmpty()){
 				GenerateRandomDirectionForGhost grd=new GenerateRandomDirectionForGhost(g, mapElements, random);
 				Direction turnDirection=grd.generateATurnDirection();
 				updater.update(turnDirection, delta);
-			}else {
-				updater.update(g.getCurrentDirection(), delta);
-			}
+//			}else {
+//				updater.update(g.getCurrentDirection(), delta);
+//			}
 			
 
 		}

@@ -33,4 +33,11 @@ public class UpdateGhostPosition extends UpdateFigurPosition{
 
 	}
 
+	@Override
+	protected boolean isFork(int row, int col) {
+		
+		return ((Road)mapElementArray[row][col]).getForksForGhost().isEmpty();
+		
+	}
+
 }

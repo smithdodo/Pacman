@@ -163,8 +163,7 @@ public abstract class UpdateFigurPosition {
 			case LEFT:
 				if (isElementWalkable(checkPointRow, checkPointCol - 1)) {
 //					System.out.println("yo->set to left-> current checkpoint c: "+checkPointCol);
-					while (((Road) mapElementArray[checkPointRow][checkPointCol - 1])
-							.getForksForPacman().isEmpty())
+					while (isFork(checkPointRow, checkPointCol-1))
 						checkPointCol -= 1;
 					checkPointCol -= 1;
 				}
@@ -172,8 +171,7 @@ public abstract class UpdateFigurPosition {
 				break;
 			case RIGHT:
 				if (isElementWalkable(checkPointRow, checkPointCol + 1)) {
-					while (((Road) mapElementArray[checkPointRow][checkPointCol + 1])
-							.getForksForPacman().isEmpty())
+					while (isFork(checkPointRow, checkPointCol+1))
 						checkPointCol += 1;
 					checkPointCol += 1;
 				}
@@ -181,8 +179,7 @@ public abstract class UpdateFigurPosition {
 				break;
 			case UP:
 				if (isElementWalkable(checkPointRow - 1, checkPointCol)) {
-					while (((Road) mapElementArray[checkPointRow - 1][checkPointCol])
-							.getForksForPacman().isEmpty())
+					while (isFork(checkPointRow-1, checkPointCol))
 						checkPointRow -= 1;
 					checkPointRow -= 1;
 				}
@@ -190,8 +187,7 @@ public abstract class UpdateFigurPosition {
 				break;
 			case DOWN:
 				if (isElementWalkable(checkPointRow + 1, checkPointCol)) {
-					while (((Road) mapElementArray[checkPointRow + 1][checkPointCol])
-							.getForksForPacman().isEmpty())
+					while (isFork(checkPointRow+1, checkPointCol))
 						checkPointRow += 1;
 					checkPointRow += 1;
 				}
@@ -205,6 +201,11 @@ public abstract class UpdateFigurPosition {
 		}
 
 	}
+	
+	/**
+	 * check if given index is a fork for pacman/ghost
+	 */
+	protected abstract boolean isFork(int row, int col);
 
 	/**
 	 * pacman can turn around at any moment if player wants

@@ -337,7 +337,7 @@ public class MapReader {
 		}
 				
 		//if this point is between a straight road, it is not a fork, unless it's a spawn point
-		if(forks.size()==2&&!(i==0&&j==0)&&!(i==0&&j==width-1)&&!(i==height-1&&j==0)&&!(i==height-1&&j==width-1)&&!mapElementStringArray[i][j].equals("P")){
+		if(forks.size()==2&&!mapElementStringArray[i][j].equals("P")&&i*j!=0&&i!=height-1&&j!=width-1){
 			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
 				return forks;
 			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))
@@ -427,7 +427,7 @@ private List<Direction> getForksForGhost(int i, int j) {
 
 		
 		//it is not a fork, if this point is between a straight road, unless it's a spawn point
-		if(forks.size()==2&&!mapElementStringArray[i][j].equals("G")){
+		if(forks.size()==2&&!mapElementStringArray[i][j].equals("G")&&i*j!=0&&i!=height-1&&j!=width-1){
 			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
 				return forks;
 			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))
