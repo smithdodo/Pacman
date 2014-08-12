@@ -32,6 +32,7 @@ public abstract class SpecialItem extends Item {
 	
 	public void deactivate(){
 		isAffecting=false;
+		this.activeTime=-1;
 	}
 	
 	public boolean isAffecting(){

@@ -79,7 +79,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
     </Class>
-    <Class name="de.tu_darmstadt.gdi1.pacman.model.Teleporter" x="585" y="277">
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.Teleporter" x="553" y="275">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>

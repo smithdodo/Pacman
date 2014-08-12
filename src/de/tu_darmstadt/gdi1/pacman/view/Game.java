@@ -36,7 +36,9 @@ public class Game extends BasicGameState {
 	List<Ghost> ghosts;
 		
 	List<Image> wallImages;
-	Image dotImage, powerUpImage, speedUpImage,invisibleWallImage, teleporterImage, pacmanImage, pinkyImage;
+	Image dotImage, powerUpImage, speedUpImage,invisibleWallImage, teleporterImage, pinkyImage;
+	Image pacmanImageUP, pacmanImageDP,pacmanImageLP,pacmanImageRP;
+	Image pacmanImageU,pacmanImageD,pacmanImageL,pacmanImageR;
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
@@ -73,8 +75,17 @@ public class Game extends BasicGameState {
 		speedUpImage=new Image("res/pictures/theme1/entities/speedup.png");
 		teleporterImage=new Image("res/pictures/theme1/entities/teleporter.png");
 		invisibleWallImage=new Image("res/pictures/theme1/map/B.png");
-		pacmanImage=new Image("res/pictures/theme1/entities/P0.png");
 		pinkyImage=new Image("res/pictures/theme1/entities/G1.png");
+		
+		pacmanImageUP=new Image("res/pictures/theme1/entities/P1_powerUp.png");
+		pacmanImageDP=new Image("res/pictures/theme1/entities/P3_powerUp.png");
+		pacmanImageLP=new Image("res/pictures/theme1/entities/P2_powerUp.png");
+		pacmanImageRP=new Image("res/pictures/theme1/entities/P0_powerUp.png");
+		pacmanImageU=new Image("res/pictures/theme1/entities/P1.png");
+		pacmanImageD=new Image("res/pictures/theme1/entities/P3.png");
+		pacmanImageL=new Image("res/pictures/theme1/entities/P2.png");
+		pacmanImageR=new Image("res/pictures/theme1/entities/P0.png");
+
 		
 	}
 	
@@ -154,7 +165,43 @@ public class Game extends BasicGameState {
 		}
 		
 		//draw pacman
-		g.drawImage(pacmanImage, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+//		g.drawImage(pacmanImage, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+		switch (pacman.getCurrentDirection()) {
+		case UP:
+			if(pacman.isPowerUp()){
+				g.drawImage(pacmanImageUP, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}else {
+				g.drawImage(pacmanImageU, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}
+			break;
+			
+		case DOWN:
+			if(pacman.isPowerUp()){
+				g.drawImage(pacmanImageDP, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}else {
+				g.drawImage(pacmanImageD, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}
+			break;
+		case LEFT:
+			if(pacman.isPowerUp()){
+				g.drawImage(pacmanImageLP, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}else {
+				g.drawImage(pacmanImageL, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}
+			break;
+		case RIGHT:
+			if(pacman.isPowerUp()){
+				g.drawImage(pacmanImageRP, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}else {
+				g.drawImage(pacmanImageR, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+			}
+			break;
+		case STOP:
+				g.drawImage(pacmanImageR, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
+				break;
+		default:
+			break;
+		}
 		
 		g.translate(-setoff.x, -setoff.y);
 		

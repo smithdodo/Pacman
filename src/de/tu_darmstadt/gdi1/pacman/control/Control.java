@@ -106,7 +106,7 @@ public class Control {
 				pacmanCanEatGhost=true;
 		}
 		CollisionDetect cd=new CollisionDetect(ghosts, pacman);
-		cd.update(pacmanCanEatGhost, delta);
+		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps);
 		
 	}
 	

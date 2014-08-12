@@ -6,6 +6,8 @@ import org.newdawn.slick.geom.Shape;
 
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
+import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
+import de.tu_darmstadt.gdi1.pacman.model.SpeedUp;
 
 public class CollisionDetect {
 
@@ -19,7 +21,7 @@ public class CollisionDetect {
 		
 	}
 	
-	public void update(boolean pacmanCanEatGhost, int delta){
+	public void update(boolean pacmanCanEatGhost, int delta, List<SpeedUp> s, List<PowerUp> p){
 				
 		if(pacmanCanEatGhost){
 			for(Ghost g:ghosts){			
@@ -45,6 +47,22 @@ public class CollisionDetect {
 					hitBox.setLocation(pacman.getCurrentPosition());
 					pacman.setHitBox(hitBox);
 					pacman.dead();
+					
+					//reset all item
+					for(PowerUp pu:p){
+						pu.deactivate();
+					}
+					for(SpeedUp su:s){
+						su.deactivate();
+						int t=pacman.getSpeedUpFactor();
+						if(t>1)
+							--t;
+						else {
+							t=1;
+						}
+						pacman.setSpeedUpFactor(t);
+					}
+					
 				}
 			}
 		}
