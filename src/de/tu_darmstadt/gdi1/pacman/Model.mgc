@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.PowerUp" x="108" y="539">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.SpecialItem"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.Dot" x="67" y="371">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.Item"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.SpeedUp" x="217" y="519">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.SpecialItem"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.SpecialItem" x="149" y="351">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.Item"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.Item" x="170" y="262">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.Road"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.SpawnPoint" x="315" y="274">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.Road"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.Road" x="211" y="140">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.MapElement"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.MapElement" x="253" y="59">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.Teleporter" x="585" y="277">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.Road"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.PlayerSpawnPoint"
+        x="472" y="373">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.SpawnPoint"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.InvisibleWall"
+        x="436" y="275">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.Road"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.model.GhostSpawnPoint"
+        x="346" y="370">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.model.SpawnPoint"/>
+    </Class>
+</ClassDiagram>
