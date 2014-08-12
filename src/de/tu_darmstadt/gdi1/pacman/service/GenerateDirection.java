@@ -86,6 +86,8 @@ public class GenerateDirection {
 						result=true;
 					}
 				}
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x<=pacman.getCurrentPosition().x)
+					result=true;
 			}
 			
 			return result;
@@ -98,6 +100,8 @@ public class GenerateDirection {
 						result=true;
 					}
 				}
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x>=pacman.getCurrentPosition().x)
+					result=true;
 			}
 			
 			return result;
@@ -110,6 +114,8 @@ public class GenerateDirection {
 						result=true;
 					}
 				}
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y<=pacman.getCurrentPosition().y)
+					result=true;
 			}
 			
 			return result;
@@ -122,6 +128,8 @@ public class GenerateDirection {
 						result=true;
 					}
 				}
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y>=pacman.getCurrentPosition().y)
+					result=true;
 			}
 			
 			return result;

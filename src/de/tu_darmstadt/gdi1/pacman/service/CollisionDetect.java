@@ -27,6 +27,8 @@ public class CollisionDetect {
 				if(g.getHitBox().intersects(pacman.getHitBox())){
 					g.setRespawning(true);
 					g.setCurrentPosition(g.getSpawnPoint().copy());
+					g.setCheckPointRow((int)g.getSpawnPoint().y/35);
+					g.setCheckPointCol((int)g.getSpawnPoint().x/35);
 					Shape hitBox=g.getHitBox();
 					hitBox.setLocation(g.getCurrentPosition());
 					g.setHitBox(hitBox);
@@ -37,6 +39,8 @@ public class CollisionDetect {
 				if(g.getHitBox().intersects(pacman.getHitBox())){
 					pacman.setRespawning(true);
 					pacman.setCurrentPosition(pacman.getSpawnPoint().copy());
+					pacman.setCheckPointRow((int)pacman.getSpawnPoint().y/35);
+					pacman.setCheckPointCol((int)pacman.getSpawnPoint().x/35);
 					Shape hitBox=pacman.getHitBox();
 					hitBox.setLocation(pacman.getCurrentPosition());
 					pacman.setHitBox(hitBox);

@@ -83,10 +83,9 @@ public class Game extends BasicGameState {
 			throws SlickException {
 		
 		if(pacman.isRespawning()){
-			control.updateRespawnTimer(pacman, delta);
-			System.out.println("ghost spawn point: "+ghosts.get(0).getSpawnPoint().toString());
-		
-			//System.out.println("respawn in "+pacman.getRespawnTimer()+" seconds...");
+			
+			control.updateRespawnTimer(pacman, delta);	
+			
 		}else{
 			//update pacman direction
 			Direction turnDirection = null;
