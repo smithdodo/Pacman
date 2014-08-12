@@ -5,15 +5,12 @@ import org.newdawn.slick.geom.Vector2f;
 public class Pacman extends Figur {
 
 	private int lives;
-	//the index of next element on pacman's radar
-	int radarElementRow, radarElementCol;
+	private boolean isPowerUp;
 	
 	public Pacman(Vector2f startPosition) {
 		
 		super(startPosition);
 		this.lives = 3;
-		this.radarElementRow=checkPointRow;
-		this.radarElementCol=checkPointCol;
 		
 	}	
 
@@ -24,19 +21,22 @@ public class Pacman extends Figur {
 				+ checkPointRow + " checkpoint col: " + checkPointCol;
 		return statusString;
 	}
-
+	
+	public void dead(){
+		lives--;
+	}
 
 	public int getLives() {
 		return lives;
 	}
 
-
-	public int getRadarElementRow() {
-		return radarElementRow;
+	public boolean isPowerUp() {
+		return isPowerUp;
 	}
 
-	public int getRadarElementCol() {
-		return radarElementCol;
+
+	public void setPowerUp(boolean isPowerUp) {
+		this.isPowerUp = isPowerUp;
 	}
 
 

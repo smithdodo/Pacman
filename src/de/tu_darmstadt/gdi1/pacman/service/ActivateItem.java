@@ -101,14 +101,20 @@ public class ActivateItem {
 		float aimAtX=mapElementArray[aimAtRow][aimAtCol].getPosition().x;
 		float aimAtY=mapElementArray[aimAtRow][aimAtCol].getPosition().y;
 		if(mapElementArray[aimAtRow][aimAtCol] instanceof Item&&pacman.getHitBox().contains(aimAtX, aimAtY)){
+			
 			if(mapElementArray[aimAtRow][aimAtCol] instanceof SpecialItem&&!((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).isEaten()){
+			
 				//special item will be activated for 5000ms
 				((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).setActiveTime(5000);
+				
 				if(mapElementArray[aimAtRow][aimAtCol] instanceof SpeedUp){
 					int t=pacman.getSpeedUpFactor();
 					pacman.setSpeedUpFactor(t+((SpeedUp)mapElementArray[aimAtRow][aimAtCol]).getSpeedUpFactor());
+				}else if (mapElementArray[aimAtRow][aimAtCol] instanceof PowerUp) {
+					pacman.setPowerUp(true);
 				}
 			}
+			
 			((Item)mapElementArray[aimAtRow][aimAtCol]).setEaten(true);
 		}
 		

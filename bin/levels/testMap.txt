@@ -1,2 +1,4 @@
-XXXXXXXXXXXXXXXXXXX
-G  S   S     S P  X
+XXXXXXXX XXXXXXXXXX
+G  S   S     U P  X
+XXXXXXXX XXXXXXXXXX
+                   

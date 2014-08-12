@@ -12,6 +12,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -81,23 +82,31 @@ public class Game extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame arg1, int delta)
 			throws SlickException {
 		
-		//update pacman direction
-		Direction turnDirection = null;
-		if(gc.getInput().isKeyPressed(Keyboard.KEY_LEFT))
-			turnDirection=Direction.LEFT;
-		else if(gc.getInput().isKeyPressed(Keyboard.KEY_RIGHT))
-			turnDirection=Direction.RIGHT;
-		else if(gc.getInput().isKeyPressed(Keyboard.KEY_UP))
-			turnDirection=Direction.UP;
-		else if(gc.getInput().isKeyPressed(Keyboard.KEY_DOWN))
-			turnDirection=Direction.DOWN;
-		//if no input detected, pacman will walk in same Direction as last frame
-		control.updatePacmanPosition(turnDirection, delta);
-			
-		control.updateGhostPosition(delta);
-		control.PacmanEatItem();
-		control.updateSpeedUp(delta);
+		if(pacman.isRespawning()){
+			control.updateRespawnTimer(pacman, delta);
+			System.out.println("ghost spawn point: "+ghosts.get(0).getSpawnPoint().toString());
 		
+			//System.out.println("respawn in "+pacman.getRespawnTimer()+" seconds...");
+		}else{
+			//update pacman direction
+			Direction turnDirection = null;
+			if(gc.getInput().isKeyPressed(Keyboard.KEY_LEFT))
+				turnDirection=Direction.LEFT;
+			else if(gc.getInput().isKeyPressed(Keyboard.KEY_RIGHT))
+				turnDirection=Direction.RIGHT;
+			else if(gc.getInput().isKeyPressed(Keyboard.KEY_UP))
+				turnDirection=Direction.UP;
+			else if(gc.getInput().isKeyPressed(Keyboard.KEY_DOWN))
+				turnDirection=Direction.DOWN;
+			//if no input detected, pacman will walk in same Direction as last frame
+			control.updatePacmanPosition(turnDirection, delta);
+			
+			control.updateGhostPosition(delta);
+			control.PacmanEatItem();
+			control.updateSpeedUp(delta);
+			control.updatePowerUp(delta);
+			control.collisionDetect(delta);
+		}
 		
 		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))
 			arg1.enterState(Pacman.GAMEMENUE);
@@ -141,6 +150,7 @@ public class Game extends BasicGameState {
 			g.drawLine(p.x, p.y, gs.getCheckPointCol()*35, gs.getCheckPointRow()*35);
 			g.translate(-17.5f, -17.5f);
 			g.drawImage(pinkyImage, p.x, p.y);
+			g.draw(gs.getHitBox());
 			
 		}
 		
@@ -148,6 +158,11 @@ public class Game extends BasicGameState {
 		g.drawImage(pacmanImage, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
 		
 		g.translate(-setoff.x, -setoff.y);
+		
+		if(pacman.isRespawning()){
+			g.setColor(Color.red);
+			g.drawString("respawn in "+((int)pacman.getRespawnTimer()/1000+1)+" seconds...", 250, 10);
+		}
 
 	}
 

@@ -51,10 +51,14 @@ public class GenerateDirection {
 	 * @return Direction
 	 * 
 	 */
-	public Direction generateDirection() {
+	public Direction generateDirection(boolean mustRunAway) {
 		
 		if (noticedPacman()) {
-			return this.currentDirection;
+			if(mustRunAway){
+				return runAway();
+			}else{
+				return this.currentDirection;
+			}
 		}else if(ghost.getCurrentPosition().equals(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition())){
 			return randomDirection();
 		}else {
@@ -169,6 +173,26 @@ public class GenerateDirection {
 		}
 		turnDirection=aRandomDirection;
 		return aRandomDirection;
+	}
+	
+	private Direction runAway(){
+		
+		switch (currentDirection) {
+		case LEFT:
+			return Direction.RIGHT;
+
+		case RIGHT:
+			return Direction.LEFT;
+			
+		case UP:
+			return Direction.DOWN;
+			
+		case DOWN:
+			return Direction.UP;
+		
+		default:
+			return currentDirection;
+		}
 	}
 
 }

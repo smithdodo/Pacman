@@ -12,15 +12,19 @@ public abstract class Figur {
 	protected Vector2f currentPosition;
 	//index of the element in MapElementArray, which the figur is moving towards to;
 	protected int checkPointRow, checkPointCol;
+	protected Vector2f spawnPoint;
 
 	protected Direction currentDirection;
 	protected Direction turnDirection;
+	protected Shape hitBox;	//collision detect
 	
-	int SpeedUpFactor;//how much will pacman be speeded up
+	private int SpeedUpFactor;//how much will pacman be speeded up
+	
+	private boolean isRespawning;
+	private float respawnTimer;//respawn dauert 5000ms
 	
 	protected final float RADIUS = 17.5f;
-	//collision detect
-	protected Shape hitBox;
+
 	
 	public Figur(Vector2f startPosition) {
 		
@@ -28,9 +32,12 @@ public abstract class Figur {
 		this.currentPosition = startPosition.copy();
 		this.checkPointRow=((int)startPosition.y)/35;
 		this.checkPointCol=((int)startPosition.x)/35;
+		this.spawnPoint=startPosition.copy();
 		this.currentDirection=Direction.RIGHT;
 		this.turnDirection=Direction.STOP;
 		this.SpeedUpFactor=1;//max. is  4
+		isRespawning=false;
+		
 	}
 	
 	
@@ -87,6 +94,31 @@ public abstract class Figur {
 
 	public void setSpeedUpFactor(int speedUpFactor) {
 		SpeedUpFactor = speedUpFactor;
+	}
+
+
+	public boolean isRespawning() {
+		return isRespawning;
+	}
+
+
+	public void setRespawning(boolean isRespawning) {
+		this.isRespawning = isRespawning;
+		setRespawnTimer(5000);
+	}
+
+
+	public float getRespawnTimer() {
+		return respawnTimer;
+	}
+
+
+	public void setRespawnTimer(float respawnTimer) {
+		this.respawnTimer = respawnTimer;
+	}
+
+	public Vector2f getSpawnPoint() {
+		return spawnPoint;
 	}
 	
 }
