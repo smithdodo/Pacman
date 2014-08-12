@@ -36,12 +36,17 @@ public class MapReader {
 	private List<PlayerSpawnPoint> playerSpawnPoints;
 	private List<GhostSpawnPoint> ghostSpawnPoints;
 	int aPlayerSpawnPointCol, aPlayerSpawnPointRow;
+	
+	private List<PowerUp> powerUps;
+	private List<SpeedUp> speedUps;
 
 	public MapReader(File mapFile) {
 
 		this.mapFile = mapFile;
 		playerSpawnPoints=new LinkedList<>();
 		ghostSpawnPoints=new LinkedList<>();
+		powerUps=new ArrayList<>();
+		speedUps=new ArrayList<>();
 		initArrayHeightAndWidth();
 		initMapData();
 		intElementCoordinates();
@@ -148,11 +153,13 @@ public class MapReader {
 						mapElementArray[i][j] = new InvisibleWall(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 					else if (mapElementStringArray[i][j].equals("S")) {
 						mapElementArray[i][j] = new SpeedUp(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
+						speedUps.add((SpeedUp)mapElementArray[i][j]);
 						item++;
 					} else if (mapElementStringArray[i][j].equals("T"))
 						mapElementArray[i][j] = new Teleporter(new Vector2f(xy),getForksForPacman(i, j), getForksForGhost(i, j));
 					else if (mapElementStringArray[i][j].equals("U")) {
 						mapElementArray[i][j] = new PowerUp(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
+						powerUps.add((PowerUp)mapElementArray[i][j]);
 						item++;
 					} else
 						// thrwo invalidLevelCharacterException
@@ -695,6 +702,14 @@ private boolean isDownWalkableG(int i, int j) {
 
 	public int getWidth() {
 		return width;
+	}
+
+	public List<PowerUp> getPowerUps() {
+		return powerUps;
+	}
+
+	public List<SpeedUp> getSpeedUps() {
+		return speedUps;
 	}
 
 }

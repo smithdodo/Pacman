@@ -19,7 +19,6 @@ public abstract class UpdateFigurPosition {
 	Figur figur;
 	int checkPointRow;
 	int checkPointCol;
-	int speedUpFactor = 1;
 	Vector2f currentPosition;
 	Direction currentDirection;
 	Shape hitBox;
@@ -27,7 +26,7 @@ public abstract class UpdateFigurPosition {
 	MapElement[][] mapElementArray;
 
 
-	public UpdateFigurPosition(Figur figur, int speedUpFactor,
+	public UpdateFigurPosition(Figur figur,
 			MapElement[][] m) {
 
 		super();
@@ -55,11 +54,7 @@ public abstract class UpdateFigurPosition {
 		} else {
 			updateTurnAround(turnDirection);
 		}
-		if (speedUpFactor < 4)
-			updateCurrentPosition(delta * speedUpFactor);
-		else
-			updateCurrentPosition(delta * 3);// pacman can only eat maximal 2
-												// speedup at a time
+		updateCurrentPosition(delta);
 		
 		figur.setCheckPointRow(checkPointRow);
 		figur.setCheckPointCol(checkPointCol);
@@ -249,9 +244,15 @@ public abstract class UpdateFigurPosition {
 	 * @param delta
 	 */
 	protected void updateCurrentPosition(int delta) {
-
-		float speed = delta * 0.15f;
-
+		
+		float speed;
+		int sf=figur.getSpeedUpFactor();
+		if(sf<=4){
+			speed = delta * 0.15f * sf;
+		}else {
+			speed = delta * 0.15f * 4;
+		}
+		
 		switch (currentDirection) {
 		case LEFT:
 			currentPosition.x -= speed;

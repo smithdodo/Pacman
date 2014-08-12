@@ -13,11 +13,6 @@ public class Dot extends Item{
 		
 	}
 
-	@Override
-	public void activateItem(Pacman p) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 }

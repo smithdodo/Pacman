@@ -9,9 +9,9 @@ import de.tu_darmstadt.gdi1.pacman.model.Road;
 
 public class UpdatePacmanPosition extends UpdateFigurPosition{
 
-	public UpdatePacmanPosition(Figur figur, int speedUpFactor,
+	public UpdatePacmanPosition(Figur figur,
 			MapElement[][] m) {
-		super(figur, speedUpFactor, m);
+		super(figur, m);
 	}
 
 	@Override

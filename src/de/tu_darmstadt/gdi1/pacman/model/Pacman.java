@@ -7,15 +7,13 @@ public class Pacman extends Figur {
 	private int lives;
 	//the index of next element on pacman's radar
 	int radarElementRow, radarElementCol;
-	private int speedUpFactor;//how much will pacman speeded up
-
+	
 	public Pacman(Vector2f startPosition) {
 		
 		super(startPosition);
 		this.lives = 3;
 		this.radarElementRow=checkPointRow;
 		this.radarElementCol=checkPointCol;
-		speedUpFactor=1;//max. is 4
 		
 	}	
 
@@ -32,9 +30,6 @@ public class Pacman extends Figur {
 		return lives;
 	}
 
-	public void setSpeedUpFactor(int speedUpFactor) {
-		this.speedUpFactor = speedUpFactor;
-	}
 
 	public int getRadarElementRow() {
 		return radarElementRow;
@@ -44,9 +39,6 @@ public class Pacman extends Figur {
 		return radarElementCol;
 	}
 
-	public int getSpeedUpFactor() {
-		return speedUpFactor;
-	}
 
 
 }

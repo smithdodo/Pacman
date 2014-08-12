@@ -16,18 +16,21 @@ public abstract class Figur {
 	protected Direction currentDirection;
 	protected Direction turnDirection;
 	
+	int SpeedUpFactor;//how much will pacman be speeded up
+	
 	protected final float RADIUS = 17.5f;
 	//collision detect
 	protected Shape hitBox;
 	
 	public Figur(Vector2f startPosition) {
+		
 		this.hitBox = new Circle (startPosition.x, startPosition.y, this.RADIUS);
 		this.currentPosition = startPosition.copy();
-		checkPointRow=((int)startPosition.y)/35;
-		checkPointCol=((int)startPosition.x)/35;
-//		this.speed = 0;
+		this.checkPointRow=((int)startPosition.y)/35;
+		this.checkPointCol=((int)startPosition.x)/35;
 		this.currentDirection=Direction.RIGHT;
 		this.turnDirection=Direction.STOP;
+		this.SpeedUpFactor=1;//max. is  4
 	}
 	
 	
@@ -74,6 +77,16 @@ public abstract class Figur {
 
 	public void setCurrentPosition(Vector2f currentPosition) {
 		this.currentPosition = currentPosition;
+	}
+
+
+	public int getSpeedUpFactor() {
+		return SpeedUpFactor;
+	}
+
+
+	public void setSpeedUpFactor(int speedUpFactor) {
+		SpeedUpFactor = speedUpFactor;
 	}
 	
 }

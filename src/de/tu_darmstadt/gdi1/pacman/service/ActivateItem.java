@@ -1,12 +1,17 @@
 package de.tu_darmstadt.gdi1.pacman.service;
 
+import java.util.List;
+
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Item;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
+import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
 import de.tu_darmstadt.gdi1.pacman.model.Road;
+import de.tu_darmstadt.gdi1.pacman.model.SpecialItem;
+import de.tu_darmstadt.gdi1.pacman.model.SpeedUp;
 
 /**
  * update the Item that pacman walked over
@@ -92,11 +97,21 @@ public class ActivateItem {
 	}
 	
 	public void activateItem(){
+		
 		float aimAtX=mapElementArray[aimAtRow][aimAtCol].getPosition().x;
 		float aimAtY=mapElementArray[aimAtRow][aimAtCol].getPosition().y;
 		if(mapElementArray[aimAtRow][aimAtCol] instanceof Item&&pacman.getHitBox().contains(aimAtX, aimAtY)){
+			if(mapElementArray[aimAtRow][aimAtCol] instanceof SpecialItem&&!((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).isEaten()){
+				//special item will be activated for 5000ms
+				((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).setActiveTime(5000);
+				if(mapElementArray[aimAtRow][aimAtCol] instanceof SpeedUp){
+					int t=pacman.getSpeedUpFactor();
+					pacman.setSpeedUpFactor(t+((SpeedUp)mapElementArray[aimAtRow][aimAtCol]).getSpeedUpFactor());
+				}
+			}
 			((Item)mapElementArray[aimAtRow][aimAtCol]).setEaten(true);
 		}
+		
 	}
 
 }

@@ -7,10 +7,10 @@ import de.tu_darmstadt.gdi1.pacman.model.Road;
 
 public class UpdateGhostPosition extends UpdateFigurPosition{
 
-	public UpdateGhostPosition(Figur figur, int speedUpFactor,
+	public UpdateGhostPosition(Figur figur,
 			MapElement[][] m) {
 		
-		super(figur, speedUpFactor, m);
+		super(figur, m);
 		
 	}
 

@@ -12,14 +12,4 @@ public class PowerUp extends SpecialItem {
 		
 	}
 
-	@Override
-	public void activateItem(Pacman p) {
-
-		if (!super.isEaten) {
-			p.setPowerUp(true);
-			p.setTimeStillPoweredUp(5000);
-		}
-		super.isEaten = true;
-	}
-
 }

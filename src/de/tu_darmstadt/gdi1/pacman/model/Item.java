@@ -5,7 +5,7 @@ import java.util.List;
 import org.newdawn.slick.geom.Vector2f;
 
 
-public abstract class Item extends Road implements ActivateItem{
+public abstract class Item extends Road{
 
 	protected boolean isEaten;
 	

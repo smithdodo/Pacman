@@ -57,7 +57,7 @@ public class Game extends BasicGameState {
 			ghosts.add(new Ghost(mapReader.getGhostSpawnPoints().get(i).getPosition()));
 		}
 		
-		control=new Control(me, ghosts, pacman,random);
+		control=new Control(mapReader, ghosts, pacman,random);
 		
 		//define randering setoff
 		setoff=new Vector2f((700-mapReader.width_on_display)/2-17.5f,30+(420-mapReader.height_on_display)/2-17.5f);
@@ -96,6 +96,7 @@ public class Game extends BasicGameState {
 			
 		control.updateGhostPosition(delta);
 		control.PacmanEatItem();
+		control.updateSpeedUp(delta);
 		
 		
 		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))
