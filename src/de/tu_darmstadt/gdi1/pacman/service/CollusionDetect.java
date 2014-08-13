@@ -58,9 +58,9 @@ public class CollusionDetect {
 					}
 					for(SpeedUp su:s){
 						su.deactivate();
-						int t=pacman.getSpeedUpFactor();
+						float t=pacman.getSpeedUpFactor();
 						if(t>1)
-							--t;
+							t-=0.7;
 						else {
 							t=1;
 						}

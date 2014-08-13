@@ -81,7 +81,6 @@ public abstract class UpdateFigurPosition {
 				currentDirection = turnDirection;
 				setCheckPointToNextFork();
 			} else {
-				currentDirection=Direction.LEFT;
 				setCheckPointToNextFork();
 				
 			}
@@ -96,7 +95,6 @@ public abstract class UpdateFigurPosition {
 				setCheckPointToNextFork();
 
 			} else {
-				currentDirection=Direction.RIGHT;
 				setCheckPointToNextFork();
 			}
 			break;
@@ -109,7 +107,6 @@ public abstract class UpdateFigurPosition {
 				currentDirection = turnDirection;
 				setCheckPointToNextFork();
 			} else {
-				currentDirection=Direction.UP;
 				setCheckPointToNextFork();
 			}
 			break;
@@ -122,7 +119,6 @@ public abstract class UpdateFigurPosition {
 				currentDirection = turnDirection;
 				setCheckPointToNextFork();
 			} else {
-				currentDirection=Direction.DOWN;
 				setCheckPointToNextFork();
 			}
 			break;
@@ -162,36 +158,40 @@ public abstract class UpdateFigurPosition {
 		try {
 			switch (currentDirection) {
 			case LEFT:
-				if (isElementWalkable(checkPointRow, checkPointCol - 1)) {
+				if (checkPointCol!=0&&isElementWalkable(checkPointRow, checkPointCol - 1)) {
 					while (!isFork(checkPointRow, checkPointCol-1))
 						checkPointCol -= 1;
 					checkPointCol -= 1;
+				}else if (checkPointCol==0&&isElementWalkable(checkPointRow, width-1)) {
+					checkPointCol=width-1;
 				}
-				// System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 				break;
 			case RIGHT:
-				if (isElementWalkable(checkPointRow, checkPointCol + 1)) {
+				if (checkPointCol!=width-1&&isElementWalkable(checkPointRow, checkPointCol + 1)) {
 					while (!isFork(checkPointRow, checkPointCol+1))
 						checkPointCol += 1;
 					checkPointCol += 1;
+				}else if (checkPointCol==width-1&&isElementWalkable(checkPointRow, 0)) {
+					checkPointCol=0;
 				}
-//				 System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 				break;
 			case UP:
-				if (isElementWalkable(checkPointRow - 1, checkPointCol)) {
+				if (checkPointRow!=0&&isElementWalkable(checkPointRow - 1, checkPointCol)) {
 					while (!isFork(checkPointRow-1, checkPointCol))
 						checkPointRow -= 1;
 					checkPointRow -= 1;
+				}else if (checkPointRow==0&&isElementWalkable(height-1, checkPointCol)) {
+					checkPointRow=height-1;
 				}
-				// System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 				break;
 			case DOWN:
-				if (isElementWalkable(checkPointRow + 1, checkPointCol)) {
+				if (checkPointRow!=height-1&&isElementWalkable(checkPointRow + 1, checkPointCol)) {
 					while (!isFork(checkPointRow+1, checkPointCol))
 						checkPointRow += 1;
 					checkPointRow += 1;
+				}else if (checkPointRow==height-1&&isElementWalkable(0, checkPointCol)) {
+					checkPointRow=0;
 				}
-				// System.out.println("next checkPoint: "+checkPointRow+" "+checkPointCol);
 				break;
 			default:
 				System.out.println("setCheckPointToNextFork-> did'n update");
@@ -251,11 +251,11 @@ public abstract class UpdateFigurPosition {
 	protected void updateCurrentPosition(int delta) {
 		
 		float speed;
-		int sf=figur.getSpeedUpFactor();
-		if(sf<=4){
+		float sf=figur.getSpeedUpFactor();
+		if(sf<=2.5){
 			speed = delta * 0.15f * sf;
 		}else {
-			speed = delta * 0.15f * 4;
+			speed = delta * 0.15f * 2.5f;
 		}
 		
 		switch (currentDirection) {

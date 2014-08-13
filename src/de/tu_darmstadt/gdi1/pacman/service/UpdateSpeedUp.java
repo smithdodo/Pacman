@@ -25,7 +25,7 @@ public class UpdateSpeedUp {
 			}
 			if (s.getActiveTime()<0&&s.isAffecting()) {
 				s.deactivate();
-				int t=pacman.getSpeedUpFactor();
+				float t=pacman.getSpeedUpFactor();
 				pacman.setSpeedUpFactor(t-s.getSpeedUpFactor());
 			}
 		}

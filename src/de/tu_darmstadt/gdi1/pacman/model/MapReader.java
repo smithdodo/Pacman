@@ -231,8 +231,8 @@ public class MapReader {
 				for (int j = 0; j <width; j++) {
 					System.err.print(tempMap[i][j]);
 				}
-			}
 				System.err.println();
+			}
 			return false;
 		}
 
@@ -347,21 +347,6 @@ public class MapReader {
 			forks.add(Direction.RIGHT);
 		}
 				
-		//if this point is between a straight road, it is not a fork, unless it's a spawn point
-		if(forks.size()==2&&!mapElementStringArray[i][j].equals("P")&&i*j!=0&&i!=height-1&&j!=width-1){
-			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
-				return forks;
-			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))
-				return forks;
-			else if(forks.contains(Direction.UP)&&!forks.contains(Direction.DOWN))
-				return forks;
-			else if(forks.contains(Direction.DOWN)&&!forks.contains(Direction.UP))
-				return forks;
-			else {
-				forks.clear();
-				return forks;
-			}
-		}
 			return forks;
 		
 	}
@@ -434,26 +419,6 @@ private List<Direction> getForksForGhost(int i, int j) {
 			forks.add(Direction.LEFT);
 		}else if(j==width-1&&isLeftWalkableG(i, 1)&isDownWalkableG(i-1, 0)&&isUpWalkableG(i+1, 0)){
 			forks.add(Direction.RIGHT);
-		}
-		
-		System.out.println(i+" "+j+" forks for G: "+forks.toString());
-
-		
-		//it is not a fork, if this point is between a straight road, unless it's a spawn point
-		if(forks.size()==2&&!mapElementStringArray[i][j].equals("G")&&i*j!=0&&i!=height-1&&j!=width-1){
-			if(forks.contains(Direction.LEFT)&&!forks.contains(Direction.RIGHT))
-				return forks;
-			else if(forks.contains(Direction.RIGHT)&&!forks.contains(Direction.LEFT))
-				return forks;
-			else if(forks.contains(Direction.UP)&&!forks.contains(Direction.DOWN))
-				return forks;
-			else if(forks.contains(Direction.DOWN)&&!forks.contains(Direction.UP))
-				return forks;
-			else {
-				//System.out.println("the road r/c: "+i+" "+j+" has fork: "+forks.toString()+" has been cleared.");
-				forks.clear();
-				return forks;
-			}
 		}
 		
 		return forks;
@@ -614,7 +579,7 @@ private boolean isDownWalkableG(int i, int j) {
 	 * LEFT and RIGHT will be added to their forks list after this method
 	 * 
 	 */
-	private void addDirectionToRandPaar(){
+	/*private void addDirectionToRandPaar(){
 		
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -653,7 +618,7 @@ private boolean isDownWalkableG(int i, int j) {
 			}
 			
 		}
-	}
+	}*/
 	
 	/**
 	 * delet duplicate fork directions of a Road Object
@@ -661,7 +626,7 @@ private boolean isDownWalkableG(int i, int j) {
 	 * all directions(except turning back) should have same chance to get choosen
 	 * 
 	 */
-	private void removeDuplicateDirection(int row, int col){
+	/*private void removeDuplicateDirection(int row, int col){
 		//remove duplicate fork direction in forkForPacman(dosen't really matter if there are duplicate
 		//because pac man don't get turn direction randomly, but ghost does
 		HashSet<Direction> t_P = new HashSet<Direction>(((Road)mapElementArray[row][col]).getForksForPacman());
@@ -673,7 +638,7 @@ private boolean isDownWalkableG(int i, int j) {
 		((Road)mapElementArray[row][col]).getForksForGhost().clear();
 		((Road)mapElementArray[row][col]).getForksForGhost().addAll(t_G);
 
-	}
+	}*/
 
 	@Override
 	public String toString() {

@@ -1,5 +1,7 @@
 package de.tu_darmstadt.gdi1.pacman.service;
 
+import java.util.List;
+
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Figur;
 import de.tu_darmstadt.gdi1.pacman.model.GhostSpawnPoint;
@@ -16,7 +18,6 @@ public class UpdatePacmanPosition extends UpdateFigurPosition{
 
 	@Override
 	protected boolean isElementWalkable(int row, int col) {
-		
 
 		if (mapElementArray[row][col] instanceof Road
 				&& !(mapElementArray[row][col] instanceof GhostSpawnPoint)
@@ -31,20 +32,31 @@ public class UpdatePacmanPosition extends UpdateFigurPosition{
 		
 		if (((Road) mapElementArray[checkPointRow][checkPointCol])
 				.getForksForPacman().contains(turn)) {
-
 			return true;
 		} else {
-
 			return false;
 		}
 
 	}
-
+	
+	
 	@Override
 	protected boolean isFork(int row, int col) {
 		
-		return !((Road)mapElementArray[row][col]).getForksForPacman().isEmpty();
-
+		boolean result=true;
+		List<Direction> forks=((Road)mapElementArray[row][col]).getForksForPacman();
+		int size=forks.size();
+		
+		if (size==2) {
+			if(forks.contains(Direction.RIGHT)&&forks.contains(Direction.LEFT)){
+				result=false;
+			}else if (forks.contains(Direction.UP)&&forks.contains(Direction.DOWN)) {
+				result=false;
+			}
+		}else if (size==0) {
+			result=false;
+		}
+		return result;
 	}
 
 }

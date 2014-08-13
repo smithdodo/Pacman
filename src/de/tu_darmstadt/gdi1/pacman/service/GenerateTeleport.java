@@ -6,6 +6,7 @@ import java.util.Random;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.pacman.control.Control;
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.Item;
@@ -34,17 +35,18 @@ public class GenerateTeleport {
 	/**
 	 * teleport pacman to a random position on map
 	 * @param r
+	 * @param pacmanTurnDirection the direction that pacman is going to turn to
 	 */
-	public void update(Random r){
+	public void update(Random r, Control c){
 		
 		Vector2f teleportPosition = getTeleport(r);
-		System.out.println("teleportposition->"+teleportPosition.toString());
 		Shape hitBox=pacman.getHitBox();
 		hitBox.setLocation(teleportPosition);
 		pacman.setCheckPointRow((int)teleportPosition.y/35);
 		pacman.setCheckPointCol((int)teleportPosition.x/35);
 		pacman.setCurrentPosition(teleportPosition);
 		pacman.setCurrentDirection(Direction.STOP);
+		c.teleport();
 		
 	}
 	

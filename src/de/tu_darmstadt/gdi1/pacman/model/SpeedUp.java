@@ -6,16 +6,16 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class SpeedUp extends SpecialItem {
 	
-	int SpeedUpFactor;//new speed will be SpeedUpFactor*normal speed
+	private float SpeedUpFactor;//new speed will be SpeedUpFactor*normal speed
 	
 	public SpeedUp(Vector2f position, List<Direction> forksP, List<Direction> forksG) {
 
 		super(position, forksP, forksG);
-		this.SpeedUpFactor=1;
+		this.SpeedUpFactor=0.7f;
 
 	}
 
-	public int getSpeedUpFactor() {
+	public float getSpeedUpFactor() {
 		return SpeedUpFactor;
 	}
 

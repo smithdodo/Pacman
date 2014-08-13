@@ -29,7 +29,7 @@ public class Control {
 	MapElement[][] mapElements;
 	List<Ghost> ghosts;
 	Pacman pacman;
-	Direction pacmanTurnDirection;
+	public Direction pacmanTurnDirection;
 	
 	List<SpeedUp> speedUps;
 	List<PowerUp> powerUps;
@@ -57,8 +57,7 @@ public class Control {
 			pacmanTurnDirection=turnDirection;
 		}
 		updater.update(pacmanTurnDirection, delta);
-//		System.out.println("current Direction->"+pacman.getCurrentDirection()+" checkpoints->"+pacman.getCheckPointRow()+"/"+pacman.getCheckPointCol());
-		
+
 	}
 	
 	public void updateGhostPosition(int delta){
@@ -84,10 +83,13 @@ public class Control {
 		
 	}
 	
+	/**
+	 * eat Item, activate special effect, update effect timer
+	 */
 	public void PacmanEatItem() {
 		
 		ActivateItem ai=new ActivateItem(pacman, mapElements);
-		ai.activateItem(random, ghosts);
+		ai.activateItem(random, ghosts, this);
 		
 	}
 	
@@ -118,8 +120,7 @@ public class Control {
 		}
 		
 		CollusionDetect cd=new CollusionDetect(ghosts, pacman);
-//		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps, pacmanTurnDirection);
-//		System.out.println("turn direction->"+pacmanTurnDirection);
+		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps, pacmanTurnDirection);
 		
 	}
 	
@@ -129,6 +130,10 @@ public class Control {
 	public void updateRespawnTimer(Figur f, int delta) {
 		RespawnTimer rt=new RespawnTimer();
 		rt.update(f, delta);
+	}
+	
+	public void teleport(){
+		this.pacmanTurnDirection=Direction.STOP;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.pacman.control.Control;
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.Item;
@@ -99,7 +100,13 @@ public class ActivateItem {
 		
 	}
 	
-	public void activateItem(Random r,List<Ghost> ghosts){
+	/**
+	 * activate the item that pacman reaches.(set status to EATEN, get special effect)
+	 * @param r
+	 * @param ghosts
+	 * @param c inctans of Control class
+	 */
+	public void activateItem(Random r,List<Ghost> ghosts, Control c){
 		
 		float aimAtX=mapElementArray[aimAtRow][aimAtCol].getPosition().x;
 		float aimAtY=mapElementArray[aimAtRow][aimAtCol].getPosition().y;
@@ -112,7 +119,7 @@ public class ActivateItem {
 				((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).setActiveTime(5000);
 				
 				if(mapElementArray[aimAtRow][aimAtCol] instanceof SpeedUp){
-					int t=pacman.getSpeedUpFactor();
+					float t=pacman.getSpeedUpFactor();
 					pacman.setSpeedUpFactor(t+((SpeedUp)mapElementArray[aimAtRow][aimAtCol]).getSpeedUpFactor());
 				}else if (mapElementArray[aimAtRow][aimAtCol] instanceof PowerUp) {
 					pacman.setPowerUp(true);
@@ -123,7 +130,7 @@ public class ActivateItem {
 
 		}else if (pacman.getHitBox().contains(aimAtX, aimAtY)&&(mapElementArray[aimAtRow][aimAtCol] instanceof Teleporter)) {
 			GenerateTeleport gt=new GenerateTeleport(pacman, mapElementArray, ghosts);
-			gt.update(r);
+			gt.update(r, c);
 		}
 
 	}

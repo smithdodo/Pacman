@@ -18,7 +18,7 @@ public abstract class Figur {
 	protected Direction turnDirection;
 	protected Shape hitBox;	//collision detect
 	
-	private int SpeedUpFactor;//how much will pacman be speeded up
+	private float SpeedUpFactor;//how much will pacman be speeded up
 	
 	private boolean isRespawning;
 	private float respawnTimer;//respawn dauert 5000ms
@@ -87,12 +87,12 @@ public abstract class Figur {
 	}
 
 
-	public int getSpeedUpFactor() {
+	public float getSpeedUpFactor() {
 		return SpeedUpFactor;
 	}
 
 
-	public void setSpeedUpFactor(int speedUpFactor) {
+	public void setSpeedUpFactor(float speedUpFactor) {
 		SpeedUpFactor = speedUpFactor;
 	}
 
