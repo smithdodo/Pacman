@@ -34,11 +34,13 @@ public class Game extends BasicGameState {
 	
 	de.tu_darmstadt.gdi1.pacman.model.Pacman pacman;
 	List<Ghost> ghosts;
-		
+	
+	//images
 	List<Image> wallImages;
 	Image dotImage, powerUpImage, speedUpImage,invisibleWallImage, teleporterImage, pinkyImage;
 	Image pacmanImageUP, pacmanImageDP,pacmanImageLP,pacmanImageRP;
 	Image pacmanImageU,pacmanImageD,pacmanImageL,pacmanImageR;
+	Image life;
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
@@ -76,8 +78,9 @@ public class Game extends BasicGameState {
 		teleporterImage=new Image("res/pictures/theme1/entities/teleporter.png");
 		invisibleWallImage=new Image("res/pictures/theme1/map/B.png");
 		pinkyImage=new Image("res/pictures/theme1/entities/G1.png");
+		life=new Image("res/pictures/theme1/ui/life.png");
 		
-		//
+		//texturs for pacman
 		pacmanImageUP=new Image("res/pictures/theme1/entities/P1_powerUp.png");
 		pacmanImageDP=new Image("res/pictures/theme1/entities/P3_powerUp.png");
 		pacmanImageLP=new Image("res/pictures/theme1/entities/P2_powerUp.png");
@@ -86,6 +89,7 @@ public class Game extends BasicGameState {
 		pacmanImageD=new Image("res/pictures/theme1/entities/P3.png");
 		pacmanImageL=new Image("res/pictures/theme1/entities/P2.png");
 		pacmanImageR=new Image("res/pictures/theme1/entities/P0.png");
+
 
 		
 	}
@@ -130,6 +134,9 @@ public class Game extends BasicGameState {
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
 			throws SlickException {
 		
+		for(int i=0;i<pacman.getLives();i++){
+			g.drawImage(life, i*35, 10);
+		}
 		g.translate(setoff.x, setoff.y);
 		
 		//draw mapElement textur
@@ -166,7 +173,6 @@ public class Game extends BasicGameState {
 		}
 		
 		//draw pacman
-//		g.drawImage(pacmanImage, pacman.getCurrentPosition().x, pacman.getCurrentPosition().y);
 		switch (pacman.getCurrentDirection()) {
 		case UP:
 			if(pacman.isPowerUp()){
