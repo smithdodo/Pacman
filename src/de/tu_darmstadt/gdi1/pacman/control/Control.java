@@ -3,6 +3,8 @@ package de.tu_darmstadt.gdi1.pacman.control;
 import java.util.List;
 import java.util.Random;
 
+import org.lwjgl.Sys;
+
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Figur;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
@@ -55,6 +57,8 @@ public class Control {
 			pacmanTurnDirection=turnDirection;
 		}
 		updater.update(pacmanTurnDirection, delta);
+		System.out.println("current Direction->"+pacman.getCurrentDirection()+" checkpoints->"+pacman.getCheckPointRow()+"/"+pacman.getCheckPointCol());
+		
 	}
 	
 	public void updateGhostPosition(int delta){
@@ -84,29 +88,38 @@ public class Control {
 		
 		ActivateItem ai=new ActivateItem(pacman, mapElements);
 		ai.activateItem(random, ghosts);
+		
 	}
 	
 	public void updateSpeedUp(int delta){
+		
 		UpdateSpeedUp us=new UpdateSpeedUp(speedUps, pacman);
 		us.update(delta);
+		
 	}
 
 	public void updatePowerUp(int delta) {
+		
 		UpdatePowerUp up=new UpdatePowerUp(powerUps, pacman);
 		up.update(delta);
+		
 	}
 	
 	/**
 	 * check if pacman eats ghost or ghost eat pacman
 	 */
 	public void collisionDetect(int delta){
+		
+		//check is pacman being affected by powerUp
 		boolean pacmanCanEatGhost=false;
 		for(PowerUp p:powerUps){
 			if(p.isAffecting())
 				pacmanCanEatGhost=true;
 		}
+		
 		CollusionDetect cd=new CollusionDetect(ghosts, pacman);
-		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps);
+//		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps, pacmanTurnDirection);
+//		System.out.println("turn direction->"+pacmanTurnDirection);
 		
 	}
 	

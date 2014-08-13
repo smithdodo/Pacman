@@ -48,6 +48,7 @@ public abstract class UpdateFigurPosition {
 	}
 
 	public void update(Direction turnDirection, int delta) {
+		
 		if (currentPosition.equals(new Vector2f(checkPointCol * 35,
 				checkPointRow * 35))) {
 			updateCheckPoint(turnDirection);

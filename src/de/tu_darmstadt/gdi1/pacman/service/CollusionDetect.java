@@ -22,7 +22,7 @@ public class CollusionDetect {
 		
 	}
 	
-	public void update(boolean pacmanCanEatGhost, int delta, List<SpeedUp> s, List<PowerUp> p){
+	public void update(boolean pacmanCanEatGhost, int delta, List<SpeedUp> s, List<PowerUp> p, Direction turn){
 				
 		if(pacmanCanEatGhost){
 			for(Ghost g:ghosts){			
@@ -46,6 +46,7 @@ public class CollusionDetect {
 					pacman.setCheckPointRow((int)pacman.getSpawnPoint().y/35);
 					pacman.setCheckPointCol((int)pacman.getSpawnPoint().x/35);
 					pacman.setCurrentDirection(Direction.STOP);
+//					turn=Direction.STOP;
 					Shape hitBox=pacman.getHitBox();
 					hitBox.setLocation(pacman.getCurrentPosition());
 					pacman.setHitBox(hitBox);
