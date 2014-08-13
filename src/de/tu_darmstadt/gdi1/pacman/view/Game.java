@@ -77,6 +77,7 @@ public class Game extends BasicGameState {
 		invisibleWallImage=new Image("res/pictures/theme1/map/B.png");
 		pinkyImage=new Image("res/pictures/theme1/entities/G1.png");
 		
+		//
 		pacmanImageUP=new Image("res/pictures/theme1/entities/P1_powerUp.png");
 		pacmanImageDP=new Image("res/pictures/theme1/entities/P3_powerUp.png");
 		pacmanImageLP=new Image("res/pictures/theme1/entities/P2_powerUp.png");

@@ -39,6 +39,7 @@ public class MapReader {
 	
 	private List<PowerUp> powerUps;
 	private List<SpeedUp> speedUps;
+	private List<Teleporter> teleporters;
 
 	public MapReader(File mapFile) {
 
@@ -47,6 +48,7 @@ public class MapReader {
 		ghostSpawnPoints=new LinkedList<>();
 		powerUps=new ArrayList<>();
 		speedUps=new ArrayList<>();
+		teleporters=new ArrayList<>();
 		initArrayHeightAndWidth();
 		initMapData();
 		intElementCoordinates();
@@ -155,8 +157,10 @@ public class MapReader {
 						mapElementArray[i][j] = new SpeedUp(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 						speedUps.add((SpeedUp)mapElementArray[i][j]);
 						item++;
-					} else if (mapElementStringArray[i][j].equals("T"))
+					} else if (mapElementStringArray[i][j].equals("T")){
 						mapElementArray[i][j] = new Teleporter(new Vector2f(xy),getForksForPacman(i, j), getForksForGhost(i, j));
+						teleporters.add((Teleporter)mapElementArray[i][j]);
+					}
 					else if (mapElementStringArray[i][j].equals("U")) {
 						mapElementArray[i][j] = new PowerUp(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
 						powerUps.add((PowerUp)mapElementArray[i][j]);
@@ -710,6 +714,10 @@ private boolean isDownWalkableG(int i, int j) {
 
 	public List<SpeedUp> getSpeedUps() {
 		return speedUps;
+	}
+
+	public List<Teleporter> getTeleporters() {
+		return teleporters;
 	}
 
 }

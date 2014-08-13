@@ -1,0 +1,73 @@
+package de.tu_darmstadt.gdi1.pacman.service;
+
+import java.util.List;
+import java.util.Random;
+
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Vector2f;
+
+import de.tu_darmstadt.gdi1.pacman.model.Ghost;
+import de.tu_darmstadt.gdi1.pacman.model.Item;
+import de.tu_darmstadt.gdi1.pacman.model.MapElement;
+import de.tu_darmstadt.gdi1.pacman.model.Pacman;
+import de.tu_darmstadt.gdi1.pacman.model.PlayerSpawnPoint;
+import de.tu_darmstadt.gdi1.pacman.model.Road;
+
+public class GenerateTeleport {
+	
+	Pacman pacman;
+	MapElement[][] mapElements;
+	List<Ghost> ghosts;
+	int width, height;
+
+	public GenerateTeleport(Pacman p, MapElement[][] m, List<Ghost> ghosts) {
+		
+		this.pacman=p;
+		this.mapElements=m;
+		this.ghosts=ghosts;
+		this.width=m[0].length;
+		this.height=m.length;
+		
+	}
+	
+	public void update(Random r){
+		
+		Vector2f teleportPosition = getTeleport(r);
+		System.out.println("teleportposition->"+teleportPosition.toString());
+		Shape hitBox=pacman.getHitBox();
+		hitBox.setLocation(teleportPosition);
+		pacman.setCheckPointRow((int)teleportPosition.y/35);
+		pacman.setCheckPointCol((int)teleportPosition.x/35);
+		pacman.setCurrentPosition(teleportPosition);
+		
+	}
+	
+	private Vector2f getTeleport(Random r){
+		
+		int row, col;
+		row=r.nextInt(height-1);
+		col=r.nextInt(width-1);
+		
+		
+		
+while (((!(mapElements[row][col] instanceof Item))&&(!(mapElements[row][col] instanceof PlayerSpawnPoint)))|| ((mapElements[row][col] instanceof Item||mapElements[row][col] instanceof PlayerSpawnPoint)&&isGhost(row, col))){
+			row=r.nextInt(height-1);
+			col=r.nextInt(width-1);
+		}
+
+		return mapElements[row][col].getPosition().copy();
+	}
+	
+	private boolean isGhost(int row, int col){
+		
+		boolean result=false;
+		Vector2f teleportPosition = new Vector2f(mapElements[row][col].getPosition().copy());
+		for(Ghost g:ghosts){
+			if(g.getHitBox().contains(teleportPosition.x, teleportPosition.y))
+				result = true;
+		}
+		return result;
+				
+	}
+
+}

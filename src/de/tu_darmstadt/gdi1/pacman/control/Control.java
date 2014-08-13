@@ -13,7 +13,7 @@ import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
 import de.tu_darmstadt.gdi1.pacman.model.Road;
 import de.tu_darmstadt.gdi1.pacman.model.SpeedUp;
 import de.tu_darmstadt.gdi1.pacman.service.ActivateItem;
-import de.tu_darmstadt.gdi1.pacman.service.CollisionDetect;
+import de.tu_darmstadt.gdi1.pacman.service.CollusionDetect;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateDirection;
 import de.tu_darmstadt.gdi1.pacman.service.RespawnTimer;
 import de.tu_darmstadt.gdi1.pacman.service.UpdateFigurPosition;
@@ -55,7 +55,6 @@ public class Control {
 			pacmanTurnDirection=turnDirection;
 		}
 		updater.update(pacmanTurnDirection, delta);
-
 	}
 	
 	public void updateGhostPosition(int delta){
@@ -82,8 +81,9 @@ public class Control {
 	}
 	
 	public void PacmanEatItem() {
+		
 		ActivateItem ai=new ActivateItem(pacman, mapElements);
-		ai.activateItem();
+		ai.activateItem(random, ghosts);
 	}
 	
 	public void updateSpeedUp(int delta){
@@ -105,7 +105,7 @@ public class Control {
 			if(p.isAffecting())
 				pacmanCanEatGhost=true;
 		}
-		CollisionDetect cd=new CollisionDetect(ghosts, pacman);
+		CollusionDetect cd=new CollusionDetect(ghosts, pacman);
 		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps);
 		
 	}
@@ -117,4 +117,5 @@ public class Control {
 		RespawnTimer rt=new RespawnTimer();
 		rt.update(f, delta);
 	}
+
 }

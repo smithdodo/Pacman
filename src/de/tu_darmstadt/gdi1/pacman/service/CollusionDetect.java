@@ -4,17 +4,18 @@ import java.util.List;
 
 import org.newdawn.slick.geom.Shape;
 
+import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
 import de.tu_darmstadt.gdi1.pacman.model.SpeedUp;
 
-public class CollisionDetect {
+public class CollusionDetect {
 
 	List<Ghost> ghosts;
 	Pacman pacman;
 	
-	public CollisionDetect(List<Ghost> g, Pacman p) {
+	public CollusionDetect(List<Ghost> g, Pacman p) {
 		
 		this.ghosts=g;
 		this.pacman=p;
@@ -39,14 +40,16 @@ public class CollisionDetect {
 		}else {
 			for(Ghost g:ghosts){
 				if(g.getHitBox().intersects(pacman.getHitBox())){
+					
 					pacman.setRespawning(true);
 					pacman.setCurrentPosition(pacman.getSpawnPoint().copy());
 					pacman.setCheckPointRow((int)pacman.getSpawnPoint().y/35);
 					pacman.setCheckPointCol((int)pacman.getSpawnPoint().x/35);
+					pacman.setCurrentDirection(Direction.STOP);
 					Shape hitBox=pacman.getHitBox();
 					hitBox.setLocation(pacman.getCurrentPosition());
 					pacman.setHitBox(hitBox);
-					pacman.dead();
+					pacman.dead();//live-=1;
 					
 					//reset all item
 					for(PowerUp pu:p){
