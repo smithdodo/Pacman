@@ -57,7 +57,7 @@ public class Control {
 			pacmanTurnDirection=turnDirection;
 		}
 		updater.update(pacmanTurnDirection, delta);
-		System.out.println("current Direction->"+pacman.getCurrentDirection()+" checkpoints->"+pacman.getCheckPointRow()+"/"+pacman.getCheckPointCol());
+//		System.out.println("current Direction->"+pacman.getCurrentDirection()+" checkpoints->"+pacman.getCheckPointRow()+"/"+pacman.getCheckPointCol());
 		
 	}
 	

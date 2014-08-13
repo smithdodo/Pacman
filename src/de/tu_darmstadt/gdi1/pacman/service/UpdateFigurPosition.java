@@ -81,7 +81,9 @@ public abstract class UpdateFigurPosition {
 				currentDirection = turnDirection;
 				setCheckPointToNextFork();
 			} else {
+				currentDirection=Direction.LEFT;
 				setCheckPointToNextFork();
+				
 			}
 			break;
 		case RIGHT:
@@ -92,9 +94,9 @@ public abstract class UpdateFigurPosition {
 			} else if (canTurnToDirection(turnDirection)) {
 				currentDirection = turnDirection;
 				setCheckPointToNextFork();
-//				System.out.println("next checkpoint: "+checkPointRow+" "+checkPointCol);
 
 			} else {
+				currentDirection=Direction.RIGHT;
 				setCheckPointToNextFork();
 			}
 			break;
@@ -107,6 +109,7 @@ public abstract class UpdateFigurPosition {
 				currentDirection = turnDirection;
 				setCheckPointToNextFork();
 			} else {
+				currentDirection=Direction.UP;
 				setCheckPointToNextFork();
 			}
 			break;
@@ -119,6 +122,7 @@ public abstract class UpdateFigurPosition {
 				currentDirection = turnDirection;
 				setCheckPointToNextFork();
 			} else {
+				currentDirection=Direction.DOWN;
 				setCheckPointToNextFork();
 			}
 			break;
