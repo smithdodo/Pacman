@@ -3,6 +3,7 @@ package de.tu_darmstadt.gdi1.pacman.service;
 import java.util.List;
 import java.util.Random;
 
+import org.newdawn.slick.Music;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.pacman.control.Control;
@@ -105,29 +106,31 @@ public class ActivateItem {
 	 * @param r
 	 * @param ghosts
 	 * @param c inctans of Control class
+	 * @param eatItem music
 	 */
-	public void activateItem(Random r,List<Ghost> ghosts, Control c){
+	public void activateItem(Random r,List<Ghost> ghosts, Control c, Music eatItem){
 		
 		float aimAtX=mapElementArray[aimAtRow][aimAtCol].getPosition().x;
 		float aimAtY=mapElementArray[aimAtRow][aimAtCol].getPosition().y;
 		
-		if(mapElementArray[aimAtRow][aimAtCol] instanceof Item&&pacman.getHitBox().contains(aimAtX, aimAtY)){
-			
-			if(mapElementArray[aimAtRow][aimAtCol] instanceof SpecialItem&&!((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).isEaten()){
-			
+		if(mapElementArray[aimAtRow][aimAtCol] instanceof Item&&!((Item)mapElementArray[aimAtRow][aimAtCol]).isEaten()&&pacman.getHitBox().contains(aimAtX, aimAtY)){
+			//check for special item
+			if(mapElementArray[aimAtRow][aimAtCol] instanceof SpecialItem){	
 				//special item will be activated for 6000ms
 				((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).setActiveTime(6000);
-				
 				if(mapElementArray[aimAtRow][aimAtCol] instanceof SpeedUp){
 					float t=pacman.getSpeedUpFactor();
 					pacman.setSpeedUpFactor(t+((SpeedUp)mapElementArray[aimAtRow][aimAtCol]).getSpeedUpFactor());
 				}else if (mapElementArray[aimAtRow][aimAtCol] instanceof PowerUp) {
 					pacman.setPowerUp(true);
+					float t=pacman.getSpeedUpFactor();
+					pacman.setSpeedUpFactor(t+((PowerUp)mapElementArray[aimAtRow][aimAtCol]).getSpeedUpFactor());
 				}
 			}
-			
 			((Item)mapElementArray[aimAtRow][aimAtCol]).setEaten(true);
-
+			if(!eatItem.playing())
+				eatItem.play();
+			//check for teleport
 		}else if (pacman.getHitBox().contains(aimAtX, aimAtY)&&(mapElementArray[aimAtRow][aimAtCol] instanceof Teleporter)) {
 			GenerateTeleport gt=new GenerateTeleport(pacman, mapElementArray, ghosts);
 			gt.update(r, c);

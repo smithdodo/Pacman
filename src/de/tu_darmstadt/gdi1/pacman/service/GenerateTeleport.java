@@ -46,7 +46,7 @@ public class GenerateTeleport {
 		pacman.setCheckPointCol((int)teleportPosition.x/35);
 		pacman.setCurrentPosition(teleportPosition);
 		pacman.setCurrentDirection(Direction.STOP);
-		c.teleport();
+		c.resetTurnDirection();
 		
 	}
 	

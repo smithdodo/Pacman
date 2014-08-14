@@ -8,7 +8,7 @@ public class PowerUp extends SpecialItem {
 
 	public PowerUp(Vector2f position, List<Direction> forksP, List<Direction> forksG) {
 	
-		super(position, forksP, forksG);	
+		super(position, forksP, forksG, 0.3f);	
 		
 	}
 

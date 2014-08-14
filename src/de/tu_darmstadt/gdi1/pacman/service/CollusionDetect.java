@@ -2,8 +2,10 @@ package de.tu_darmstadt.gdi1.pacman.service;
 
 import java.util.List;
 
+import org.newdawn.slick.Music;
 import org.newdawn.slick.geom.Shape;
 
+import de.tu_darmstadt.gdi1.pacman.control.Control;
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
@@ -20,9 +22,21 @@ public class CollusionDetect {
 		this.ghosts=g;
 		this.pacman=p;
 		
+		
 	}
 	
-	public void update(boolean pacmanCanEatGhost, int delta, List<SpeedUp> s, List<PowerUp> p, Direction turn){
+	/**
+	 * detect the collusion betwenn pacman, ghosts and other map elements, then trigger activity
+	 * 
+	 * @param pacmanCanEatGhost if pacman is being powered up
+	 * @param delta 
+	 * @param s list of all speedups on the map
+	 * @param p list of all powerups on the map
+	 * @param c instance of Control, use to reset pacmanTurnDirection
+	 * @param pd pacman dies music
+	 * @param gd ghost dies music
+	 */
+	public void update(boolean pacmanCanEatGhost, int delta, List<SpeedUp> s, List<PowerUp> p, Control c, Music pd, Music gd){
 				
 		if(pacmanCanEatGhost){
 			for(Ghost g:ghosts){			
@@ -35,6 +49,7 @@ public class CollusionDetect {
 					Shape hitBox=g.getHitBox();
 					hitBox.setLocation(g.getCurrentPosition());
 					g.setHitBox(hitBox);
+					gd.play();
 				}
 			}
 		}else {
@@ -46,11 +61,12 @@ public class CollusionDetect {
 					pacman.setCheckPointRow((int)pacman.getSpawnPoint().y/35);
 					pacman.setCheckPointCol((int)pacman.getSpawnPoint().x/35);
 					pacman.setCurrentDirection(Direction.STOP);
-//					turn=Direction.STOP;
+					c.resetTurnDirection();
 					Shape hitBox=pacman.getHitBox();
 					hitBox.setLocation(pacman.getCurrentPosition());
 					pacman.setHitBox(hitBox);
 					pacman.dead();//live-=1;
+					pd.play();
 					
 					//reset all item
 					for(PowerUp pu:p){

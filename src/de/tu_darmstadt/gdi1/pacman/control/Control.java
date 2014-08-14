@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.Sys;
+import org.newdawn.slick.Music;
 
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Figur;
@@ -35,6 +36,11 @@ public class Control {
 	List<PowerUp> powerUps;
 	
 	Random random;
+	
+	//soundboard
+	Music pacman_die_music;
+	Music pacman_eat_dot_music;
+	Music ghost_die_music;
 
 	public Control(MapReader mr, List<Ghost> g, Pacman p, Random r) {
 		
@@ -47,6 +53,15 @@ public class Control {
 		
 		this.speedUps=mr.getSpeedUps();
 		this.powerUps=mr.getPowerUps();
+		
+		try {
+			pacman_die_music=new Music("res/soundboard/die.wav");
+			pacman_eat_dot_music=new Music("res/soundboard/waka_waka.wav");
+			ghost_die_music=new Music("res/soundboard/eating_ghost.wav");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
@@ -89,7 +104,7 @@ public class Control {
 	public void PacmanEatItem() {
 		
 		ActivateItem ai=new ActivateItem(pacman, mapElements);
-		ai.activateItem(random, ghosts, this);
+		ai.activateItem(random, ghosts, this, pacman_eat_dot_music);
 		
 	}
 	
@@ -120,7 +135,7 @@ public class Control {
 		}
 		
 		CollusionDetect cd=new CollusionDetect(ghosts, pacman);
-		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps, pacmanTurnDirection);
+		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps, this, pacman_die_music, ghost_die_music);
 		
 	}
 	
@@ -132,7 +147,7 @@ public class Control {
 		rt.update(f, delta);
 	}
 	
-	public void teleport(){
+	public void resetTurnDirection(){
 		this.pacmanTurnDirection=Direction.STOP;
 	}
 

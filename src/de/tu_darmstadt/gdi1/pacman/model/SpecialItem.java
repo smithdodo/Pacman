@@ -8,11 +8,13 @@ public abstract class SpecialItem extends Item {
 
 	protected long activeTime;
 	protected boolean isAffecting;//is item affecting Pacman/Ghost
+	private float SpeedUpFactor;//new speed will be SpeedUpFactor*normal speed
 	
-	public SpecialItem(Vector2f position, List<Direction> forksP,List<Direction> forksG) {
+	public SpecialItem(Vector2f position, List<Direction> forksP,List<Direction> forksG, float speedUpFactor) {
 		
 		super(position, forksP, forksG);
 		isAffecting=false;
+		this.SpeedUpFactor=speedUpFactor;
 		
 		}
 		
@@ -39,6 +41,8 @@ public abstract class SpecialItem extends Item {
 		return isAffecting;
 	}
 
-	//public abstract void setEffect();
+	public float getSpeedUpFactor() {
+		return SpeedUpFactor;
+	}
 
 }
