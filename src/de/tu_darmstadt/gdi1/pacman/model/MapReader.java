@@ -37,6 +37,7 @@ public class MapReader {
 	private List<GhostSpawnPoint> ghostSpawnPoints;
 	int aPlayerSpawnPointCol, aPlayerSpawnPointRow;
 	
+	private List<Dot> dots;
 	private List<PowerUp> powerUps;
 	private List<SpeedUp> speedUps;
 	private List<Teleporter> teleporters;
@@ -44,19 +45,24 @@ public class MapReader {
 	public MapReader(File mapFile) {
 
 		this.mapFile = mapFile;
+		
 		playerSpawnPoints=new LinkedList<>();
 		ghostSpawnPoints=new LinkedList<>();
+		dots=new ArrayList<>();
 		powerUps=new ArrayList<>();
 		speedUps=new ArrayList<>();
 		teleporters=new ArrayList<>();
+		
 		initArrayHeightAndWidth();
 		initMapData();
 		intElementCoordinates();
-//		addDirectionToRandPaar();
 		isAllAreaAchievable();
 
 	}
-
+	
+	/**
+	 * calculate the width and height of mapElement array
+	 */
 	private void initArrayHeightAndWidth() {
 
 		height = 0;
@@ -140,6 +146,7 @@ public class MapReader {
 								i, j));
 					} else if (mapElementStringArray[i][j].equals(" ")) {
 						mapElementArray[i][j] = new Dot(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
+						dots.add((Dot)mapElementArray[i][j]);
 						item++;
 					} else if (mapElementStringArray[i][j].equals("P")) {
 						mapElementArray[i][j] = new PlayerSpawnPoint(new Vector2f(xy), getForksForPacman(i, j), getForksForGhost(i, j));
@@ -399,10 +406,8 @@ public class MapReader {
 private List<Direction> getForksForGhost(int i, int j) {
 		
 		List<Direction> forks=new LinkedList<>();
-		if (isLeftWalkableG(i, j)){
+		if (isLeftWalkableG(i, j))
 			forks.add(Direction.LEFT);
-			System.out.println("->isLeftWalkableG: ->yes: "+i+" "+j);
-			}
 		if (isRightWalkableG(i, j))
 			forks.add(Direction.RIGHT);
 		if (isUpWalkableG(i, j))
@@ -683,6 +688,10 @@ private boolean isDownWalkableG(int i, int j) {
 
 	public List<Teleporter> getTeleporters() {
 		return teleporters;
+	}
+
+	public List<Dot> getDots() {
+		return dots;
 	}
 
 }

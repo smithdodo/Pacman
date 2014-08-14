@@ -134,9 +134,15 @@ public class Game extends BasicGameState {
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
 			throws SlickException {
 		
+		//draw life
 		for(int i=0;i<pacman.getLives();i++){
 			g.drawImage(life, i*35, 10);
 		}
+		
+		//draw score
+		g.setColor(Color.white);
+		g.drawString(control.getScore().toString(), 650, 10);
+		
 		g.translate(setoff.x, setoff.y);
 		
 		//draw mapElement textur

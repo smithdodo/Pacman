@@ -49,7 +49,10 @@ public class CollusionDetect {
 					Shape hitBox=g.getHitBox();
 					hitBox.setLocation(g.getCurrentPosition());
 					g.setHitBox(hitBox);
+					//play music
 					gd.play();
+					//add score
+					c.addScore(500);
 				}
 			}
 		}else {

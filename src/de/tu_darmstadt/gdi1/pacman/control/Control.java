@@ -37,9 +37,12 @@ public class Control {
 	
 	Random random;
 	
+	Integer score;
+	
 	//soundboard
 	Music pacman_die_music;
 	Music pacman_eat_dot_music;
+	Music pacman_eat_special_item_music;
 	Music ghost_die_music;
 
 	public Control(MapReader mr, List<Ghost> g, Pacman p, Random r) {
@@ -49,6 +52,7 @@ public class Control {
 		this.ghosts=g;
 		this.pacman=p;
 		this.random=r;
+		score=new Integer(0);
 		this.pacmanTurnDirection=Direction.STOP;
 		
 		this.speedUps=mr.getSpeedUps();
@@ -57,6 +61,7 @@ public class Control {
 		try {
 			pacman_die_music=new Music("res/soundboard/die.wav");
 			pacman_eat_dot_music=new Music("res/soundboard/waka_waka.wav");
+			pacman_eat_special_item_music=new Music("res/soundboard/eating_herry.wav");
 			ghost_die_music=new Music("res/soundboard/eating_ghost.wav");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,7 +109,7 @@ public class Control {
 	public void PacmanEatItem() {
 		
 		ActivateItem ai=new ActivateItem(pacman, mapElements);
-		ai.activateItem(random, ghosts, this, pacman_eat_dot_music);
+		ai.activateItem(random, ghosts, this, pacman_eat_dot_music, pacman_eat_special_item_music);
 		
 	}
 	
@@ -149,6 +154,14 @@ public class Control {
 	
 	public void resetTurnDirection(){
 		this.pacmanTurnDirection=Direction.STOP;
+	}
+
+	public void addScore(int s){
+		this.score+=s;
+	}
+	
+	public Integer getScore() {
+		return score;
 	}
 
 }

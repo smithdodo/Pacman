@@ -107,8 +107,9 @@ public class ActivateItem {
 	 * @param ghosts
 	 * @param c inctans of Control class
 	 * @param eatItem music
+	 * @param score total score
 	 */
-	public void activateItem(Random r,List<Ghost> ghosts, Control c, Music eatItem){
+	public void activateItem(Random r,List<Ghost> ghosts, Control c, Music eatItem, Music specialItem){
 		
 		float aimAtX=mapElementArray[aimAtRow][aimAtCol].getPosition().x;
 		float aimAtY=mapElementArray[aimAtRow][aimAtCol].getPosition().y;
@@ -126,8 +127,21 @@ public class ActivateItem {
 					float t=pacman.getSpeedUpFactor();
 					pacman.setSpeedUpFactor(t+((PowerUp)mapElementArray[aimAtRow][aimAtCol]).getSpeedUpFactor());
 				}
+				//play music
+				if(eatItem.playing()){
+					eatItem.stop();
+				}
+				if (!specialItem.playing()) {
+					specialItem.play();
+				}
+				//add score
+				c.addScore(200);
+			}else {
+				c.addScore(30);
 			}
+			
 			((Item)mapElementArray[aimAtRow][aimAtCol]).setEaten(true);
+			
 			if(!eatItem.playing())
 				eatItem.play();
 			//check for teleport
