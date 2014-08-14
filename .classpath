@@ -11,5 +11,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Pacman_rebuid/lwjgl-2.9.0/native/macosx"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="jorbis-0.0.17-1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

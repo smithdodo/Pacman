@@ -115,8 +115,8 @@ public class ActivateItem {
 			
 			if(mapElementArray[aimAtRow][aimAtCol] instanceof SpecialItem&&!((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).isEaten()){
 			
-				//special item will be activated for 5000ms
-				((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).setActiveTime(5000);
+				//special item will be activated for 6000ms
+				((SpecialItem)mapElementArray[aimAtRow][aimAtCol]).setActiveTime(6000);
 				
 				if(mapElementArray[aimAtRow][aimAtCol] instanceof SpeedUp){
 					float t=pacman.getSpeedUpFactor();
