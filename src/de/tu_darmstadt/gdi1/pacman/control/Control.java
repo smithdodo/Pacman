@@ -1,5 +1,14 @@
 package de.tu_darmstadt.gdi1.pacman.control;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -38,6 +47,7 @@ public class Control {
 	Random random;
 	
 	Integer score;
+	Boolean scoreSaved=false;
 	
 	//soundboard
 	Music pacman_die_music;
@@ -158,6 +168,55 @@ public class Control {
 
 	public void addScore(int s){
 		this.score+=s;
+	}
+	
+	/**
+	 * refresh the highscore records
+	 * score will be save in format like:
+	 * ranking score playerName
+	 * example:
+	 * 1 50000 pinky
+	 * 2 30000 naughty
+	 * @param name
+	 * @throws IOException
+	 */
+	public void refreshRecord(String name) throws IOException{
+		if(!scoreSaved){
+		BufferedReader br=new BufferedReader(new FileReader(new File("res/levels/records.txt")));
+		//read all records into list
+		List<String> records=new LinkedList<>();
+		while(br.readLine()!=null){
+			records.add(br.readLine());
+		}
+		
+		//read all high scores into list for Sortierung
+		List<Integer> highscores=new LinkedList();
+		for(String s:records) {
+			String[] t=s.split(" ");
+			if (t.length==3) {
+				highscores.add(new Integer(Integer.parseInt(t[1])));
+			}	
+		}
+		
+		int ranking=1;
+		for(Integer i:highscores){
+			if(i<this.score){
+				String r=ranking+" "+score.toString()+" "+name;
+				records.add(ranking-1, r);
+			}
+			ranking++;
+		}
+		
+		//save new record to file
+		FileWriter fr=new FileWriter(new File("res/levels/records.txt"), false);
+		for(String s:records){
+			fr.write(s+"\n");
+		}
+		fr.close();
+		System.out.println("refreshed");
+		scoreSaved=true;
+		}
+		
 	}
 	
 	public Integer getScore() {

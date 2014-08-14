@@ -12,5 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="jorbis-0.0.17-1.jar"/>
+	<classpathentry kind="lib" path="acm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

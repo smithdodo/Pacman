@@ -1,6 +1,10 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
 import java.io.File;
+import java.io.IOException;
+
+import acm.program.DialogProgram;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -98,6 +102,7 @@ public class Game extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame arg1, int delta)
 			throws SlickException {
 		
+		if(pacman.getLives()>0){
 		if(pacman.isRespawning()){
 			
 			control.updateRespawnTimer(pacman, delta);	
@@ -121,6 +126,14 @@ public class Game extends BasicGameState {
 			control.updateSpeedUp(delta);
 			control.updatePowerUp(delta);
 			control.collisionDetect(delta);
+		}
+		}else {
+			try {
+				control.refreshRecord("r");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))
@@ -218,7 +231,7 @@ public class Game extends BasicGameState {
 		
 		g.translate(-setoff.x, -setoff.y);
 		
-		if(pacman.isRespawning()){
+		if(pacman.isRespawning()&&pacman.getLives()>0){
 			g.setColor(Color.red);
 			g.drawString("respawn in "+((int)pacman.getRespawnTimer()/1000+1)+" seconds...", 250, 10);
 		}
