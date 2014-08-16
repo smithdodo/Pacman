@@ -3,8 +3,12 @@ package de.tu_darmstadt.gdi1.pacman.view;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class PButton {
 	
@@ -32,6 +36,21 @@ public class PButton {
 		
 		g.setColor(Color.black);
 		g.drawString(buttonName, 270, y+10);
+		
+	}
+	
+	public void  update(StateBasedGame sbg, GameContainer gc, int StateID, boolean reinit) throws SlickException {
+		
+		// restart game
+		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
+				.getMouseY())
+				&& gc.getInput().isMousePressed(0)){
+			
+			if(reinit)
+				sbg.getState(StateID).init(gc, sbg);
+			sbg.enterState(StateID, new FadeOutTransition(), new FadeInTransition());
+			
+		}
 		
 	}
 

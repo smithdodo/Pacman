@@ -12,9 +12,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameMenu extends BasicGameState {
 
-	Shape restartButton;
-	Shape homeMenuButton;
-	Shape resumeButton;
+	PButton restartButton;
+	PButton homeMenuButton;
+	PButton resumeButton;
 
 	Image background;
 
@@ -22,9 +22,9 @@ public class GameMenu extends BasicGameState {
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 
-		restartButton = new Rectangle(240, 40, 120, 40);
-		homeMenuButton = new Rectangle(240, 95, 120, 40);
-		resumeButton = new Rectangle(240, 150, 120, 40);
+		restartButton = new PButton(40,"RESTART");
+		homeMenuButton = new PButton(95,"HOME MENU");
+		resumeButton = new PButton(150,"RESUME");
 		background = new Image("res/pictures/theme1/ui/background.jpg");
 	}
 
@@ -35,67 +35,28 @@ public class GameMenu extends BasicGameState {
 		g.drawImage(background, 0, 0, 700, 435, 0, 0, 1400, 870);
 
 		// draw restart button
-		if (restartButton.contains(gc.getInput().getMouseX(), gc.getInput()
-				.getMouseY())) {
-			g.setColor(Color.yellow);
-			g.fill(restartButton);
-		} else {
-			g.setColor(Color.white);
-			g.fill(restartButton);
-		}
-
-		g.setColor(Color.black);
-		g.drawString("RESTART", 245, 50);
+		restartButton.render(g, gc);
 
 		// draw back to main menu button
-		if (homeMenuButton.contains(gc.getInput().getMouseX(), gc.getInput()
-				.getMouseY())) {
-			g.setColor(Color.yellow);
-			g.fill(homeMenuButton);
-		} else {
-			g.setColor(Color.white);
-			g.fill(homeMenuButton);
-		}
-
-		g.setColor(Color.black);
-		g.drawString("Main Menu", 245, 110);
+		homeMenuButton.render(g, gc);
 
 		// draw resume button
-		if (resumeButton.contains(gc.getInput().getMouseX(), gc.getInput()
-				.getMouseY())) {
-			g.setColor(Color.yellow);
-			g.fill(resumeButton);
-		} else {
-			g.setColor(Color.white);
-			g.fill(resumeButton);
-		}
-
-		g.setColor(Color.black);
-		g.drawString("Back to Game", 245, 170);
+		resumeButton.render(g, gc);
 
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame arg1, int arg2)
 			throws SlickException {
+		
 		// restart game
-		if (restartButton.contains(gc.getInput().getMouseX(), gc.getInput()
-				.getMouseY())
-				&& gc.getInput().isMousePressed(0)){
-			arg1.getState(Pacman.GAME).init(gc, arg1);
-			arg1.enterState(Pacman.GAME);
-		}
-		// restart game
-				if (homeMenuButton.contains(gc.getInput().getMouseX(), gc.getInput()
-						.getMouseY())
-						&& gc.getInput().isMousePressed(0)){
-					arg1.enterState(Pacman.HOMEMENUE);
-				}
-		// start game
-		if (resumeButton.contains(gc.getInput().getMouseX(), gc.getInput()
-				.getMouseY())
-				&& gc.getInput().isMousePressed(0))
-			arg1.enterState(Pacman.GAME);
+		restartButton.update(arg1, gc, Pacman.GAME, true);
+		
+		// back to home
+		homeMenuButton.update(arg1, gc, Pacman.HOMEMENUE, true);
+		
+		// back to game
+		resumeButton.update(arg1, gc, Pacman.GAME, false);
 
 	}
 

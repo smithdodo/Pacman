@@ -23,6 +23,8 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import de.tu_darmstadt.gdi1.pacman.control.Control;
 import de.tu_darmstadt.gdi1.pacman.model.*;
@@ -152,7 +154,7 @@ public class Game extends BasicGameState {
 		}
 		
 		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))
-			arg1.enterState(Pacman.GAMEMENUE);
+			arg1.enterState(Pacman.GAMEMENUE, new FadeOutTransition(), new FadeInTransition());
 		
 	}
 	
