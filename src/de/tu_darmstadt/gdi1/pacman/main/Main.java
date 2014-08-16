@@ -21,7 +21,7 @@ public class Main
 
 		// konfiguration festlegen
 		app.setDisplayMode(700, 435, false);
-		app.setShowFPS(true);
+		app.setShowFPS(false);
 		app.setTargetFrameRate(60);
 		app.start();
 	}

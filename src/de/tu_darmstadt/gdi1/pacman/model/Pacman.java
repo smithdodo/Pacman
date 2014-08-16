@@ -10,7 +10,7 @@ public class Pacman extends Figur {
 	public Pacman(Vector2f startPosition) {
 		
 		super(startPosition);
-		this.lives = 3;
+		this.lives = 1;
 		
 	}	
 

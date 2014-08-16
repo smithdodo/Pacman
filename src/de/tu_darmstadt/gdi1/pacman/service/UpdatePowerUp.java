@@ -27,6 +27,13 @@ public class UpdatePowerUp {
 			if (u.getActiveTime()<0&&u.isAffecting()) {
 				u.deactivate();
 				pacman.setPowerUp(false);
+				float t=pacman.getSpeedUpFactor();
+				t-=0.3f;
+				if(t>1){
+					pacman.setSpeedUpFactor(t);
+				}else {
+					pacman.setSpeedUpFactor(1f);
+				}
 			}
 		}
 	}

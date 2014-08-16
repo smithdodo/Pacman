@@ -1,10 +1,8 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
-
-import acm.program.DialogProgram;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,14 +14,18 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
+import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.tu_darmstadt.gdi1.pacman.control.Control;
 import de.tu_darmstadt.gdi1.pacman.model.*;
-
 
 public class Game extends BasicGameState {
 	
@@ -45,7 +47,12 @@ public class Game extends BasicGameState {
 	Image pacmanImageUP, pacmanImageDP,pacmanImageLP,pacmanImageRP;
 	Image pacmanImageU,pacmanImageD,pacmanImageL,pacmanImageR;
 	Image life;
-
+	
+	String playerName = "";
+	TextField textField;
+	
+	boolean isPlaying=true;
+	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
@@ -93,9 +100,7 @@ public class Game extends BasicGameState {
 		pacmanImageD=new Image("res/pictures/theme1/entities/P3.png");
 		pacmanImageL=new Image("res/pictures/theme1/entities/P2.png");
 		pacmanImageR=new Image("res/pictures/theme1/entities/P0.png");
-
-
-		
+				
 	}
 	
 	@Override
@@ -128,12 +133,22 @@ public class Game extends BasicGameState {
 			control.collisionDetect(delta);
 		}
 		}else {
-			try {
-				control.refreshRecord("r");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			isPlaying=false;
+			this.pauseUpdate();
+		}
+		
+		try {
+			if(!isPlaying&&control.isTopTen()){
+				
+				NameListner nl = new NameListner();
+				org.newdawn.slick.Font font = new TrueTypeFont(new java.awt.Font(java.awt.Font.SERIF,java.awt.Font.BOLD , 26), false);
+				textField = new TextField(gc, font, 250, 180, 200, 60, nl);
+				textField.setConsumeEvents(true);
+				textField.setFocus(true);
+				
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))
@@ -235,7 +250,17 @@ public class Game extends BasicGameState {
 			g.setColor(Color.red);
 			g.drawString("respawn in "+((int)pacman.getRespawnTimer()/1000+1)+" seconds...", 250, 10);
 		}
-
+		
+		if(!isPlaying&&textField!=null){
+			g.setColor(new Color (0.2f, 0.2f, 0.2f, 0.5f));
+			Shape bg = new Rectangle(0, 0, 700, 435);
+			g.fill(bg);
+			
+			g.setColor(Color.yellow);
+			g.drawString("NEW TOP 10 SCORE!!\n\nEnter your name:", 280, 98);
+			textField.render(arg0, g);
+			
+		}
 	}
 
 
@@ -308,5 +333,23 @@ public class Game extends BasicGameState {
 			}
 			
 	}
+	
+	private class NameListner implements ComponentListener{
 
+		@Override
+		public void componentActivated(AbstractComponent ac) {
+			
+			playerName = textField.getText();
+			System.out.println("player name is-> "+playerName);
+			textField.deactivate();
+			try {
+				control.refreshRecord(playerName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+	}
+	
 }
