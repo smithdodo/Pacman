@@ -15,7 +15,7 @@ public abstract class Figur {
 	protected Vector2f spawnPoint;
 
 	protected Direction currentDirection;
-	protected Direction turnDirection;
+//	protected Direction turnDirection;
 	protected Shape hitBox;	//collision detect
 	
 	private float SpeedUpFactor;//how much will pacman be speeded up
@@ -34,9 +34,18 @@ public abstract class Figur {
 		this.checkPointCol=((int)startPosition.x)/35;
 		this.spawnPoint=startPosition.copy();
 		this.currentDirection=Direction.RIGHT;
-		this.turnDirection=Direction.STOP;
+//		this.turnDirection=Direction.STOP;
 		this.SpeedUpFactor=1;//max. is  4
 		isRespawning=false;
+		
+	}
+	
+	@Override
+	public String toString(){
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("currentPosition: "+currentPosition.toString()+" checkPointRow: "+checkPointRow+" checkPointCol: "+checkPointCol+" spawnPoint: "+spawnPoint.toString()+" currentDirection: "+currentDirection+" hitBoxX: "+hitBox.getX()+" hitBoxY: "+hitBox.getY()+" respawnTimer: "+respawnTimer);
+		return sb.toString();
 		
 	}
 	

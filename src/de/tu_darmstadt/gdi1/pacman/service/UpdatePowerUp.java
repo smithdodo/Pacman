@@ -28,7 +28,7 @@ public class UpdatePowerUp {
 				u.deactivate();
 				pacman.setPowerUp(false);
 				float t=pacman.getSpeedUpFactor();
-				t-=0.3f;
+				t-=u.getSpeedUpFactor();
 				if(t>1){
 					pacman.setSpeedUpFactor(t);
 				}else {

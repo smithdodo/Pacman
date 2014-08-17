@@ -12,7 +12,13 @@ public class Dot extends Item{
 		super(position, forksP, forksG);
 		
 	}
-
-
 	
+	@Override
+	public String toString(){
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("positionRow: "+(int)this.getPosition().y/35+" positionCol: "+(int)this.getPosition().x/35+" isEaten: "+isEaten);
+		return sb.toString();
+		
+	}
 }

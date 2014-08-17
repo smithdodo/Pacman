@@ -45,4 +45,13 @@ public abstract class SpecialItem extends Item {
 		return SpeedUpFactor;
 	}
 
+	@Override
+	public String toString(){
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append(" activeTime: "+activeTime+" isAffecting: "+isAffecting);
+		return sb.toString();
+		
+	}
 }
