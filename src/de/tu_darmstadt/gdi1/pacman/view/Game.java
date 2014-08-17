@@ -40,6 +40,9 @@ public class Game extends BasicGameState {
 	MapReader mapReader;
 	MapElement[][] me;
 	
+	StateBasedGame sbGame;
+	GameContainer gContainer;
+	
 	de.tu_darmstadt.gdi1.pacman.model.Pacman pacman;
 	List<Ghost> ghosts;
 	
@@ -53,11 +56,14 @@ public class Game extends BasicGameState {
 	String playerName = "";
 	TextField textField;
 	
-	boolean isPlaying=true;
+	boolean isPlaying;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
+		
+		sbGame=arg1;
+		gContainer=arg0;
 		
 		this.random=new Random();
 		
@@ -79,6 +85,8 @@ public class Game extends BasicGameState {
 		
 		//define randering setoff
 		setoff=new Vector2f((700-mapReader.width_on_display)/2-17.5f,30+(420-mapReader.height_on_display)/2-17.5f);
+		
+		isPlaying=true;
 		
 		//initiallize texturs
 		wallImages=new LinkedList<>();
@@ -136,7 +144,7 @@ public class Game extends BasicGameState {
 		}
 		}else {
 			isPlaying=false;
-			this.pauseUpdate();
+			arg1.pauseUpdate();
 		}
 		
 		try {
@@ -268,8 +276,9 @@ public class Game extends BasicGameState {
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
+		
 		return Pacman.GAME;
+		
 	}
 	
 	/**
@@ -342,13 +351,23 @@ public class Game extends BasicGameState {
 		public void componentActivated(AbstractComponent ac) {
 			
 			playerName = textField.getText();
-			System.out.println("player name is-> "+playerName);
+			System.out.println("player name->"+playerName+" saved");
 			textField.deactivate();
 			try {
 				control.refreshRecord(playerName);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			textField = null;
+			try {
+				sbGame.getState(Pacman.RANKING).init(gContainer, sbGame);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			sbGame.unpauseUpdate();
+			sbGame.enterState(Pacman.RANKING, new FadeOutTransition(), new FadeInTransition());
+			
 			
 		}
 

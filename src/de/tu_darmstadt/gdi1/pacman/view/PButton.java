@@ -35,22 +35,28 @@ public class PButton {
 		}
 		
 		g.setColor(Color.black);
-		g.drawString(buttonName, 270, y+10);
+		g.drawString(buttonName, button.getX()+10, y+10);
 		
 	}
 	
 	public void  update(StateBasedGame sbg, GameContainer gc, int StateID, boolean reinit) throws SlickException {
-		
-		// restart game
+				
 		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
 				.getMouseY())
 				&& gc.getInput().isMousePressed(0)){
 			
 			if(reinit)
 				sbg.getState(StateID).init(gc, sbg);
+			
 			sbg.enterState(StateID, new FadeOutTransition(), new FadeInTransition());
 			
 		}
+		
+	}
+	
+	public void set(float x){
+		
+		this.button.setX(x);
 		
 	}
 

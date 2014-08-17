@@ -29,21 +29,20 @@ public class HomeMenu extends BasicGameState{
 		startButton=new PButton(20, "START GAME");
 		backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
 		backgroundMusic=new Music("res/soundboard/intro.wav");
-		backgroundMusic.loop();//loop the music
-		
+
 	}
 	
 	@Override
-	public void update(GameContainer gc, StateBasedGame arg1, int arg2)
+	public void update(GameContainer gc, StateBasedGame sbg, int arg2)
 			throws SlickException {
 		//start game
-		if(startButton.getButton().contains(gc.getInput().getMouseX(),gc.getInput().getMouseY())&&gc.getInput().isMousePressed(0)){
-			//init state and enter
-			arg1.getState(Pacman.GAME).init(gc, arg1);
-			arg1.enterState(Pacman.GAME,new FadeOutTransition(), new FadeInTransition());
-			backgroundMusic.stop();
-		}
+		startButton.update(sbg, gc, Pacman.GAME, true);
+		
+		if(!backgroundMusic.playing()&&sbg.isAcceptingInput())
+			backgroundMusic.play();
+		
 	}
+		
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g)
 			throws SlickException {
