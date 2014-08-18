@@ -140,15 +140,8 @@ public class Control {
 	 */
 	public void collisionDetect(int delta){
 		
-		//check is pacman being affected by powerUp
-		boolean pacmanCanEatGhost=false;
-		for(PowerUp p:powerUps){
-			if(p.isAffecting())
-				pacmanCanEatGhost=true;
-		}
-		
 		CollusionDetect cd=new CollusionDetect(ghosts, pacman);
-		cd.update(pacmanCanEatGhost, delta, speedUps, powerUps, this, pacman_die_music, ghost_die_music);
+		cd.update(delta, speedUps, powerUps, this, pacman_die_music, ghost_die_music);
 		
 	}
 	

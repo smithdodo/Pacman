@@ -1,5 +1,7 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
+import java.io.IOException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -12,6 +14,7 @@ public class GameMenu extends BasicGameState {
 	PButton restartButton;
 	PButton homeMenuButton;
 	PButton resumeButton;
+	PButton saveButton;
 	
 	public int gameStateID;//game state that this pause menu belongs to
 
@@ -24,6 +27,7 @@ public class GameMenu extends BasicGameState {
 		restartButton = new PButton(40,"Restart");
 		homeMenuButton = new PButton(95,"Home");
 		resumeButton = new PButton(150,"Resume");
+		saveButton = new PButton(205, "Save Game");
 		background = new Image("res/pictures/theme1/ui/background.jpg");
 	}
 
@@ -41,6 +45,9 @@ public class GameMenu extends BasicGameState {
 
 		// draw resume button
 		resumeButton.render(g, gc);
+		
+		//draw save game button
+		saveButton.render(g, gc);
 
 	}
 
@@ -56,6 +63,13 @@ public class GameMenu extends BasicGameState {
 		
 		// back to game
 		resumeButton.update(arg1, gc, this.gameStateID, false);
+		
+		//save game
+		try {
+			saveButton.updateSaver(arg1, gc,((Game)arg1.getState(gameStateID)).control);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

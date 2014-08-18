@@ -1,5 +1,7 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
+import java.io.IOException;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,6 +11,8 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import de.tu_darmstadt.gdi1.pacman.control.Control;
 
 
 /**
@@ -73,6 +77,25 @@ public class PButton {
 			sbg.enterState(StateID, new FadeOutTransition(), new FadeInTransition());
 			
 		}
+		
+	}
+	
+	/**
+	 * update saver
+	 * @param gc
+	 * @throws IOException 
+	 */
+	public void updateSaver(StateBasedGame sbg, GameContainer gc, Control c) throws IOException{
+		
+		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
+				.getMouseY())
+				&& gc.getInput().isMousePressed(0)){
+		
+			c.saveGame();
+			sbg.enterState(Pacman.HOMEMENUE, new FadeOutTransition(), new FadeInTransition());
+			
+		}
+		
 		
 	}
 	

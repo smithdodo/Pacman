@@ -30,7 +30,7 @@ import de.tu_darmstadt.gdi1.pacman.model.*;
 
 public abstract class Game extends BasicGameState {
 	
-	Control control;
+	public Control control;
 	
 	Random random;
 	

@@ -36,9 +36,9 @@ public class CollusionDetect {
 	 * @param pd pacman dies music
 	 * @param gd ghost dies music
 	 */
-	public void update(boolean pacmanCanEatGhost, int delta, List<SpeedUp> s, List<PowerUp> p, Control c, Music pd, Music gd){
+	public void update(int delta, List<SpeedUp> s, List<PowerUp> p, Control c, Music pd, Music gd){
 				
-		if(pacmanCanEatGhost){
+		if(pacman.isPowerUp()){
 			for(Ghost g:ghosts){			
 				//if collsion between pacman and ghost detected
 				if(g.getHitBox().intersects(pacman.getHitBox())){
@@ -74,6 +74,12 @@ public class CollusionDetect {
 					//reset all item
 					for(PowerUp pu:p){
 						pu.deactivate();
+						float t=pacman.getSpeedUpFactor();
+						if(t>1)
+							t-=0.3;
+						else {
+							t=1;
+						}
 					}
 					for(SpeedUp su:s){
 						su.deactivate();

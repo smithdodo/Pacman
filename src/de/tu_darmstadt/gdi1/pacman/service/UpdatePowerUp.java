@@ -19,13 +19,14 @@ public class UpdatePowerUp {
 	
 	public void update(int delta){
 		
+		boolean flag=false;
 		for(PowerUp u:powerUps){
 			if(u.isAffecting()){
 				u.tikTok(delta);
+				flag=true;
 			}
 			if (u.getActiveTime()<0&&u.isAffecting()) {
 				u.deactivate();
-				pacman.setPowerUp(false);
 				float t=pacman.getSpeedUpFactor();
 				t-=u.getSpeedUpFactor();
 				if(t>1){
@@ -34,6 +35,11 @@ public class UpdatePowerUp {
 					pacman.setSpeedUpFactor(1f);
 				}
 			}
+		}
+		if(flag){
+			
+			pacman.setPowerUp(true);
+			
 		}
 	}
 

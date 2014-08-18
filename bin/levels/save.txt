@@ -1,0 +1,16 @@
+positionRow: 1 positionCol: 1 isEaten: false activeTime: 0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 2 isEaten: false activeTime: 0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 3 isEaten: false activeTime: 0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 4 isEaten: false activeTime: 0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 5 isEaten: false activeTime: 0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 6 isEaten: false activeTime: 0 isAffecting: false SpecialItem.
+positionRow: 2 positionCol: 0 isEaten: false Dot.
+positionRow: 2 positionCol: 1 isEaten: false Dot.
+positionRow: 2 positionCol: 2 isEaten: false Dot.
+positionRow: 2 positionCol: 3 isEaten: false Dot.
+positionRow: 2 positionCol: 4 isEaten: false Dot.
+positionRow: 2 positionCol: 5 isEaten: true Dot.
+positionRow: 2 positionCol: 6 isEaten: true Dot.
+positionRow: 2 positionCol: 7 isEaten: true Dot.
+currentPositionX: 175.05 currentPositionY: 70.0 checkPointRow: 2 checkPointCol: 5 spawnPointR: 1 spawnPointC: 7 currentDirection: LEFT hitBoxX: 175.05 hitBoxY: 70.0 respawnTimer: 0.0 Lives: 3 PowerUp: false Pacman.
+currentPositionX: 92.50002 currentPositionY: 70.0 checkPointRow: 2 checkPointCol: 3 spawnPointR: 1 spawnPointC: 0 currentDirection: RIGHT hitBoxX: 92.50002 hitBoxY: 70.0 respawnTimer: 0.0 Ghost.
