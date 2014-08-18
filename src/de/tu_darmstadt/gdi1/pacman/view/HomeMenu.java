@@ -1,24 +1,19 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
-import java.awt.Button;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class HomeMenu extends BasicGameState{
 	
-	PButton startButton;
+	PButton enterLevel1;
+	PButton enterLevel2;
+	PButton enterLevel3;
 	Image backgroundImage;
 	Music backgroundMusic;
 	
@@ -26,7 +21,9 @@ public class HomeMenu extends BasicGameState{
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		
-		startButton=new PButton(20, "START GAME");
+		enterLevel1=new PButton(20, "Level 1");
+		enterLevel2=new PButton(70, "Level 2");
+		enterLevel3=new PButton(120, "Level 3");
 		backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
 		backgroundMusic=new Music("res/soundboard/intro.wav");
 
@@ -35,8 +32,11 @@ public class HomeMenu extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int arg2)
 			throws SlickException {
+		
 		//start game
-		startButton.update(sbg, gc, Pacman.GAME, true);
+		enterLevel1.update(sbg, gc, Pacman.Level1, true);
+		enterLevel2.update(sbg, gc, Pacman.Level2, true);
+		enterLevel3.update(sbg, gc, Pacman.Level3, true);
 		
 		if(!backgroundMusic.playing()&&sbg.isAcceptingInput())
 			backgroundMusic.play();
@@ -49,7 +49,9 @@ public class HomeMenu extends BasicGameState{
 	
 		g.drawImage(backgroundImage,0,0,700,435,0,0,1400,870);
 		
-		startButton.render(g, gc);
+		enterLevel1.render(g, gc);
+		enterLevel2.render(g, gc);
+		enterLevel3.render(g, gc);
 		
 	}
 

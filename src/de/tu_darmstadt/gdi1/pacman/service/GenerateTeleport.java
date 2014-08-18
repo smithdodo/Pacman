@@ -13,7 +13,6 @@ import de.tu_darmstadt.gdi1.pacman.model.Item;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.PlayerSpawnPoint;
-import de.tu_darmstadt.gdi1.pacman.model.Road;
 
 public class GenerateTeleport {
 	

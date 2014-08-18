@@ -45,6 +45,8 @@ public class PButton {
 				.getMouseY())
 				&& gc.getInput().isMousePressed(0)){
 			
+			System.out.println("enter state->"+StateID);
+			
 			if(reinit)
 				sbg.getState(StateID).init(gc, sbg);
 			

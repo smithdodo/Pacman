@@ -4,19 +4,17 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import eea.engine.entity.StateBasedEntityManager;
-
 /**
  * Grundgerüst eines FSMs
  */
 public class Pacman extends StateBasedGame{
 
 public final static int HOMEMENUE=0;
-public final static int GAME=1;
-public final static int GAMEMENUE=2;
-public final static int RANKING=3;
-
-
+public final static int Level1=1;
+public final static int Level2=2;
+public final static int Level3=3;
+public final static int GAMEMENUE=4;
+public final static int RANKING=5;
 
 	public Pacman() throws SlickException
 	{
@@ -29,7 +27,9 @@ public final static int RANKING=3;
 	public void initStatesList(GameContainer gc) throws SlickException
 	{
 		addState(new HomeMenu());
-		addState(new Game());
+		addState(new Level1());
+		addState(new Level2());
+		addState(new Level3());
 		addState(new GameMenu());
 		addState(new Ranking());
 	}

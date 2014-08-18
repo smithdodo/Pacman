@@ -1,9 +1,9 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
-import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +29,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import de.tu_darmstadt.gdi1.pacman.control.Control;
 import de.tu_darmstadt.gdi1.pacman.model.*;
 
-public class Game extends BasicGameState {
+public abstract class Game extends BasicGameState {
 	
 	Control control;
 	
@@ -37,6 +37,7 @@ public class Game extends BasicGameState {
 	
 	Vector2f setoff;
 	
+	File mapFile = new File("res/levels/testMap.txt");
 	MapReader mapReader;
 	MapElement[][] me;
 	
@@ -48,15 +49,19 @@ public class Game extends BasicGameState {
 	
 	//images
 	List<Image> wallImages;
-	Image dotImage, powerUpImage, speedUpImage,invisibleWallImage, teleporterImage, pinkyImage;
+	Image dotImage, powerUpImage, speedUpImage,invisibleWallImage, teleporterImage;
 	Image pacmanImageUP, pacmanImageDP,pacmanImageLP,pacmanImageRP;
 	Image pacmanImageU,pacmanImageD,pacmanImageL,pacmanImageR;
+	List<Image> ghostImages;
 	Image life;
 	
 	String playerName = "";
 	TextField textField;
 	
+	float startTimer=3000;//count down before game start
 	boolean isPlaying;
+	
+	protected int nextLevel_StateID;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
@@ -66,8 +71,8 @@ public class Game extends BasicGameState {
 		gContainer=arg0;
 		
 		this.random=new Random();
-		
-		this.mapReader=new MapReader(new File("res/levels/testMap.txt"));
+
+		mapReader=new MapReader(mapFile);
 		this.me=mapReader.getMapData();
 		
 		//initialize pacman on a random spawn point
@@ -98,8 +103,14 @@ public class Game extends BasicGameState {
 		speedUpImage=new Image("res/pictures/theme1/entities/speedup.png");
 		teleporterImage=new Image("res/pictures/theme1/entities/teleporter.png");
 		invisibleWallImage=new Image("res/pictures/theme1/map/B.png");
-		pinkyImage=new Image("res/pictures/theme1/entities/G1.png");
 		life=new Image("res/pictures/theme1/ui/life.png");
+		ghostImages = new ArrayList<>();
+		for(int i=0;i<ghosts.size();i++){
+			
+			Image image = new Image("res/pictures/theme1/entities/G"+i+".png");
+			ghostImages.add(image);
+			
+		}
 		
 		//texturs for pacman
 		pacmanImageUP=new Image("res/pictures/theme1/entities/P1_powerUp.png");
@@ -116,8 +127,11 @@ public class Game extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame arg1, int delta)
 			throws SlickException {
+		if(startTimer>0){
+			startTimer-=delta;
+		}else{
 		
-		if(pacman.getLives()>0){
+		if(pacman.getLives()>0&&control.getNumOfDots()>0){
 		if(pacman.isRespawning()){
 			
 			control.updateRespawnTimer(pacman, delta);	
@@ -142,44 +156,66 @@ public class Game extends BasicGameState {
 			control.updatePowerUp(delta);
 			control.collisionDetect(delta);
 		}
-		}else {
-			isPlaying=false;
-			arg1.pauseUpdate();
-		}
+		}else if(pacman.getLives()==0){
+			
+			isPlaying=false;		
 		
 		try {
 			if(!isPlaying&&control.isTopTen()){
 				
+				arg1.pauseUpdate();
 				NameListner nl = new NameListner();
 				org.newdawn.slick.Font font = new TrueTypeFont(new java.awt.Font(java.awt.Font.SERIF,java.awt.Font.BOLD , 26), false);
 				textField = new TextField(gc, font, 250, 180, 200, 60, nl);
 				textField.setConsumeEvents(true);
 				textField.setFocus(true);
 				
+			}else {
+				((Ranking)sbGame.getState(Pacman.RANKING)).gameStateID=getID();
+				sbGame.enterState(Pacman.RANKING, new FadeOutTransition(), new FadeInTransition());;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		}else if (control.getNumOfDots()==0) {
+			
+			enterNextLevel(control.getScore());
+			
+		}
 		
-		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE))
+		if(gc.getInput().isKeyPressed(Keyboard.KEY_ESCAPE)){
+			
+			((GameMenu)arg1.getState(Pacman.GAMEMENUE)).gameStateID=getID();
 			arg1.enterState(Pacman.GAMEMENUE, new FadeOutTransition(), new FadeInTransition());
+
+		}
+		}
+		
 		
 	}
 	
-	
+	/**
+	 * enter the next level when player finish the current one
+	 */
+	abstract protected void enterNextLevel(Integer i);
+
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
 			throws SlickException {
 		
+		if(startTimer>0){
+			g.setColor(Color.green);
+			g.drawString("Game start in "+(int)(startTimer/1000+1)+" seconds...", 230, 10);
+		}
 		//draw life
 		for(int i=0;i<pacman.getLives();i++){
-			g.drawImage(life, i*35, 10);
+			g.drawImage(life, 5+i*35, 2);
 		}
 		
 		//draw score
 		g.setColor(Color.white);
-		g.drawString(control.getScore().toString(), 650, 10);
+		g.drawString("Total Score: "+control.getScore().toString(), 520, 10);
 		
 		g.translate(setoff.x, setoff.y);
 		
@@ -211,8 +247,7 @@ public class Game extends BasicGameState {
 			g.translate(17.5f, 17.5f);
 			g.drawLine(p.x, p.y, gs.getCheckPointCol()*35, gs.getCheckPointRow()*35);
 			g.translate(-17.5f, -17.5f);
-			g.drawImage(pinkyImage, p.x, p.y);
-			g.draw(gs.getHitBox());
+			g.drawImage(ghostImages.get(i), p.x, p.y);
 			
 		}
 		
@@ -261,6 +296,7 @@ public class Game extends BasicGameState {
 			g.drawString("respawn in "+((int)pacman.getRespawnTimer()/1000+1)+" seconds...", 250, 10);
 		}
 		
+				
 		if(!isPlaying&&textField!=null){
 			g.setColor(new Color (0.2f, 0.2f, 0.2f, 0.5f));
 			Shape bg = new Rectangle(0, 0, 700, 435);
@@ -271,15 +307,9 @@ public class Game extends BasicGameState {
 			textField.render(arg0, g);
 			
 		}
-	}
-
-
-	@Override
-	public int getID() {
-		
-		return Pacman.GAME;
 		
 	}
+
 	
 	/**
 	 * draw wall textur depends on its type
@@ -366,11 +396,16 @@ public class Game extends BasicGameState {
 				e.printStackTrace();
 			}
 			sbGame.unpauseUpdate();
+			((Ranking)sbGame.getState(Pacman.RANKING)).gameStateID=getID();
 			sbGame.enterState(Pacman.RANKING, new FadeOutTransition(), new FadeInTransition());
 			
 			
 		}
 
+	}
+
+	public void setMapReader(MapReader mapReader) {
+		this.mapReader = mapReader;
 	}
 	
 }

@@ -2,17 +2,13 @@ package de.tu_darmstadt.gdi1.pacman.control;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Music;
-import org.newdawn.slick.gui.TextField;
-import org.newdawn.slick.state.BasicGameState;
 
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Figur;
@@ -41,7 +37,8 @@ public class Control {
 	
 	List<SpeedUp> speedUps;
 	List<PowerUp> powerUps;
-	
+	int numOfDots;//number of still eatable dots in map
+
 	Random random;
 	
 	Integer score;
@@ -65,6 +62,8 @@ public class Control {
 		
 		this.speedUps=mr.getSpeedUps();
 		this.powerUps=mr.getPowerUps();
+		//calculate how many dots are there on the map, that pacman must eat
+		this.numOfDots=mr.getDots().size();
 		
 		try {
 			pacman_die_music=new Music("res/soundboard/die.wav");
@@ -224,5 +223,20 @@ public class Control {
 		}
 		
 	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+	
+	public void reduceDots() {
+		
+		this.numOfDots--;
+		
+	}
+
+	public int getNumOfDots() {
+		return numOfDots;
+	}
+	
 
 }

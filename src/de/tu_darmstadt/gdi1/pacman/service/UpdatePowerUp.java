@@ -2,7 +2,6 @@ package de.tu_darmstadt.gdi1.pacman.service;
 
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
-import de.tu_darmstadt.gdi1.pacman.model.SpeedUp;
 
 import java.util.List;
 

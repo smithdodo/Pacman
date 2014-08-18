@@ -1,7 +1,5 @@
 package de.tu_darmstadt.gdi1.pacman.model;
 
-import java.util.List;
-
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
@@ -23,7 +21,7 @@ public abstract class Figur {
 	private boolean isRespawning;
 	private float respawnTimer;//respawn dauert 5000ms
 	
-	protected final float RADIUS = 17.5f;
+	protected final float RADIUS = 16f;
 
 	
 	public Figur(Vector2f startPosition) {

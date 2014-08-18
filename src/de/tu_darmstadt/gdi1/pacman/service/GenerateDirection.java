@@ -3,9 +3,6 @@ package de.tu_darmstadt.gdi1.pacman.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
-
-import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
@@ -176,6 +173,7 @@ public class GenerateDirection {
 				break;
 			}
 		}else {
+			
 			aRandomDirection=forks.get(0);
 
 		}

@@ -1,6 +1,5 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
-import java.awt.Menu;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,6 +25,8 @@ public class Ranking extends BasicGameState{
 	
 	Image backgroundImage;
 	Music backgroundMusic;
+	
+	int gameStateID;//game state that player come from
 
 	public Ranking() {
 		
@@ -49,12 +50,13 @@ public class Ranking extends BasicGameState{
 				line = br.readLine();
 				
 			}
+			br.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		homeMenu = new PButton(350, "HOME");
+		homeMenu = new PButton(350, "Home");
 		tryAgain = new PButton(350, "Try Again");
 		homeMenu.set(200);
 		tryAgain.set(350);
@@ -76,7 +78,7 @@ public class Ranking extends BasicGameState{
 		int i = 0;
 		for(Iterator<String> it=records.iterator();it.hasNext();i++){
 			
-			g.drawString(it.next(), 250, 50+i*20);
+			g.drawString(it.next(), 275, 20+i*22);
 			
 		}
 		
@@ -90,7 +92,7 @@ public class Ranking extends BasicGameState{
 			throws SlickException {
 		
 		homeMenu.update(sbg, gc, Pacman.HOMEMENUE, true);
-		tryAgain.update(sbg, gc, Pacman.GAME, true);
+		tryAgain.update(sbg, gc, this.gameStateID, true);
 		
 		if(!backgroundMusic.playing()&&sbg.isAcceptingInput())
 			backgroundMusic.play();

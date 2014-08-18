@@ -1,7 +1,6 @@
 package de.tu_darmstadt.gdi1.pacman.model;
 
 import java.util.List;
-import java.util.Set;
 
 import org.newdawn.slick.geom.Vector2f;
 

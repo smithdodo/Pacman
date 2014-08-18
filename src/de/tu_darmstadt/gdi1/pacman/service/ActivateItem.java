@@ -138,6 +138,7 @@ public class ActivateItem {
 				c.addScore(200);
 			}else {
 				c.addScore(30);
+				c.reduceDots();
 			}
 			
 			((Item)mapElementArray[aimAtRow][aimAtCol]).setEaten(true);

@@ -6,11 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.lwjgl.Sys;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.pacman.exceptions.*;
@@ -102,7 +100,7 @@ public class MapReader {
 		try {
 
 			BufferedReader br = new BufferedReader(new FileReader(mapFile));
-
+			
 			for (int row = 0; row < height; row++) {
 				// read a line
 				String line = br.readLine();
@@ -113,13 +111,13 @@ public class MapReader {
 				// split all single characters of this string into array
 				char[] elements = line.toCharArray();
 				// save these single characters into mapData array
-
-				// System.out.println(mapData[row].length);
 				for (int col = 0; col < width; col++) {
 					mapElementStringArray[row][col] = String.valueOf(elements[col]);
-
 				}
+				
 			}
+			
+			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
