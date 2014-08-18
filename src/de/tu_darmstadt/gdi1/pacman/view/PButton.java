@@ -10,6 +10,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+
+/**
+ * Game button
+ * Auto change color wenn coursor on button. Enter state
+ * 
+ */
 public class PButton {
 	
 	Shape button;
@@ -24,6 +30,11 @@ public class PButton {
 		
 	}
 	
+	/**
+	 * auto change color wen coursor on button
+	 * @param g
+	 * @param gc
+	 */
 	public void render(Graphics g, GameContainer gc){
 		
 		if(button.contains(gc.getInput().getMouseX(),gc.getInput().getMouseY())){
@@ -39,6 +50,15 @@ public class PButton {
 		
 	}
 	
+	
+	/**
+	 * enter other state with/without initialize target state
+	 * @param sbg
+	 * @param gc
+	 * @param StateID target state ID
+	 * @param reinit initialize target state or not
+	 * @throws SlickException
+	 */
 	public void  update(StateBasedGame sbg, GameContainer gc, int StateID, boolean reinit) throws SlickException {
 				
 		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
