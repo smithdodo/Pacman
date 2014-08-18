@@ -23,6 +23,7 @@ import de.tu_darmstadt.gdi1.pacman.service.CollusionDetect;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateDirection;
 import de.tu_darmstadt.gdi1.pacman.service.RefreshRecord;
 import de.tu_darmstadt.gdi1.pacman.service.RespawnTimer;
+import de.tu_darmstadt.gdi1.pacman.service.Saver;
 import de.tu_darmstadt.gdi1.pacman.service.UpdateGhostPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdatePacmanPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdatePowerUp;
@@ -221,6 +222,13 @@ public class Control {
 			System.out.println("false----");
 			return false;
 		}
+		
+	}
+	
+	public void saveGame() throws IOException{
+		
+		Saver saver = new Saver(this, mapElements, pacman, ghosts);
+		saver.saveGame();
 		
 	}
 

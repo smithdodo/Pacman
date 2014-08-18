@@ -16,10 +16,10 @@ public class Pacman extends Figur {
 
 	
 	public String toString() {
-		String statusString = "current position: " + currentPosition.toString()
-				+ "heading: " + currentDirection + " checkpoint row: "
-				+ checkPointRow + " checkpoint col: " + checkPointCol;
-		return statusString;
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString()).append(" Lives: "+lives).append(" PowerUp: "+isPowerUp);
+		sb.append(" Pacman.");
+		return sb.toString();
 	}
 	
 	public void dead(){

@@ -42,7 +42,7 @@ public abstract class Figur {
 	public String toString(){
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("currentPosition: "+currentPosition.toString()+" checkPointRow: "+checkPointRow+" checkPointCol: "+checkPointCol+" spawnPoint: "+spawnPoint.toString()+" currentDirection: "+currentDirection+" hitBoxX: "+hitBox.getX()+" hitBoxY: "+hitBox.getY()+" respawnTimer: "+respawnTimer);
+		sb.append("currentPositionX: "+currentPosition.x+" currentPositionY: "+currentPosition.y+" checkPointRow: "+checkPointRow+" checkPointCol: "+checkPointCol+" spawnPointR: "+(int)spawnPoint.y/35+" spawnPointC: "+(int)spawnPoint.x/35+" currentDirection: "+currentDirection+" hitBoxX: "+hitBox.getX()+" hitBoxY: "+hitBox.getY()+" respawnTimer: "+respawnTimer);
 		return sb.toString();
 		
 	}

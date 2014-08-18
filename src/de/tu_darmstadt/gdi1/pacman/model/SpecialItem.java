@@ -51,6 +51,7 @@ public abstract class SpecialItem extends Item {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append(" activeTime: "+activeTime+" isAffecting: "+isAffecting);
+		sb.append(" SpecialItem.");
 		return sb.toString();
 		
 	}

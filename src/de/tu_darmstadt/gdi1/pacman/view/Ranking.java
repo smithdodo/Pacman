@@ -97,7 +97,6 @@ public class Ranking extends BasicGameState{
 		if(!backgroundMusic.playing()&&sbg.isAcceptingInput())
 			backgroundMusic.play();
 		
-		
 	}
 
 	@Override

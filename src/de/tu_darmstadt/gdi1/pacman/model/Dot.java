@@ -17,8 +17,9 @@ public class Dot extends Item{
 	public String toString(){
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("positionRow: "+(int)this.getPosition().y/35+" positionCol: "+(int)this.getPosition().x/35+" isEaten: "+isEaten);
+		sb.append(super.toString()).append(" Dot.");
 		return sb.toString();
 		
 	}
+	
 }

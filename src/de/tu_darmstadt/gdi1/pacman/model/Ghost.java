@@ -11,4 +11,13 @@ public class Ghost extends Figur {
 		
 	}
 	
+	@Override
+	public String toString(){
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString()).append(" Ghost.");
+		return sb.toString();
+		
+	}
+	
 }

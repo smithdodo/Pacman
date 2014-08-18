@@ -3,7 +3,6 @@ package de.tu_darmstadt.gdi1.pacman.view;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -68,7 +67,7 @@ public abstract class Game extends BasicGameState {
 			throws SlickException {
 		
 		sbGame=arg1;
-		gContainer=arg0;
+		gContainer=arg0;		
 		
 		this.random=new Random();
 
