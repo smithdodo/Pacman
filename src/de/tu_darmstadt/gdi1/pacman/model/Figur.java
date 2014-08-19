@@ -127,5 +127,9 @@ public abstract class Figur {
 	public Vector2f getSpawnPoint() {
 		return spawnPoint;
 	}
+
+	public void setSpawnPoint(Vector2f spawnPoint) {
+		this.spawnPoint = spawnPoint;
+	}
 	
 }

@@ -31,6 +31,7 @@ import de.tu_darmstadt.gdi1.pacman.service.UpdateSpeedUp;
 
 public class Control {
 	
+	MapReader mapReader;
 	MapElement[][] mapElements;
 	List<Ghost> ghosts;
 	Pacman pacman;
@@ -38,11 +39,9 @@ public class Control {
 	
 	List<SpeedUp> speedUps;
 	List<PowerUp> powerUps;
-	int numOfDots;//number of still eatable dots in map
 
 	Random random;
 	
-	Integer score;
 	Boolean scoreSaved=false;
 	
 	//soundboard
@@ -54,17 +53,17 @@ public class Control {
 	public Control(MapReader mr, List<Ghost> g, Pacman p, Random r) {
 		
 		super();
+		this.mapReader = mr;
 		this.mapElements=mr.getMapData();
 		this.ghosts=g;
 		this.pacman=p;
 		this.random=r;
-		score=new Integer(0);
 		this.pacmanTurnDirection=Direction.STOP;
 		
 		this.speedUps=mr.getSpeedUps();
 		this.powerUps=mr.getPowerUps();
 		//calculate how many dots are there on the map, that pacman must eat
-		this.numOfDots=mr.getDots().size();
+		pacman.setNumOfDots(mr.getDots().size());
 		
 		try {
 			pacman_die_music=new Music("res/soundboard/die.wav");
@@ -156,10 +155,6 @@ public class Control {
 	public void resetTurnDirection(){
 		this.pacmanTurnDirection=Direction.STOP;
 	}
-
-	public void addScore(int s){
-		this.score+=s;
-	}
 	
 	/**
 	 * refresh the highscore records
@@ -177,15 +172,11 @@ public class Control {
 		
 		if(!scoreSaved){
 			
-			rr.refresh(this.score, playerName);
+			rr.refresh(pacman.getScore(), playerName);
 			scoreSaved=true;
 			
 		}
 		
-	}
-	
-	public Integer getScore() {
-		return score;
 	}
 	
 	public boolean isTopTen() throws IOException {
@@ -210,7 +201,7 @@ public class Control {
 			String[] worstRecord = records.get(9).split(" ");
 			int worstScore = Integer.parseInt(worstRecord[1]);
 			
-			return score>worstScore;
+			return pacman.getScore()>worstScore;
 		}else {
 			System.out.println("false----");
 			return false;
@@ -224,20 +215,14 @@ public class Control {
 		saver.saveGame();
 		
 	}
-
-	public void setScore(Integer score) {
-		this.score = score;
-	}
 	
-	public void reduceDots() {
+	
+	public String getMapPath(){
 		
-		this.numOfDots--;
+		return mapReader.getFilePath();
 		
 	}
 
-	public int getNumOfDots() {
-		return numOfDots;
-	}
 	
 
 }

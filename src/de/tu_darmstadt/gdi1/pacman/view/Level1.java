@@ -24,7 +24,7 @@ public class Level1 extends Game{
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		((Game)sbGame.getState(Pacman.Level2)).control.setScore(i);
+		((Game)sbGame.getState(Pacman.Level2)).pacman.setScore(i);
 		System.out.println("level cleared! loading next level...");
 		sbGame.enterState(Pacman.Level2, new FadeOutTransition(), new FadeInTransition());
 		

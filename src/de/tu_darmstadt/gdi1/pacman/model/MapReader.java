@@ -691,5 +691,11 @@ private boolean isDownWalkableG(int i, int j) {
 	public List<Dot> getDots() {
 		return dots;
 	}
+	
+	public String getFilePath(){
+		
+		return mapFile.getPath();
+		
+	}
 
 }

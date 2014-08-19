@@ -52,7 +52,7 @@ public class CollusionDetect {
 					//play music
 					gd.play();
 					//add score
-					c.addScore(500);
+					pacman.setScore(pacman.getScore()+500);
 				}
 			}
 		}else {

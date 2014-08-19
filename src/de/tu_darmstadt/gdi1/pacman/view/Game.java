@@ -38,7 +38,7 @@ public abstract class Game extends BasicGameState {
 	
 	File mapFile = new File("res/levels/testMap.txt");
 	MapReader mapReader;
-	MapElement[][] me;
+	MapElement[][] mapElement;
 	
 	StateBasedGame sbGame;
 	GameContainer gContainer;
@@ -72,7 +72,7 @@ public abstract class Game extends BasicGameState {
 		this.random=new Random();
 
 		mapReader=new MapReader(mapFile);
-		this.me=mapReader.getMapData();
+		this.mapElement=mapReader.getMapData();
 		
 		//initialize pacman on a random spawn point
 		int ps=random.nextInt(mapReader.getPlayerSpawnPoints().size());
@@ -120,6 +120,8 @@ public abstract class Game extends BasicGameState {
 		pacmanImageD=new Image("res/pictures/theme1/entities/P3.png");
 		pacmanImageL=new Image("res/pictures/theme1/entities/P2.png");
 		pacmanImageR=new Image("res/pictures/theme1/entities/P0.png");
+		
+		System.out.println("initilizing state "+getID()+"...");
 				
 	}
 	
@@ -130,7 +132,7 @@ public abstract class Game extends BasicGameState {
 			startTimer-=delta;
 		}else{
 		
-		if(pacman.getLives()>0&&control.getNumOfDots()>0){
+		if(pacman.getLives()>0&&pacman.getNumOfDots()>0){
 		if(pacman.isRespawning()){
 			
 			control.updateRespawnTimer(pacman, delta);	
@@ -176,9 +178,9 @@ public abstract class Game extends BasicGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		}else if (control.getNumOfDots()==0) {
+		}else if (pacman.getNumOfDots()==0) {
 			
-			enterNextLevel(control.getScore());
+			enterNextLevel(pacman.getScore());
 			
 		}
 		
@@ -214,25 +216,25 @@ public abstract class Game extends BasicGameState {
 		
 		//draw score
 		g.setColor(Color.white);
-		g.drawString("Total Score: "+control.getScore().toString(), 520, 10);
+		g.drawString("Total Score: "+pacman.getScore().toString(), 520, 10);
 		
 		g.translate(setoff.x, setoff.y);
 		
 		//draw mapElement textur
 		for (int i = 0; i < mapReader.height; i++) {
 			for (int j = 0; j < mapReader.width; j++) {
-				if(me[i][j] instanceof Wall)
+				if(mapElement[i][j] instanceof Wall)
 					drawWall(i, j, g);
-				else if (me[i][j] instanceof Dot&&!((Dot)me[i][j]).isEaten())
-					g.drawImage(dotImage, me[i][j].getPosition().x, me[i][j].getPosition().y);
-				else if (me[i][j] instanceof SpeedUp&&!((SpeedUp)me[i][j]).isEaten()) 
-					g.drawImage(speedUpImage, me[i][j].getPosition().x, me[i][j].getPosition().y);
-				else if (me[i][j] instanceof PowerUp&&!((PowerUp)me[i][j]).isEaten()) 
-					g.drawImage(powerUpImage, me[i][j].getPosition().x, me[i][j].getPosition().y);
-				else if (me[i][j] instanceof Teleporter) 
-					g.drawImage(teleporterImage, me[i][j].getPosition().x, me[i][j].getPosition().y);
+				else if (mapElement[i][j] instanceof Dot&&!((Dot)mapElement[i][j]).isEaten())
+					g.drawImage(dotImage, mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
+				else if (mapElement[i][j] instanceof SpeedUp&&!((SpeedUp)mapElement[i][j]).isEaten()) 
+					g.drawImage(speedUpImage, mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
+				else if (mapElement[i][j] instanceof PowerUp&&!((PowerUp)mapElement[i][j]).isEaten()) 
+					g.drawImage(powerUpImage, mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
+				else if (mapElement[i][j] instanceof Teleporter) 
+					g.drawImage(teleporterImage, mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				else {
-					g.drawImage(invisibleWallImage, me[i][j].getPosition().x, me[i][j].getPosition().y);
+					g.drawImage(invisibleWallImage, mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				}
 			}
 			
@@ -319,54 +321,54 @@ public abstract class Game extends BasicGameState {
 	 */
 	private void drawWall(int i, int j, Graphics g){
 		
-			switch (((Wall) me[i][j]).getType()) {
+			switch (((Wall) mapElement[i][j]).getType()) {
 			case ALONE:
-				g.drawImage(wallImages.get(0), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(0), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case U:
-				g.drawImage(wallImages.get(1), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(1), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case R:
-				g.drawImage(wallImages.get(2), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(2), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case UR:
-				g.drawImage(wallImages.get(3), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(3), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case D:
-				g.drawImage(wallImages.get(4), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(4), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case UD:
-				g.drawImage(wallImages.get(5), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(5), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case DR:
-				g.drawImage(wallImages.get(6), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(6), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case UDR:
-				g.drawImage(wallImages.get(7), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(7), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case L:
-				g.drawImage(wallImages.get(8), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(8), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case UL:
-				g.drawImage(wallImages.get(9), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(9), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case LR:
-				g.drawImage(wallImages.get(10), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(10), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case ULR:
-				g.drawImage(wallImages.get(11), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(11), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case DL:
-				g.drawImage(wallImages.get(12), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(12), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case UDL:
-				g.drawImage(wallImages.get(13), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(13), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case DLR:
-				g.drawImage(wallImages.get(14), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(14), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			case UDLR:
-				g.drawImage(wallImages.get(15), me[i][j].getPosition().x, me[i][j].getPosition().y);
+				g.drawImage(wallImages.get(15), mapElement[i][j].getPosition().x, mapElement[i][j].getPosition().y);
 				break;
 			default:
 				break;
@@ -405,6 +407,19 @@ public abstract class Game extends BasicGameState {
 
 	public void setMapReader(MapReader mapReader) {
 		this.mapReader = mapReader;
+	}
+
+	public MapElement[][] getMapElement() {
+		System.out.println("returning mapelement from state->"+getID());
+		return mapElement;
+	}
+
+	public de.tu_darmstadt.gdi1.pacman.model.Pacman getPacman() {
+		return pacman;
+	}
+
+	public List<Ghost> getGhosts() {
+		return ghosts;
 	}
 	
 }

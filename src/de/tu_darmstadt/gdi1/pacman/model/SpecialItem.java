@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class SpecialItem extends Item {
 
-	protected long activeTime;
+	protected float activeTime;
 	protected boolean isAffecting;//is item affecting Pacman/Ghost
 	private float SpeedUpFactor;//new speed will be SpeedUpFactor*normal speed
 	
@@ -18,11 +18,11 @@ public abstract class SpecialItem extends Item {
 		
 		}
 		
-	public long getActiveTime() {
+	public float getActiveTime() {
 		return activeTime;
 	}
 
-	public void setActiveTime(long activeTime) {
+	public void setActiveTime(float activeTime) {
 		this.activeTime = activeTime;
 		isAffecting=true;
 	}
@@ -54,5 +54,9 @@ public abstract class SpecialItem extends Item {
 		sb.append(" SpecialItem.");
 		return sb.toString();
 		
+	}
+
+	public void setAffecting(boolean isAffecting) {
+		this.isAffecting = isAffecting;
 	}
 }

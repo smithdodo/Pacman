@@ -12,7 +12,6 @@ import de.tu_darmstadt.gdi1.pacman.model.Dot;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.SpecialItem;
-import de.tu_darmstadt.gdi1.pacman.view.Pacman;
 
 public class Saver {
 	
@@ -45,6 +44,7 @@ public class Saver {
 	public void saveGame() throws IOException{
 		
 		List<String> gameData=new ArrayList<>();
+		gameData.add(controller.getMapPath());
 		for(int i=0;i<height;i++){
 			for (int j = 0; j < width; j++) {
 				if (mapElements[i][j] instanceof Dot||mapElements[i][j] instanceof SpecialItem) {

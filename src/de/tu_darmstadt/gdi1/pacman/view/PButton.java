@@ -13,6 +13,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import de.tu_darmstadt.gdi1.pacman.control.Control;
+import de.tu_darmstadt.gdi1.pacman.control.Loader;
 
 
 /**
@@ -96,6 +97,19 @@ public class PButton {
 			
 		}
 		
+	}
+	
+	public void updateLoader(StateBasedGame sbg, GameContainer gc) throws IOException{
+		
+		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
+				.getMouseY())
+				&& gc.getInput().isMousePressed(0)){
+			
+			Loader loader=new Loader(sbg);
+			loader.loadGame();
+			sbg.enterState(loader.getTargetState().getID(), new FadeOutTransition(), new FadeInTransition());
+			
+		}
 		
 	}
 	

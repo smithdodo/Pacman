@@ -135,10 +135,10 @@ public class ActivateItem {
 					specialItem.play();
 				}
 				//add score
-				c.addScore(200);
+				pacman.setScore(pacman.getScore()+200);
 			}else {
-				c.addScore(30);
-				c.reduceDots();
+				pacman.setScore(pacman.getScore()+30);
+				pacman.setNumOfDots(pacman.getNumOfDots()-1);
 			}
 			
 			((Item)mapElementArray[aimAtRow][aimAtCol]).setEaten(true);

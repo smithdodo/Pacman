@@ -36,11 +36,9 @@ public class UpdatePowerUp {
 				}
 			}
 		}
-		if(flag){
 			
-			pacman.setPowerUp(true);
-			
-		}
+			pacman.setPowerUp(flag);
+		
 	}
 
 }

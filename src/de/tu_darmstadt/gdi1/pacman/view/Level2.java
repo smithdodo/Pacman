@@ -23,7 +23,7 @@ public class Level2 extends Game{
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		((Game)sbGame.getState(Pacman.Level3)).control.setScore(i);
+		((Game)sbGame.getState(Pacman.Level3)).pacman.setScore(i);
 		sbGame.enterState(Pacman.Level3, new FadeOutTransition(), new FadeInTransition());
 
 	}
