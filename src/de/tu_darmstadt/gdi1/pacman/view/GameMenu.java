@@ -15,6 +15,7 @@ public class GameMenu extends BasicGameState {
 	PButton homeMenuButton;
 	PButton resumeButton;
 	PButton saveButton;
+	PButton exit;
 	
 	public int gameStateID;//game state that this pause menu belongs to
 
@@ -28,6 +29,8 @@ public class GameMenu extends BasicGameState {
 		homeMenuButton = new PButton(95,"Home");
 		resumeButton = new PButton(150,"Resume");
 		saveButton = new PButton(205, "Save Game");
+		exit = new PButton(350,"EXIT");
+		exit.set(450);
 		background = new Image("res/pictures/theme1/ui/background.jpg");
 	}
 
@@ -48,6 +51,9 @@ public class GameMenu extends BasicGameState {
 		
 		//draw save game button
 		saveButton.render(g, gc);
+		
+		//draw exit button
+		exit.render(g, gc);
 
 	}
 
@@ -70,6 +76,9 @@ public class GameMenu extends BasicGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//exit game
+		exit.updateExit(gc);
 
 	}
 

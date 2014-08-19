@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.newdawn.slick.geom.Vector2f;
 
@@ -39,6 +40,11 @@ public class MapReader {
 	private List<PowerUp> powerUps;
 	private List<SpeedUp> speedUps;
 	private List<Teleporter> teleporters;
+	
+	private Random random=new Random();
+	
+	private Pacman pacman;
+	private List<Ghost> ghosts;
 
 	public MapReader(File mapFile) {
 
@@ -55,6 +61,17 @@ public class MapReader {
 		initMapData();
 		intElementCoordinates();
 		isAllAreaAchievable();
+		
+		//initialize pacman on a random spawn point
+		int ps=random.nextInt(getPlayerSpawnPoints().size());
+		Vector2f aPlayerStartPoint=getPlayerSpawnPoints().get(ps).getPosition();
+		this.pacman=new de.tu_darmstadt.gdi1.pacman.model.Pacman(aPlayerStartPoint);
+		
+		//initiallize ghosts
+		ghosts=new ArrayList<>();
+		for (int i=0; i < getGhostSpawnPoints().size(); i++) {
+			ghosts.add(new Ghost(getGhostSpawnPoints().get(i).getPosition()));
+		}
 
 	}
 	
@@ -696,6 +713,22 @@ private boolean isDownWalkableG(int i, int j) {
 		
 		return mapFile.getPath();
 		
+	}
+
+	public Pacman getPacman() {
+		return pacman;
+	}
+
+	public List<Ghost> getGhosts() {
+		return ghosts;
+	}
+
+	public String[][] getMapElementStringArray() {
+		return mapElementStringArray;
+	}
+
+	public void setMapElementStringArray(String[][] mapElementStringArray) {
+		this.mapElementStringArray = mapElementStringArray;
 	}
 
 }

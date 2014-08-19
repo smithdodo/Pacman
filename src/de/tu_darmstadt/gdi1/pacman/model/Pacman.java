@@ -54,9 +54,7 @@ public class Pacman extends Figur {
 
 
 	public void setScore(Integer score) {
-		System.out.println("set as->"+score);
 		this.score = score;
-		System.out.println("now->"+this.score);
 	}
 
 

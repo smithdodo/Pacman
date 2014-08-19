@@ -74,22 +74,14 @@ public abstract class Game extends BasicGameState {
 		mapReader=new MapReader(mapFile);
 		this.mapElement=mapReader.getMapData();
 		
-		//initialize pacman on a random spawn point
-		int ps=random.nextInt(mapReader.getPlayerSpawnPoints().size());
-		Vector2f aPlayerStartPoint=mapReader.getPlayerSpawnPoints().get(ps).getPosition();
-		this.pacman=new de.tu_darmstadt.gdi1.pacman.model.Pacman(aPlayerStartPoint);
-		
-		//initiallize ghosts
-		ghosts=new ArrayList<>();
-		for (int i=0; i < mapReader.getGhostSpawnPoints().size(); i++) {
-			ghosts.add(new Ghost(mapReader.getGhostSpawnPoints().get(i).getPosition()));
-		}
+		this.pacman=mapReader.getPacman();
+		this.ghosts=mapReader.getGhosts();
 		
 		control=new Control(mapReader, ghosts, pacman,random);
 		
 		//define randering setoff
 		setoff=new Vector2f((700-mapReader.width_on_display)/2-17.5f,30+(420-mapReader.height_on_display)/2-17.5f);
-		
+
 		isPlaying=true;
 		
 		//initiallize texturs
@@ -130,11 +122,13 @@ public abstract class Game extends BasicGameState {
 			throws SlickException {
 		if(startTimer>0){
 			startTimer-=delta;
+			gc.getInput().clearKeyPressedRecord();
 		}else{
 		
 		if(pacman.getLives()>0&&pacman.getNumOfDots()>0){
 		if(pacman.isRespawning()){
-			
+		
+			gc.getInput().clearKeyPressedRecord();
 			control.updateRespawnTimer(pacman, delta);	
 			
 		}else{

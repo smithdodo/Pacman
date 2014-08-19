@@ -13,21 +13,22 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class HomeMenu extends BasicGameState{
 	
-	PButton enterLevel1;
-	PButton enterLevel2;
-	PButton enterLevel3;
-	PButton loadButton;
+	PButton newGame;
+	PButton reloadGame;
+	PButton ranking;
+	PButton exit;
 	Image backgroundImage;
-	Music backgroundMusic;
+	static Music backgroundMusic;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		
-		enterLevel1=new PButton(20, "Level 1");
-		enterLevel2=new PButton(70, "Level 2");
-		enterLevel3=new PButton(120, "Level 3");
-		loadButton=new PButton(170, "Load Game");
+		newGame=new PButton(20, "NEW GAME");
+		reloadGame=new PButton(70, "RELOAD");
+		ranking=new PButton(120, "HIGH SCORE");
+		exit = new PButton(350,"EXIT");
+		exit.set(450);
 		backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
 		backgroundMusic=new Music("res/soundboard/intro.wav");
 
@@ -38,15 +39,15 @@ public class HomeMenu extends BasicGameState{
 			throws SlickException {
 		
 		//start game
-		enterLevel1.update(sbg, gc, Pacman.Level1, true);
-		enterLevel2.update(sbg, gc, Pacman.Level2, true);
-		enterLevel3.update(sbg, gc, Pacman.Level3, true);
-		
+		newGame.update(sbg, gc, Pacman.NEWGAMEMENU, true);
 		try {
-			loadButton.updateLoader(sbg, gc);
+			reloadGame.updateLoader(sbg, gc);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		ranking.update(sbg, gc, Pacman.RANKING, true);
+		exit.updateExit(gc);
 		
 		if(!backgroundMusic.playing()&&sbg.isAcceptingInput())
 			backgroundMusic.play();
@@ -59,11 +60,10 @@ public class HomeMenu extends BasicGameState{
 	
 		g.drawImage(backgroundImage,0,0,700,435,0,0,1400,870);
 		
-		enterLevel1.render(g, gc);
-		enterLevel2.render(g, gc);
-		enterLevel3.render(g, gc);
-		loadButton.render(g, gc);
-		
+		newGame.render(g, gc);
+		reloadGame.render(g, gc);
+		ranking.render(g, gc);
+		exit.render(g, gc);
 	}
 
 	@Override

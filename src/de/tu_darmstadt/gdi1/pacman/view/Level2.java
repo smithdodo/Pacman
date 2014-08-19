@@ -19,7 +19,7 @@ public class Level2 extends Game{
 	protected void enterNextLevel(Integer i) {
 
 		try {
-			sbGame.getState(Pacman.Level2).init(gContainer, sbGame);
+			sbGame.getState(Pacman.Level3).init(gContainer, sbGame);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
