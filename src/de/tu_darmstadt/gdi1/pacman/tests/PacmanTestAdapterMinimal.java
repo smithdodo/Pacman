@@ -378,9 +378,13 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
 		
+		control.PacmanEatItem();
+		if(!removeGhost)
+			 control.collisionDetect();
+		
 		switch (pacman.getCurrentDirection()) {
 		case LEFT:
-			if(upp.canTurnToDirection(Direction.LEFT)){
+			if(upp.canTurnToDirection(Direction.LEFT)||upp.canTurnToDirection(control.getBlickRichtung())){
 				int t=pacman.getCheckPointCol();
 				float destination=me[pacman.getCheckPointRow()][(pacman.getCheckPointCol()-1)%(mapReader.getWidth()-1)].getPosition().x;
 				while (pacman.getCurrentPosition().x!=destination) {
@@ -391,7 +395,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 			}
 			break;
 		case RIGHT:
-			if(upp.canTurnToDirection(Direction.RIGHT)){
+			if(upp.canTurnToDirection(Direction.RIGHT)||upp.canTurnToDirection(control.getBlickRichtung())){
 				int t=pacman.getCheckPointCol();
 				float destination=me[pacman.getCheckPointRow()][(pacman.getCheckPointCol()+1)%(mapReader.getWidth()-1)].getPosition().x;
 				while (pacman.getCurrentPosition().x!=destination) {
@@ -402,7 +406,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 			}
 			break;
 		case UP:
-			if(upp.canTurnToDirection(Direction.UP)){
+			if(upp.canTurnToDirection(Direction.UP)||upp.canTurnToDirection(control.getBlickRichtung())){
 				int t=pacman.getCheckPointRow();
 				float destination=me[(pacman.getCheckPointRow()-1)%(mapReader.getHeight()-1)][pacman.getCheckPointCol()].getPosition().y;
 				while (pacman.getCurrentPosition().y!=destination) {
@@ -413,7 +417,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 			}
 			break;
 		case DOWN:
-			if(upp.canTurnToDirection(Direction.DOWN)){
+			if(upp.canTurnToDirection(Direction.DOWN)||upp.canTurnToDirection(control.getBlickRichtung())){
 				int t=pacman.getCheckPointRow();
 				float destination=me[(pacman.getCheckPointRow()+1)%(mapReader.getHeight()-1)][pacman.getCheckPointCol()].getPosition().y;
 				while (pacman.getCurrentPosition().y!=destination) {
@@ -454,9 +458,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 			}
 		}
 		
-		control.PacmanEatItem();
-		if(!removeGhost)
-			 control.collisionDetect();
+		
 		
 		for(Ghost g:control.getGhosts()){
 //			control.updatePowerUp(1);
@@ -519,6 +521,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 			
 		}
 		
+		control.PacmanEatItem();//check if pacman has eaten dot 
 		if(!removeGhost)
 			 control.collisionDetect();
 		
