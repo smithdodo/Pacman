@@ -1,51 +1,109 @@
-res/levels/randomMap.txt
-positionRow: 0 positionCol: 2 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 0 positionCol: 3 isEaten: false Dot.
-positionRow: 0 positionCol: 6 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 0 positionCol: 7 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 1 positionCol: 5 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
+res/levels/Extended 3.txt
+positionRow: 0 positionCol: 10 isEaten: false Dot.
+positionRow: 1 positionCol: 1 isEaten: false activeTime: -1.0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 2 isEaten: false Dot.
+positionRow: 1 positionCol: 3 isEaten: false Dot.
+positionRow: 1 positionCol: 4 isEaten: false Dot.
 positionRow: 1 positionCol: 6 isEaten: false Dot.
-positionRow: 1 positionCol: 7 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 2 positionCol: 0 isEaten: false Dot.
-positionRow: 2 positionCol: 5 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 2 positionCol: 6 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 2 positionCol: 8 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 2 positionCol: 9 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 7 isEaten: false Dot.
+positionRow: 1 positionCol: 8 isEaten: false Dot.
+positionRow: 1 positionCol: 9 isEaten: false Dot.
+positionRow: 1 positionCol: 10 isEaten: false Dot.
+positionRow: 1 positionCol: 11 isEaten: false activeTime: -1.0 isAffecting: false SpecialItem.
+positionRow: 1 positionCol: 12 isEaten: false Dot.
+positionRow: 1 positionCol: 13 isEaten: false Dot.
+positionRow: 1 positionCol: 14 isEaten: false Dot.
+positionRow: 1 positionCol: 15 isEaten: false Dot.
+positionRow: 1 positionCol: 16 isEaten: false Dot.
+positionRow: 1 positionCol: 17 isEaten: false Dot.
+positionRow: 2 positionCol: 1 isEaten: false Dot.
+positionRow: 2 positionCol: 4 isEaten: false Dot.
+positionRow: 2 positionCol: 6 isEaten: false Dot.
+positionRow: 2 positionCol: 17 isEaten: false Dot.
+positionRow: 2 positionCol: 19 isEaten: false Dot.
 positionRow: 3 positionCol: 1 isEaten: false Dot.
-positionRow: 4 positionCol: 5 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 4 positionCol: 6 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 5 positionCol: 0 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 5 positionCol: 2 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 5 positionCol: 7 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 5 positionCol: 8 isEaten: false Dot.
-positionRow: 5 positionCol: 9 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 6 positionCol: 0 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
+positionRow: 3 positionCol: 4 isEaten: false Dot.
+positionRow: 3 positionCol: 5 isEaten: false Dot.
+positionRow: 3 positionCol: 6 isEaten: false Dot.
+positionRow: 3 positionCol: 7 isEaten: false Dot.
+positionRow: 3 positionCol: 8 isEaten: false Dot.
+positionRow: 3 positionCol: 9 isEaten: false Dot.
+positionRow: 3 positionCol: 10 isEaten: false Dot.
+positionRow: 3 positionCol: 11 isEaten: false Dot.
+positionRow: 3 positionCol: 12 isEaten: false Dot.
+positionRow: 3 positionCol: 13 isEaten: false Dot.
+positionRow: 3 positionCol: 14 isEaten: false Dot.
+positionRow: 3 positionCol: 15 isEaten: false Dot.
+positionRow: 3 positionCol: 16 isEaten: false Dot.
+positionRow: 3 positionCol: 19 isEaten: false Dot.
+positionRow: 4 positionCol: 1 isEaten: false Dot.
+positionRow: 4 positionCol: 3 isEaten: true Dot.
+positionRow: 4 positionCol: 6 isEaten: false Dot.
+positionRow: 4 positionCol: 10 isEaten: false Dot.
+positionRow: 4 positionCol: 14 isEaten: false Dot.
+positionRow: 4 positionCol: 17 isEaten: false Dot.
+positionRow: 4 positionCol: 19 isEaten: false Dot.
+positionRow: 5 positionCol: 0 isEaten: false Dot.
+positionRow: 5 positionCol: 1 isEaten: false Dot.
+positionRow: 5 positionCol: 2 isEaten: false Dot.
+positionRow: 5 positionCol: 3 isEaten: true Dot.
+positionRow: 5 positionCol: 4 isEaten: true Dot.
+positionRow: 5 positionCol: 5 isEaten: true Dot.
+positionRow: 5 positionCol: 6 isEaten: true Dot.
+positionRow: 5 positionCol: 10 isEaten: false Dot.
+positionRow: 5 positionCol: 14 isEaten: false Dot.
+positionRow: 5 positionCol: 15 isEaten: false Dot.
+positionRow: 5 positionCol: 16 isEaten: false Dot.
+positionRow: 5 positionCol: 17 isEaten: false Dot.
+positionRow: 5 positionCol: 18 isEaten: false Dot.
+positionRow: 5 positionCol: 19 isEaten: false Dot.
+positionRow: 5 positionCol: 20 isEaten: false Dot.
 positionRow: 6 positionCol: 1 isEaten: false Dot.
 positionRow: 6 positionCol: 3 isEaten: false Dot.
-positionRow: 6 positionCol: 6 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 6 positionCol: 7 isEaten: false Dot.
-positionRow: 6 positionCol: 8 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 7 positionCol: 0 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 7 positionCol: 1 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 7 positionCol: 3 isEaten: false Dot.
-positionRow: 7 positionCol: 4 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
+positionRow: 6 positionCol: 6 isEaten: true Dot.
+positionRow: 6 positionCol: 10 isEaten: false Dot.
+positionRow: 6 positionCol: 14 isEaten: false Dot.
+positionRow: 6 positionCol: 17 isEaten: false Dot.
+positionRow: 6 positionCol: 19 isEaten: false Dot.
+positionRow: 7 positionCol: 1 isEaten: false Dot.
+positionRow: 7 positionCol: 4 isEaten: false Dot.
+positionRow: 7 positionCol: 5 isEaten: false Dot.
 positionRow: 7 positionCol: 6 isEaten: false Dot.
-positionRow: 7 positionCol: 7 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 8 positionCol: 3 isEaten: false activeTime: 0.0 isAffecting: false SpecialItem.
-positionRow: 8 positionCol: 6 isEaten: false Dot.
-positionRow: 8 positionCol: 9 isEaten: false Dot.
-currentPositionX: 105.0 currentPositionY: 140.0 checkPointRow: 4 checkPointCol: 3 spawnPointR: 4 spawnPointC: 3 currentDirection: RIGHT hitBoxX: 105.0 hitBoxY: 140.0 respawnTimer: 0.0 Lives: 3 PowerUp: false restDots: 12 totalScore: 0 Pacman.
-currentPositionX: 140.0 currentPositionY: 280.0 checkPointRow: 8 checkPointCol: 4 spawnPointR: 0 spawnPointC: 4 currentDirection: UP hitBoxX: 140.0 hitBoxY: 280.0 respawnTimer: 0.0 Ghost.
-currentPositionX: 35.0 currentPositionY: 32.75 checkPointRow: 0 checkPointCol: 1 spawnPointR: 1 spawnPointC: 1 currentDirection: UP hitBoxX: 35.0 hitBoxY: 32.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 140.0 currentPositionY: 32.75 checkPointRow: 0 checkPointCol: 4 spawnPointR: 1 spawnPointC: 4 currentDirection: UP hitBoxX: 140.0 hitBoxY: 32.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 280.0 currentPositionY: 32.75 checkPointRow: 0 checkPointCol: 8 spawnPointR: 1 spawnPointC: 8 currentDirection: UP hitBoxX: 280.0 hitBoxY: 32.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 35.0 currentPositionY: 67.75 checkPointRow: 1 checkPointCol: 1 spawnPointR: 2 spawnPointC: 1 currentDirection: UP hitBoxX: 35.0 hitBoxY: 67.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 245.0 currentPositionY: 67.75 checkPointRow: 1 checkPointCol: 7 spawnPointR: 2 spawnPointC: 7 currentDirection: UP hitBoxX: 245.0 hitBoxY: 67.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 0.0 currentPositionY: 102.75 checkPointRow: 2 checkPointCol: 0 spawnPointR: 3 spawnPointC: 0 currentDirection: UP hitBoxX: 0.0 hitBoxY: 102.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 175.0 currentPositionY: 107.25 checkPointRow: 4 checkPointCol: 5 spawnPointR: 3 spawnPointC: 5 currentDirection: DOWN hitBoxX: 175.0 hitBoxY: 107.25 respawnTimer: 0.0 Ghost.
-currentPositionX: 0.0 currentPositionY: 105.0 checkPointRow: 3 checkPointCol: 0 spawnPointR: 3 spawnPointC: 9 currentDirection: RIGHT hitBoxX: 0.0 hitBoxY: 105.0 respawnTimer: 0.0 Ghost.
-currentPositionX: 210.0 currentPositionY: 172.75 checkPointRow: 4 checkPointCol: 6 spawnPointR: 5 spawnPointC: 6 currentDirection: UP hitBoxX: 210.0 hitBoxY: 172.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 72.25 currentPositionY: 210.0 checkPointRow: 6 checkPointCol: 3 spawnPointR: 6 spawnPointC: 2 currentDirection: RIGHT hitBoxX: 72.25 hitBoxY: 210.0 respawnTimer: 0.0 Ghost.
-currentPositionX: 282.25 currentPositionY: 245.0 checkPointRow: 7 checkPointCol: 9 spawnPointR: 7 spawnPointC: 8 currentDirection: RIGHT hitBoxX: 282.25 hitBoxY: 245.0 respawnTimer: 0.0 Ghost.
-currentPositionX: 0.0 currentPositionY: 277.75 checkPointRow: 7 checkPointCol: 0 spawnPointR: 8 spawnPointC: 0 currentDirection: UP hitBoxX: 0.0 hitBoxY: 277.75 respawnTimer: 0.0 Ghost.
-currentPositionX: 35.0 currentPositionY: 277.75 checkPointRow: 7 checkPointCol: 1 spawnPointR: 8 spawnPointC: 1 currentDirection: UP hitBoxX: 35.0 hitBoxY: 277.75 respawnTimer: 0.0 Ghost.
+positionRow: 7 positionCol: 7 isEaten: false Dot.
+positionRow: 7 positionCol: 8 isEaten: false Dot.
+positionRow: 7 positionCol: 9 isEaten: false Dot.
+positionRow: 7 positionCol: 10 isEaten: false Dot.
+positionRow: 7 positionCol: 11 isEaten: false Dot.
+positionRow: 7 positionCol: 12 isEaten: false Dot.
+positionRow: 7 positionCol: 13 isEaten: false Dot.
+positionRow: 7 positionCol: 14 isEaten: false Dot.
+positionRow: 7 positionCol: 15 isEaten: false Dot.
+positionRow: 7 positionCol: 16 isEaten: false Dot.
+positionRow: 7 positionCol: 19 isEaten: false Dot.
+positionRow: 8 positionCol: 1 isEaten: false Dot.
+positionRow: 8 positionCol: 3 isEaten: false Dot.
+positionRow: 8 positionCol: 14 isEaten: false Dot.
+positionRow: 8 positionCol: 16 isEaten: false Dot.
+positionRow: 8 positionCol: 19 isEaten: false Dot.
+positionRow: 9 positionCol: 3 isEaten: false Dot.
+positionRow: 9 positionCol: 4 isEaten: false Dot.
+positionRow: 9 positionCol: 5 isEaten: false Dot.
+positionRow: 9 positionCol: 6 isEaten: false Dot.
+positionRow: 9 positionCol: 7 isEaten: false Dot.
+positionRow: 9 positionCol: 8 isEaten: false Dot.
+positionRow: 9 positionCol: 9 isEaten: false activeTime: -1.0 isAffecting: false SpecialItem.
+positionRow: 9 positionCol: 10 isEaten: false Dot.
+positionRow: 9 positionCol: 11 isEaten: false Dot.
+positionRow: 9 positionCol: 12 isEaten: false Dot.
+positionRow: 9 positionCol: 13 isEaten: false Dot.
+positionRow: 9 positionCol: 14 isEaten: false Dot.
+positionRow: 9 positionCol: 16 isEaten: false Dot.
+positionRow: 9 positionCol: 17 isEaten: false Dot.
+positionRow: 9 positionCol: 18 isEaten: false Dot.
+positionRow: 9 positionCol: 19 isEaten: false activeTime: -1.0 isAffecting: false SpecialItem.
+positionRow: 10 positionCol: 10 isEaten: false Dot.
+currentPositionX: 105.0 currentPositionY: 105.0 checkPointRow: 3 checkPointCol: 3 spawnPointR: 3 spawnPointC: 3 currentDirection: STOP hitBoxX: 105.0 hitBoxY: 105.0 respawnTimer: 5000.0 Lives: 2 PowerUp: false restDots: 93 totalScore: 7100 Pacman.
+currentPositionX: 285.09998 currentPositionY: 175.0 checkPointRow: 5 checkPointCol: 9 spawnPointR: 5 spawnPointC: 8 currentDirection: RIGHT hitBoxX: 285.09998 hitBoxY: 175.0 respawnTimer: 0.0 Ghost.
+currentPositionX: 309.90002 currentPositionY: 175.0 checkPointRow: 5 checkPointCol: 8 spawnPointR: 5 spawnPointC: 9 currentDirection: LEFT hitBoxX: 309.90002 hitBoxY: 175.0 respawnTimer: 0.0 Ghost.
+currentPositionX: 379.90002 currentPositionY: 175.0 checkPointRow: 5 checkPointCol: 10 spawnPointR: 5 spawnPointC: 11 currentDirection: LEFT hitBoxX: 379.90002 hitBoxY: 175.0 respawnTimer: 0.0 Ghost.
+currentPositionX: 414.90002 currentPositionY: 175.0 checkPointRow: 5 checkPointCol: 11 spawnPointR: 5 spawnPointC: 12 currentDirection: LEFT hitBoxX: 414.90002 hitBoxY: 175.0 respawnTimer: 0.0 Ghost.
