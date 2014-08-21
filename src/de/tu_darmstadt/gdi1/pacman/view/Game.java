@@ -178,7 +178,7 @@ public abstract class Game extends BasicGameState {
 			isPlaying=false;		
 		
 		try {
-			if(!isPlaying&&control.isTopTen()){
+			if(!isPlaying&&control.isTop20()){
 				
 				arg1.pauseUpdate();
 				NameListner nl = new NameListner();

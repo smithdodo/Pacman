@@ -174,7 +174,7 @@ public class Control {
 		
 	}
 	
-	public boolean isTopTen() throws IOException {
+	public boolean isTop20() throws IOException {
 		
 		FileReader fr=new FileReader(new File("res/levels/records.txt"));
 		BufferedReader br=new BufferedReader(fr);
@@ -187,13 +187,13 @@ public class Control {
 		}
 		br.close();
 		
-		if(records.size()<10){
+		if(records.size()<20){
 			
 			return true;
 			
-		}else if(records.size()==10){
+		}else if(records.size()==20){
 			
-			String[] worstRecord = records.get(9).split(" ");
+			String[] worstRecord = records.get(19).split(" ");
 			int worstScore = Integer.parseInt(worstRecord[1]);
 			
 			return pacman.getScore()>worstScore;

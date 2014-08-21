@@ -73,68 +73,69 @@ public class GenerateDirection {
 	private boolean noticedPacman(){
 		
 		boolean result=false;
-		
-		switch (currentDirection) {
-		
-		case LEFT:
+			
+		//is pacman on left
 			if(pacman.getCurrentPosition().y==ghost.getCurrentPosition().y&&pacman.getCurrentPosition().x<ghost.getCurrentPosition().x){
 				while (checkPointCol>0&&mapElementArray[checkPointRow][checkPointCol-1] instanceof Road) {
 					checkPointCol--;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().x<=pacman.getCurrentPosition().x){
 						result=true;
+						currentDirection=Direction.LEFT;
 					}
 				}
-				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x<=pacman.getCurrentPosition().x)
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x<=pacman.getCurrentPosition().x){
 					result=true;
+					currentDirection=Direction.LEFT;
+				}
 			}
 			
-			return result;
-		
-		case RIGHT:
+		//is pacman on right
 			if(pacman.getCurrentPosition().y==ghost.getCurrentPosition().y&&pacman.getCurrentPosition().x>ghost.getCurrentPosition().x){
 				while (checkPointCol<width-1&&mapElementArray[checkPointRow][checkPointCol+1] instanceof Road) {
 					checkPointCol++;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().x>=pacman.getCurrentPosition().x){
 						result=true;
+						currentDirection=Direction.RIGHT;
 					}
 				}
-				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x>=pacman.getCurrentPosition().x)
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x>=pacman.getCurrentPosition().x){
 					result=true;
+					currentDirection=Direction.RIGHT;
+				}
 			}
 			
-			return result;
-			
-		case UP:
+			//is pacman on up
 			if (pacman.getCurrentPosition().x==ghost.getCurrentPosition().x&&pacman.getCurrentPosition().y<ghost.getCurrentPosition().y) {
 				while(checkPointRow>0&&mapElementArray[checkPointRow-1][checkPointCol] instanceof Road){
 					checkPointRow--;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().y<=pacman.getCurrentPosition().y){
 						result=true;
+						currentDirection=Direction.UP;
 					}
 				}
-				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y<=pacman.getCurrentPosition().y)
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y<=pacman.getCurrentPosition().y){
 					result=true;
+					currentDirection=Direction.UP;
+				}
 			}
 			
-			return result;
-			
-		case DOWN:
+			//is pacman on down
 			if (pacman.getCurrentPosition().x==ghost.getCurrentPosition().x&&pacman.getCurrentPosition().y>ghost.getCurrentPosition().y) {
 				while(checkPointRow<height-1&&mapElementArray[checkPointRow+1][checkPointCol] instanceof Road){
 					checkPointRow++;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().y>=pacman.getCurrentPosition().y){
 						result=true;
+						currentDirection=Direction.DOWN;
 					}
 				}
-				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y>=pacman.getCurrentPosition().y)
+				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y>=pacman.getCurrentPosition().y){
 					result=true;
+					currentDirection=Direction.DOWN;
+				}
 			}
 			
 			return result;
 
-		default:
-			return result;
-		}
 	}
 	
 	/**

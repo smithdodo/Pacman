@@ -312,6 +312,7 @@ public class PacmanTestsuiteMinimal {
 
 	@Test
 	public void testSpawn2() {
+		
 		uut.startGame("XXXXXXXXXXXXX\nX     P   X X\nX         X X\nX         X X\nX     G     X\nXXXXXXXXXXXXX");
 		Point p = uut.getPacmanPosition();
 		Point g = uut.getGhostPosition();

@@ -30,6 +30,8 @@ import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
 import de.tu_darmstadt.gdi1.pacman.model.Road;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateDirection;
+import de.tu_darmstadt.gdi1.pacman.service.UpdateFigurPosition;
+import de.tu_darmstadt.gdi1.pacman.service.UpdateGhostPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdatePacmanPosition;
 
 public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
@@ -37,6 +39,10 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 	public Control control;
 	boolean removeGhost=false;//if true, controller will not check collusion between ghost and pacman
 	MapReader mapReader;
+	boolean turnDown=false;
+	boolean turnUp=false;
+	boolean turnLeft=false;
+	boolean turnRight=false;
 	public PacmanTestAdapterMinimal() {
 		
 	}
@@ -237,18 +243,11 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		Pacman pacman=control.getPacman();
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
 		
-		if(upp.canTurnToDirection(Direction.UP)){
+		if(upp.canTurnToDirection(Direction.UP)&&!turnUp){
 			
-			if(control.getBlickRichtung()!=Direction.UP&&pacman.getCurrentDirection()!=Direction.STOP){
 				control.setBlickRichtung(Direction.UP);
-				pacman.setCheckPointRow((pacman.getCheckPointRow()-1)%(mapReader.getHeight()-1));
+				turnUp=true;
 				return true;
-			}else if(pacman.getCurrentPosition().x==pacman.getCheckPointCol()*35f&&pacman.getCurrentPosition().y==pacman.getCheckPointRow()*35f){
-				control.setBlickRichtung(Direction.UP);
-				pacman.setCheckPointRow((pacman.getCheckPointRow()-1)%(mapReader.getHeight()-1));
-				return true;
-			}else
-				return false;
 			
 		}else {
 			return false;
@@ -262,18 +261,11 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		Pacman pacman=control.getPacman();
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
 		
-		if(upp.canTurnToDirection(Direction.LEFT)){
+		if(upp.canTurnToDirection(Direction.LEFT)&&!turnLeft){
 
-			if(control.getBlickRichtung()!=Direction.LEFT&&pacman.getCurrentDirection()!=Direction.STOP){
 				control.setBlickRichtung(Direction.LEFT);
-				pacman.setCheckPointCol((pacman.getCheckPointCol()-1)%(mapReader.getWidth()-1));
+				turnLeft=true;
 				return true;
-			}else if(pacman.getCurrentPosition().x==pacman.getCheckPointCol()*35f&&pacman.getCurrentPosition().y==pacman.getCheckPointRow()*35f){
-				control.setBlickRichtung(Direction.LEFT);
-				pacman.setCheckPointCol((pacman.getCheckPointCol()-1)%(mapReader.getWidth()-1));
-				return true;
-			}else
-				return false;
 			
 		}else {
 			return false;
@@ -286,18 +278,11 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		Pacman pacman=control.getPacman();
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
 		
-		if(upp.canTurnToDirection(Direction.DOWN)){
+		if(upp.canTurnToDirection(Direction.DOWN)&&!turnDown){
 			
-			if(pacman.getCurrentDirection()!=Direction.DOWN&&pacman.getCurrentDirection()!=Direction.STOP){
 				control.setBlickRichtung(Direction.DOWN);
-				pacman.setCheckPointRow((pacman.getCheckPointRow()+1)%(mapReader.getHeight()-1));
+				turnDown=true;
 				return true;
-			}else if(pacman.getCurrentPosition().x==pacman.getCheckPointCol()*35f&&pacman.getCurrentPosition().y==pacman.getCheckPointRow()*35f){
-				control.setBlickRichtung(Direction.DOWN);
-				pacman.setCheckPointRow((pacman.getCheckPointRow()+1)%(mapReader.getHeight()-1));
-				return true;
-			}else
-				return false;
 			
 		}else {
 			return false;
@@ -312,16 +297,9 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		
 		if(upp.canTurnToDirection(Direction.RIGHT)){
 
-			if(pacman.getCurrentDirection()!=Direction.RIGHT&&pacman.getCurrentDirection()!=Direction.STOP){
 				control.setBlickRichtung(Direction.RIGHT);
-				pacman.setCheckPointCol((pacman.getCheckPointCol()+1)%(mapReader.getWidth()-1));
+				turnRight=true;
 				return true;
-			}else if(pacman.getCurrentPosition().x==pacman.getCheckPointCol()*35f&&pacman.getCurrentPosition().y==pacman.getCheckPointRow()*35f){
-				control.setBlickRichtung(Direction.RIGHT);
-				pacman.setCheckPointCol((pacman.getCheckPointCol()+1)%(mapReader.getWidth()-1));
-				return true;
-			}else
-				return false;
 			
 		}else {
 			return false;
@@ -391,12 +369,90 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		
 		Pacman pacman=control.getPacman();
 		MapElement[][] me=control.getMapElements();
-		Vector2f newPosition=me[pacman.getCheckPointRow()][pacman.getCheckPointCol()].getPosition().copy();
+		/*Vector2f newPosition=me[pacman.getCheckPointRow()][pacman.getCheckPointCol()].getPosition().copy();
 		Shape hitBox=pacman.getHitBox();
 		hitBox.setLocation(newPosition);
 		pacman.setHitBox(hitBox);
 		pacman.setCurrentPosition(newPosition);
-		pacman.setCurrentDirection(control.getBlickRichtung());
+		pacman.setCurrentDirection(control.getBlickRichtung());*/
+		
+		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
+		
+		switch (pacman.getCurrentDirection()) {
+		case LEFT:
+			if(upp.canTurnToDirection(Direction.LEFT)){
+				int t=pacman.getCheckPointCol();
+				float destination=me[pacman.getCheckPointRow()][(pacman.getCheckPointCol()-1)%(mapReader.getWidth()-1)].getPosition().x;
+				while (pacman.getCurrentPosition().x!=destination) {
+					control.updatePacmanPosition(control.getBlickRichtung(), 50);
+				}
+				pacman.setCheckPointCol(t-1);
+				turnLeft=false;
+			}
+			break;
+		case RIGHT:
+			if(upp.canTurnToDirection(Direction.RIGHT)){
+				int t=pacman.getCheckPointCol();
+				float destination=me[pacman.getCheckPointRow()][(pacman.getCheckPointCol()+1)%(mapReader.getWidth()-1)].getPosition().x;
+				while (pacman.getCurrentPosition().x!=destination) {
+					control.updatePacmanPosition(control.getBlickRichtung(), 50);
+				}
+				pacman.setCheckPointCol(t+1);
+				turnRight=false;
+			}
+			break;
+		case UP:
+			if(upp.canTurnToDirection(Direction.UP)){
+				int t=pacman.getCheckPointRow();
+				float destination=me[(pacman.getCheckPointRow()-1)%(mapReader.getHeight()-1)][pacman.getCheckPointCol()].getPosition().y;
+				while (pacman.getCurrentPosition().y!=destination) {
+					control.updatePacmanPosition(control.getBlickRichtung(), 50);
+				}
+				pacman.setCheckPointRow(t-1);
+				turnUp=false;
+			}
+			break;
+		case DOWN:
+			if(upp.canTurnToDirection(Direction.DOWN)){
+				int t=pacman.getCheckPointRow();
+				float destination=me[(pacman.getCheckPointRow()+1)%(mapReader.getHeight()-1)][pacman.getCheckPointCol()].getPosition().y;
+				while (pacman.getCurrentPosition().y!=destination) {
+					control.updatePacmanPosition(control.getBlickRichtung(), 50);
+				}
+				pacman.setCheckPointRow(t+1);
+				turnDown=false;
+			}
+			break;
+		case STOP:
+			if(upp.canTurnToDirection(Direction.LEFT)||upp.canTurnToDirection(Direction.RIGHT)||upp.canTurnToDirection(Direction.UP)||upp.canTurnToDirection(Direction.DOWN)){
+				control.updatePacmanPosition(control.getBlickRichtung(), 1);
+				if(control.getBlickRichtung().equals(Direction.RIGHT)){
+					
+					pacman.setCheckPointCol((int)pacman.getCurrentPosition().x/35+1);
+					
+				}else if(control.getBlickRichtung().equals(Direction.DOWN)){
+					
+					pacman.setCheckPointRow((int)pacman.getCurrentPosition().y/35+1);
+					
+				}else if(control.getBlickRichtung().equals(Direction.LEFT)){
+					
+					pacman.setCheckPointCol((int)pacman.getCurrentPosition().x/35);
+					
+				}else if(control.getBlickRichtung().equals(Direction.UP)){
+					
+					pacman.setCheckPointRow((int)pacman.getCurrentPosition().y/35);
+					
+				}
+				while (pacman.getCurrentPosition().x%35!=0||pacman.getCurrentPosition().y%35!=0) {
+					control.updatePacmanPosition(control.getBlickRichtung(), 50);
+				}
+			
+				turnLeft=false;
+				turnRight=false;
+				turnUp=false;
+				turnDown=false;
+			}
+		}
 		
 		control.PacmanEatItem();
 		if(!removeGhost)
@@ -405,20 +461,24 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		for(Ghost g:control.getGhosts()){
 //			control.updatePowerUp(1);
 //			control.updateSpeedUp(1);
+			UpdateGhostPosition ugp=new UpdateGhostPosition(g, control.getMapElements());
 			
 			GenerateDirection gd=new GenerateDirection(g, control.getMapElements(), new Random(), control.getPacman());
 			Direction turn=gd.generateDirection();
 			switch (turn) {
+			
 			case LEFT:
+				if(ugp.canTurnToDirection(Direction.LEFT)){
 				Vector2f newPosL=me[g.getCheckPointRow()][g.getCheckPointCol()-1].getPosition().copy();
 				Shape hitBoxL=g.getHitBox();
 				hitBoxL.setLocation(newPosL);
 				g.setHitBox(hitBoxL);
 				g.setCurrentPosition(newPosL);
 				g.setCurrentDirection(Direction.LEFT);
-				g.setCheckPointCol(g.getCheckPointCol()-1);
+				g.setCheckPointCol(g.getCheckPointCol()-1);}
 				break;
 			case RIGHT:
+				if(ugp.canTurnToDirection(Direction.RIGHT)){
 				Vector2f newPosR=me[g.getCheckPointRow()][g.getCheckPointCol()+1].getPosition().copy();
 				Shape hitBoxR=g.getHitBox();
 				hitBoxR.setLocation(newPosR);
@@ -426,8 +486,10 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 				g.setCurrentPosition(newPosR);
 				g.setCurrentDirection(Direction.RIGHT);
 				g.setCheckPointCol(g.getCheckPointCol()+1);
+				}
 				break;
 			case UP:
+				if(ugp.canTurnToDirection(Direction.UP)){
 				Vector2f newPosU=me[g.getCheckPointRow()-1][g.getCheckPointCol()].getPosition().copy();
 				Shape hitBoxU=g.getHitBox();
 				hitBoxU.setLocation(newPosU);
@@ -435,8 +497,10 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 				g.setCurrentPosition(newPosU);
 				g.setCurrentDirection(Direction.UP);
 				g.setCheckPointRow(g.getCheckPointRow()-1);
+				}
 				break;
 			case DOWN:
+				if(ugp.canTurnToDirection(Direction.DOWN)){
 				Vector2f newPosD=me[g.getCheckPointRow()+1][g.getCheckPointCol()].getPosition().copy();
 				Shape hitBoxD=g.getHitBox();
 				hitBoxD.setLocation(newPosD);
@@ -444,6 +508,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 				g.setCurrentPosition(newPosD);
 				g.setCurrentDirection(Direction.DOWN);
 				g.setCheckPointRow(g.getCheckPointRow()+1);
+				}
 				break;
 
 			default:
