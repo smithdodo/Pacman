@@ -35,7 +35,7 @@ public class Control {
 	MapElement[][] mapElements;
 	List<Ghost> ghosts;
 	Pacman pacman;
-	public Direction pacmanTurnDirection;
+	public Direction blickRichtung;
 	
 	List<SpeedUp> speedUps;
 	List<PowerUp> powerUps;
@@ -58,7 +58,7 @@ public class Control {
 		this.ghosts=g;
 		this.pacman=p;
 		this.random=r;
-		this.pacmanTurnDirection=Direction.STOP;
+		this.blickRichtung=Direction.STOP;
 		
 		this.speedUps=mr.getSpeedUps();
 		this.powerUps=mr.getPowerUps();
@@ -81,19 +81,14 @@ public class Control {
 		
 		UpdatePacmanPosition updater=new UpdatePacmanPosition(pacman, mapElements);
 		if(turnDirection!=null){
-			pacmanTurnDirection=turnDirection;
+			blickRichtung=turnDirection;
 		}
-		updater.update(pacmanTurnDirection, delta);
+		updater.update(blickRichtung, delta);
 
 	}
 	
 	public void updateGhostPosition(int delta){
-		//check if a power up is affecting pacman, if yes, ghost must run away form him
-		boolean mustRunAway=false;
-		for(PowerUp p:powerUps){
-			if (p.isAffecting())
-				mustRunAway=true;
-		}
+	
 		//update all ghosts' position
 		for(Ghost g:ghosts){
 
@@ -103,7 +98,7 @@ public class Control {
 			}else{
 				UpdateGhostPosition updater=new UpdateGhostPosition(g, mapElements);
 				GenerateDirection grd=new GenerateDirection(g, mapElements, random, pacman);
-				Direction turnDirection=grd.generateDirection(mustRunAway);
+				Direction turnDirection=grd.generateDirection();
 				updater.update(turnDirection, delta);
 			}
 		}
@@ -137,10 +132,10 @@ public class Control {
 	/**
 	 * check if pacman eats ghost or ghost eat pacman
 	 */
-	public void collisionDetect(int delta){
+	public void collisionDetect(){
 		
 		CollusionDetect cd=new CollusionDetect(ghosts, pacman);
-		cd.update(delta, speedUps, powerUps, this, pacman_die_music, ghost_die_music);
+		cd.update(speedUps, powerUps, this, pacman_die_music, ghost_die_music);
 		
 	}
 	
@@ -153,7 +148,7 @@ public class Control {
 	}
 	
 	public void resetTurnDirection(){
-		this.pacmanTurnDirection=Direction.STOP;
+		this.blickRichtung=Direction.STOP;
 	}
 	
 	/**
@@ -221,6 +216,30 @@ public class Control {
 		
 		return mapReader.getFilePath();
 		
+	}
+
+	public Pacman getPacman() {
+		return pacman;
+	}
+
+	public MapElement[][] getMapElements() {
+		return mapElements;
+	}
+
+	public List<Ghost> getGhosts() {
+		return ghosts;
+	}
+
+	public List<PowerUp> getPowerUps() {
+		return powerUps;
+	}
+
+	public Direction getBlickRichtung() {
+		return blickRichtung;
+	}
+
+	public void setBlickRichtung(Direction blickRichtung) {
+		this.blickRichtung = blickRichtung;
 	}
 
 	

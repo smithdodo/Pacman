@@ -31,8 +31,7 @@ public abstract class Figur {
 		this.checkPointRow=((int)startPosition.y)/35;
 		this.checkPointCol=((int)startPosition.x)/35;
 		this.spawnPoint=startPosition.copy();
-		this.currentDirection=Direction.RIGHT;
-//		this.turnDirection=Direction.STOP;
+		this.currentDirection=Direction.STOP;
 		this.SpeedUpFactor=1;//max. is  4
 		isRespawning=false;
 		

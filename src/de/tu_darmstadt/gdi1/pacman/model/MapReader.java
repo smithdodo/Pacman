@@ -46,7 +46,7 @@ public class MapReader {
 	private Pacman pacman;
 	private List<Ghost> ghosts;
 
-	public MapReader(File mapFile) {
+	public MapReader(File mapFile) throws ReachabilityException, InvalidLevelCharacterException, NoGhostSpawnPointException, NoPacmanSpawnPointException, NoItemsException {
 
 		this.mapFile = mapFile;
 		
@@ -93,6 +93,7 @@ public class MapReader {
 				height += 1;
 				line = br.readLine();
 			}
+			br.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -119,21 +120,23 @@ public class MapReader {
 			BufferedReader br = new BufferedReader(new FileReader(mapFile));
 			
 			for (int row = 0; row < height; row++) {
+				
 				// read a line
 				String line = br.readLine();
+				
 				// if length of this line is different from width, then throw
-				// exception
 				if (line.length() != width)
 					throw new InvalidLevelFormatException();
+				
 				// split all single characters of this string into array
 				char[] elements = line.toCharArray();
+				
 				// save these single characters into mapData array
 				for (int col = 0; col < width; col++) {
 					mapElementStringArray[row][col] = String.valueOf(elements[col]);
 				}
 				
 			}
-			
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,13 +146,17 @@ public class MapReader {
 
 	/**
 	 * save elements into a 2 demensional MapElement arrat
+	 * @throws InvalidLevelCharacterException 
+	 * @throws NoGhostSpawnPointException 
+	 * @throws NoPacmanSpawnPointException 
+	 * @throws NoItemsException 
 	 */
-	private void intElementCoordinates() {
+	private void intElementCoordinates() throws InvalidLevelCharacterException, NoGhostSpawnPointException, NoPacmanSpawnPointException, NoItemsException {
 
 		int ps = 0;// player spawn point counter
 		int gs = 0;// ghost spawn point counter
 		int item = 0;// item counter
-		try {
+		
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
 					// j*MAPDENSITY as x coordinate, i*MAPDENSITY as y
@@ -201,18 +208,16 @@ public class MapReader {
 				throw new NoPacmanSpawnPointException();
 			if (item == 0)
 				throw new NoItemsException();
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		
 	}
 	
 	/**
 	 * check if all area of the map is valid
 	 * 
 	 * @return
+	 * @throws ReachabilityException 
 	 */
-	private boolean isAllAreaAchievable() {
+	private boolean isAllAreaAchievable() throws ReachabilityException {
 		
 		// mark all points that the player should reach as 1, else as 0
 		int[][] tempMap = new int[height][width];
@@ -240,25 +245,24 @@ public class MapReader {
 			}
 		}
 		
-		try {
+//		try {
 			if (unreachablePoint > 0) {
-				System.out
-						.println(unreachablePoint + " points are unreachable");
+				System.out.println(unreachablePoint + " points are unreachable");
 				throw new ReachabilityException();
+			}else {
+				return true;
 			}
-		} catch (ReachabilityException e) {
+	/*	} catch (ReachabilityException e) {
 			System.out.println(e);
 			//print out map with invalid area
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j <width; j++) {
-					System.err.print(tempMap[i][j]);
+					System.out.print(tempMap[i][j]);
 				}
-				System.err.println();
+				System.out.print("\n");
 			}
 			return false;
-		}
-
-		return true;
+		}*/
 
 	}
 
@@ -384,7 +388,7 @@ public class MapReader {
 		} else {
 			return (mapElementStringArray[i][j - 1].equals(" ")||mapElementStringArray[i][j - 1].equals("P")
 					|| mapElementStringArray[i][j - 1].equals("S") || mapElementStringArray[i][j - 1]
-					.equals("U")||mapElementStringArray[i][j - 1].equals("T"));
+					.equals("U")||mapElementStringArray[i][j - 1].equals("T")||mapElementStringArray[i][j - 1].equals("G"));
 		}
 	}
 
@@ -394,7 +398,7 @@ public class MapReader {
 		} else {
 			return (mapElementStringArray[i][j + 1].equals(" ")||mapElementStringArray[i][j + 1].equals("P")
 					|| mapElementStringArray[i][j + 1].equals("S") || mapElementStringArray[i][j + 1]
-					.equals("U")||mapElementStringArray[i][j + 1].equals("T"));
+					.equals("U")||mapElementStringArray[i][j + 1].equals("T")|mapElementStringArray[i][j + 1].equals("G"));
 		}
 	}
 
@@ -404,7 +408,7 @@ public class MapReader {
 		} else {
 			return (mapElementStringArray[i-1][j].equals(" ")||mapElementStringArray[i-1][j].equals("P")
 					|| mapElementStringArray[i-1][j].equals("S") || mapElementStringArray[i-1][j]
-					.equals("U")||mapElementStringArray[i-1][j].equals("T"));
+					.equals("U")||mapElementStringArray[i-1][j].equals("T")||mapElementStringArray[i-1][j].equals("G"));
 		}
 	}
 
@@ -414,7 +418,7 @@ public class MapReader {
 		} else {
 			return (mapElementStringArray[i+1][j].equals(" ")||mapElementStringArray[i+1][j].equals("P")
 					|| mapElementStringArray[i+1][j].equals("S") || mapElementStringArray[i+1][j]
-					.equals("U")||mapElementStringArray[i+1][j].equals("T"));
+					.equals("U")||mapElementStringArray[i+1][j].equals("T")||mapElementStringArray[i+1][j].equals("G"));
 		}
 	}
 	
@@ -668,7 +672,8 @@ private boolean isDownWalkableG(int i, int j) {
 			for (int j = 0; j < width; j++) {
 				sb.append(mapElementStringArray[i][j]);
 			}
-			sb.append("\n");
+			if(i!=height-1)
+				sb.append("\n");
 		}
 		return sb.toString();
 	}

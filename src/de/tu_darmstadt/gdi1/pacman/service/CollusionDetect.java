@@ -36,7 +36,7 @@ public class CollusionDetect {
 	 * @param pd pacman dies music
 	 * @param gd ghost dies music
 	 */
-	public void update(int delta, List<SpeedUp> s, List<PowerUp> p, Control c, Music pd, Music gd){
+	public void update(List<SpeedUp> s, List<PowerUp> p, Control c, Music pd, Music gd){
 				
 		if(pacman.isPowerUp()){
 			for(Ghost g:ghosts){			
@@ -53,6 +53,7 @@ public class CollusionDetect {
 					gd.play();
 					//add score
 					pacman.setScore(pacman.getScore()+500);
+					pacman.setKillGhost(pacman.getKillGhost()+1);
 				}
 			}
 		}else {

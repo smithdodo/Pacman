@@ -19,6 +19,7 @@ public class RandomLevel extends Game{
 	protected void enterNextLevel(Integer i) {
 
 		pacman.setLives(0);//finished all levels, save the score tho records if avalable
+		sbGame.enterState(Pacman.RANKING, new FadeOutTransition(), new FadeInTransition());
 		
 	}
 

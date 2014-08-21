@@ -9,11 +9,15 @@ public class Pacman extends Figur {
 	Integer score;//current play score
 	int numOfDots;//number of still eatable dots in map
 	
+	//for tests
+	int killGhost;//number of ghost that pacman has killed
+	
 	public Pacman(Vector2f startPosition) {
 		
 		super(startPosition);
 		this.lives = 3;
 		this.score=new Integer(0);
+		killGhost=0;
 		
 	}	
 
@@ -65,6 +69,16 @@ public class Pacman extends Figur {
 
 	public void setNumOfDots(int numOfDots) {
 		this.numOfDots = numOfDots;
+	}
+
+
+	public int getKillGhost() {
+		return killGhost;
+	}
+
+
+	public void setKillGhost(int killGhost) {
+		this.killGhost = killGhost;
 	}
 
 

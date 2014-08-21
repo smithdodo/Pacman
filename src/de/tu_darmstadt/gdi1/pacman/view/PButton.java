@@ -17,8 +17,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import de.tu_darmstadt.gdi1.pacman.control.Control;
-import de.tu_darmstadt.gdi1.pacman.control.Loader;
 import de.tu_darmstadt.gdi1.pacman.model.MapReader;
+import de.tu_darmstadt.gdi1.pacman.service.GenerateRandomLevel;
+import de.tu_darmstadt.gdi1.pacman.service.Loader;
 
 /**
  * Game button Auto change color wenn coursor on button. Enter state
@@ -95,7 +96,8 @@ public class PButton {
 		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
 				.getMouseY())
 				&& gc.getInput().isMousePressed(0)) {
-			this.randomMap();
+			GenerateRandomLevel grl=new GenerateRandomLevel();
+			grl.generateRandomMap();
 			if (reinit)
 				sbg.getState(StateID).init(gc, sbg);
 
@@ -104,41 +106,7 @@ public class PButton {
 		}
 	}
 
-	public void randomMap() throws IOException {
-		Random a = new Random();
-		String[] mapElement = new String[8];
-		mapElement[0] = " ";
-		mapElement[1] = "P";
-		mapElement[2] = "X";
-		mapElement[3] = "S";
-		mapElement[4] = "G";
-		mapElement[5] = "B";
-		mapElement[6] = "U";
-		mapElement[7] = "T";
-		int width = a.nextInt(10) + 1;
-		int height = a.nextInt(20) + 1;
-		String[][] randomMap = new String[height][width];
-		File file = new File("res/levels/randomMap.txt");
-		FileWriter fw = new FileWriter(file);
-		BufferedWriter bw = new BufferedWriter(fw);
-		System.out.println(width+ "   "+ height+"   ");
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {				
-				randomMap[i][j] = mapElement[a.nextInt(7)];				
-				bw.write(randomMap[i][j]);
-				System.out.print(randomMap[i][j]);
-			}
-			System.out.println();
-			bw.newLine();
-		}
-		bw.close();
-		try {			
-			MapReader mr = new MapReader(new File(
-					"res/levels/randomMap.txt"));
-		} catch (Exception e) {
-			this.randomMap();
-		}			
-	}
+	
 
 	/**
 	 * update saver

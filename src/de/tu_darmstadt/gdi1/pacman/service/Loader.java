@@ -1,4 +1,4 @@
-package de.tu_darmstadt.gdi1.pacman.control;
+package de.tu_darmstadt.gdi1.pacman.service;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,6 +63,11 @@ public class Loader {
 
 			this.targetState = (Game) stateBasedGame.getState(Pacman.Level3);
 			init(targetState);
+		}else if (mapPath.indexOf("random") > -1) {
+			
+			this.targetState = (Game) stateBasedGame.getState(Pacman.RANDOMLEVEL);
+			init(targetState);
+			
 		}
 
 	}

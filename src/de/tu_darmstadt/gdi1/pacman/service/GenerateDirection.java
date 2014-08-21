@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
+
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
@@ -48,15 +50,14 @@ public class GenerateDirection {
 	 * @return Direction
 	 * 
 	 */
-	public Direction generateDirection(boolean mustRunAway) {
-		
+	public Direction generateDirection() {
 		if (noticedPacman()) {
-			if(mustRunAway){
+			if(pacman.isPowerUp()){
 				return runAway();
 			}else{
 				return this.currentDirection;
 			}
-		}else if(ghost.getCurrentPosition().equals(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition())){
+		}else if(ghost.getCurrentPosition().equals(mapElementArray[checkPointRow][checkPointCol].getPosition())){
 			return randomDirection();
 		}else {
 			return currentDirection;
@@ -144,6 +145,7 @@ public class GenerateDirection {
 		
 		Direction turnDirection;
 		List<Direction> forks=new ArrayList<>();
+//		System.out.println("checkpoint r/c->"+checkPointRow+" "+checkPointCol+" element->"+mapElementArray[checkPointRow][checkPointCol]);
 		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
 //		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
@@ -171,6 +173,8 @@ public class GenerateDirection {
 					aRandomDirection=forks.get(random.nextInt(size));
 				} while (aRandomDirection==Direction.UP);
 				break;
+				default:
+					aRandomDirection=forks.get(random.nextInt(size));
 			}
 		}else {
 			

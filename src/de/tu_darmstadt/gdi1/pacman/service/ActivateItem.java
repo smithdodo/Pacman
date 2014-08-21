@@ -54,7 +54,7 @@ public class ActivateItem {
 		
 		//if pacman is standing right on an MapElement, aim at it
 		//if not, aim at the next MapElement ahead
-		if(pacman.getCheckPointRow()%35==0&&pacman.getCheckPointCol()%35==0){
+		if(pacman.getCurrentPosition().x%35==0&&pacman.getCurrentPosition().y%35==0){
 			aimAtRow=(int)pacman.getCurrentPosition().y/35;
 			aimAtCol=(int)pacman.getCurrentPosition().x/35;
 		}else {
@@ -113,7 +113,6 @@ public class ActivateItem {
 		
 		float aimAtX=mapElementArray[aimAtRow][aimAtCol].getPosition().x;
 		float aimAtY=mapElementArray[aimAtRow][aimAtCol].getPosition().y;
-		
 		if(mapElementArray[aimAtRow][aimAtCol] instanceof Item&&!((Item)mapElementArray[aimAtRow][aimAtCol]).isEaten()&&pacman.getHitBox().contains(aimAtX, aimAtY)){
 			//check for special item
 			if(mapElementArray[aimAtRow][aimAtCol] instanceof SpecialItem){	

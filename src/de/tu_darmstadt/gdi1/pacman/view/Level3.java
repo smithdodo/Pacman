@@ -3,6 +3,8 @@ package de.tu_darmstadt.gdi1.pacman.view;
 import java.io.File;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class Level3 extends Game{
 
@@ -17,6 +19,7 @@ public class Level3 extends Game{
 	protected void enterNextLevel(Integer i) {
 
 		pacman.setLives(0);//finished all levels, save the score tho records if avalable
+		sbGame.enterState(Pacman.RANDOMLEVEL, new FadeOutTransition(), new FadeInTransition());
 		
 	}
 

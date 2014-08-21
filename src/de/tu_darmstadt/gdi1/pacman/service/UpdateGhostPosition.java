@@ -22,7 +22,7 @@ public class UpdateGhostPosition extends UpdateFigurPosition{
 	}
 
 	@Override
-	protected boolean canTurnToDirection(Direction turn) {
+	public boolean canTurnToDirection(Direction turn) {
 		
 		if(((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost().contains(turn)){
 			return true;

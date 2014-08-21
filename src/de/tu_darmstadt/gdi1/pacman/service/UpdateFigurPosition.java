@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Figur;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
+import de.tu_darmstadt.gdi1.pacman.model.Road;
 
 public abstract class UpdateFigurPosition {
 
@@ -136,7 +137,7 @@ public abstract class UpdateFigurPosition {
 	 *            the direction that figur wants to turn
 	 * @return boolean
 	 */
-	protected abstract boolean canTurnToDirection(Direction turn);
+	public abstract boolean canTurnToDirection(Direction turn);
 
 	/**
 	 * if the next element along current moving direction is a Fork point, then
@@ -147,7 +148,7 @@ public abstract class UpdateFigurPosition {
 	 * 
 	 * @param checkpointRow
 	 * @param checkpointCol
-	 * @param currentDirection
+	 * @param blickRichtung
 	 */
 	protected void setCheckPointToNextFork() {
 
@@ -264,7 +265,6 @@ public abstract class UpdateFigurPosition {
 			if (currentPosition.x > checkPointCol * 35){
 				currentPosition.x = checkPointCol * 35;
 			}
-
 			break;
 		case UP:
 			currentPosition.y -= speed;

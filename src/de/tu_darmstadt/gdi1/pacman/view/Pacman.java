@@ -1,7 +1,5 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
-import java.util.Random;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;

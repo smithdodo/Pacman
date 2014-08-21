@@ -26,6 +26,11 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import de.tu_darmstadt.gdi1.pacman.control.Control;
+import de.tu_darmstadt.gdi1.pacman.exceptions.InvalidLevelCharacterException;
+import de.tu_darmstadt.gdi1.pacman.exceptions.NoGhostSpawnPointException;
+import de.tu_darmstadt.gdi1.pacman.exceptions.NoItemsException;
+import de.tu_darmstadt.gdi1.pacman.exceptions.NoPacmanSpawnPointException;
+import de.tu_darmstadt.gdi1.pacman.exceptions.ReachabilityException;
 import de.tu_darmstadt.gdi1.pacman.model.*;
 
 public abstract class Game extends BasicGameState {
@@ -71,7 +76,24 @@ public abstract class Game extends BasicGameState {
 		
 		this.random=new Random();
 
-		mapReader=new MapReader(mapFile);
+		try {
+			mapReader=new MapReader(mapFile);
+		} catch (ReachabilityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidLevelCharacterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoGhostSpawnPointException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoPacmanSpawnPointException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoItemsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.mapElement=mapReader.getMapData();
 		
 		this.pacman=mapReader.getPacman();
@@ -98,7 +120,7 @@ public abstract class Game extends BasicGameState {
 		ghostImages = new ArrayList<>();
 		for(int i=0;i<ghosts.size();i++){
 			
-			Image image = new Image("res/pictures/theme1/entities/G"+i+".png");
+			Image image = new Image("res/pictures/theme1/entities/G"+i%4+".png");
 			ghostImages.add(image);
 			
 		}
@@ -149,7 +171,7 @@ public abstract class Game extends BasicGameState {
 			control.PacmanEatItem();
 			control.updateSpeedUp(delta);
 			control.updatePowerUp(delta);
-			control.collisionDetect(delta);
+			control.collisionDetect();
 		}
 		}else if(pacman.getLives()==0){
 			
