@@ -164,6 +164,7 @@ public class PacmanTestsuiteMinimal {
 					'X' == uut.getLevelCharAt(uut.getGhostPosition().x,
 							uut.getGhostPosition().y));
 			pos = uut.getGhostPosition();
+			System.out.println("i pos->"+pos);
 		}
 	}
 

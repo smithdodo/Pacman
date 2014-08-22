@@ -8,7 +8,7 @@ public class PacmanTestAdapterExtended1 extends PacmanTestAdapterMinimal impleme
 
 	@Override
 	public int getViewDirection() {
-		switch (control.getBlickRichtung()) {
+		switch (control.getPacman().getCurrentDirection()) {
 		case RIGHT:
 			return 0;
 		case LEFT:

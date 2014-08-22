@@ -23,6 +23,7 @@ import de.tu_darmstadt.gdi1.pacman.exceptions.NoItemsException;
 import de.tu_darmstadt.gdi1.pacman.exceptions.NoPacmanSpawnPointException;
 import de.tu_darmstadt.gdi1.pacman.exceptions.ReachabilityException;
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
+import de.tu_darmstadt.gdi1.pacman.model.Figur;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.MapReader;
@@ -233,7 +234,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 	@Override
 	public void removeGhosts() {
 		
-		this.removeGhost=true;
+		control.setGhostRemoved(true);
 
 	}
 
@@ -242,10 +243,9 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		
 		Pacman pacman=control.getPacman();
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
-		
+		control.setBlickRichtung(Direction.UP);
 		if(upp.canTurnToDirection(Direction.UP)&&!turnUp){
 			
-				control.setBlickRichtung(Direction.UP);
 				turnUp=true;
 				return true;
 			
@@ -260,10 +260,9 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		
 		Pacman pacman=control.getPacman();
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
-		
+		control.setBlickRichtung(Direction.LEFT);
 		if(upp.canTurnToDirection(Direction.LEFT)&&!turnLeft){
 
-				control.setBlickRichtung(Direction.LEFT);
 				turnLeft=true;
 				return true;
 			
@@ -277,10 +276,9 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 
 		Pacman pacman=control.getPacman();
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
-		
+		control.setBlickRichtung(Direction.DOWN);
 		if(upp.canTurnToDirection(Direction.DOWN)&&!turnDown){
 			
-				control.setBlickRichtung(Direction.DOWN);
 				turnDown=true;
 				return true;
 			
@@ -294,10 +292,9 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 
 		Pacman pacman=control.getPacman();
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
-		
-		if(upp.canTurnToDirection(Direction.RIGHT)){
+		control.setBlickRichtung(Direction.RIGHT);
+		if(upp.canTurnToDirection(Direction.RIGHT)&&!turnRight){
 
-				control.setBlickRichtung(Direction.RIGHT);
 				turnRight=true;
 				return true;
 			
@@ -368,163 +365,185 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 	public void update() {
 		
 		Pacman pacman=control.getPacman();
-		MapElement[][] me=control.getMapElements();
-		/*Vector2f newPosition=me[pacman.getCheckPointRow()][pacman.getCheckPointCol()].getPosition().copy();
-		Shape hitBox=pacman.getHitBox();
-		hitBox.setLocation(newPosition);
-		pacman.setHitBox(hitBox);
-		pacman.setCurrentPosition(newPosition);
-		pacman.setCurrentDirection(control.getBlickRichtung());*/
-		
 		UpdatePacmanPosition upp=new UpdatePacmanPosition(pacman, control.getMapElements());
 		
 		control.PacmanEatItem();
-		if(!removeGhost)
+		if(!control.isGhostRemoved()){
 			 control.collisionDetect();
+			 pacman.setRespawning(false);//if pacman is respawning, ghost will set to its spawn point, kann sich nicht bewegen, muessen wir hier als false setzen, sodass geist sich bewegen kann
+		}
 		
-		switch (pacman.getCurrentDirection()) {
+		//update pacman
+		switch (control.getBlickRichtung()) {
 		case LEFT:
-			if(upp.canTurnToDirection(Direction.LEFT)||upp.canTurnToDirection(control.getBlickRichtung())){
-				int t=pacman.getCheckPointCol();
-				float destination=me[pacman.getCheckPointRow()][(pacman.getCheckPointCol()-1)%(mapReader.getWidth()-1)].getPosition().x;
-				while (pacman.getCurrentPosition().x!=destination) {
-					control.updatePacmanPosition(control.getBlickRichtung(), 50);
-				}
-				pacman.setCheckPointCol(t-1);
+			if(upp.canTurnToDirection(Direction.LEFT)){
+				
+				updateFigur(pacman, Direction.LEFT);
 				turnLeft=false;
+				control.setBlickRichtung(Direction.STOP);//without moveLeft, moveRight..., pacman will in test not automatisch move
 			}
 			break;
 		case RIGHT:
-			if(upp.canTurnToDirection(Direction.RIGHT)||upp.canTurnToDirection(control.getBlickRichtung())){
-				int t=pacman.getCheckPointCol();
-				float destination=me[pacman.getCheckPointRow()][(pacman.getCheckPointCol()+1)%(mapReader.getWidth()-1)].getPosition().x;
-				while (pacman.getCurrentPosition().x!=destination) {
-					control.updatePacmanPosition(control.getBlickRichtung(), 50);
-				}
-				pacman.setCheckPointCol(t+1);
+			if(upp.canTurnToDirection(Direction.RIGHT)){
+				
+				updateFigur(pacman, Direction.RIGHT);
 				turnRight=false;
+				control.setBlickRichtung(Direction.STOP);
 			}
 			break;
 		case UP:
-			if(upp.canTurnToDirection(Direction.UP)||upp.canTurnToDirection(control.getBlickRichtung())){
-				int t=pacman.getCheckPointRow();
-				float destination=me[(pacman.getCheckPointRow()-1)%(mapReader.getHeight()-1)][pacman.getCheckPointCol()].getPosition().y;
-				while (pacman.getCurrentPosition().y!=destination) {
-					control.updatePacmanPosition(control.getBlickRichtung(), 50);
-				}
-				pacman.setCheckPointRow(t-1);
+			if(upp.canTurnToDirection(Direction.UP)){
+				
+				updateFigur(pacman, Direction.UP);
 				turnUp=false;
+				control.setBlickRichtung(Direction.STOP);
 			}
 			break;
 		case DOWN:
-			if(upp.canTurnToDirection(Direction.DOWN)||upp.canTurnToDirection(control.getBlickRichtung())){
-				int t=pacman.getCheckPointRow();
-				float destination=me[(pacman.getCheckPointRow()+1)%(mapReader.getHeight()-1)][pacman.getCheckPointCol()].getPosition().y;
-				while (pacman.getCurrentPosition().y!=destination) {
-					control.updatePacmanPosition(control.getBlickRichtung(), 50);
-				}
-				pacman.setCheckPointRow(t+1);
+			if(upp.canTurnToDirection(Direction.DOWN)){
+			
+				updateFigur(pacman, Direction.DOWN);
 				turnDown=false;
+				control.setBlickRichtung(Direction.STOP);
 			}
 			break;
-		case STOP:
-			if(upp.canTurnToDirection(Direction.LEFT)||upp.canTurnToDirection(Direction.RIGHT)||upp.canTurnToDirection(Direction.UP)||upp.canTurnToDirection(Direction.DOWN)){
-				control.updatePacmanPosition(control.getBlickRichtung(), 1);
-				if(control.getBlickRichtung().equals(Direction.RIGHT)){
-					
-					pacman.setCheckPointCol((int)pacman.getCurrentPosition().x/35+1);
-					
-				}else if(control.getBlickRichtung().equals(Direction.DOWN)){
-					
-					pacman.setCheckPointRow((int)pacman.getCurrentPosition().y/35+1);
-					
-				}else if(control.getBlickRichtung().equals(Direction.LEFT)){
-					
-					pacman.setCheckPointCol((int)pacman.getCurrentPosition().x/35);
-					
-				}else if(control.getBlickRichtung().equals(Direction.UP)){
-					
-					pacman.setCheckPointRow((int)pacman.getCurrentPosition().y/35);
-					
-				}
-				while (pacman.getCurrentPosition().x%35!=0||pacman.getCurrentPosition().y%35!=0) {
-					control.updatePacmanPosition(control.getBlickRichtung(), 50);
-				}
-			
-				turnLeft=false;
-				turnRight=false;
-				turnUp=false;
-				turnDown=false;
-			}
+		default:
+			break;
 		}
 		
+		control.PacmanEatItem();
+		if(!control.isGhostRemoved()){
+			 control.collisionDetect();
+			 pacman.setRespawning(false);
+		}
 		
-		
+		//update ghost
 		for(Ghost g:control.getGhosts()){
-//			control.updatePowerUp(1);
-//			control.updateSpeedUp(1);
-			UpdateGhostPosition ugp=new UpdateGhostPosition(g, control.getMapElements());
 			
 			GenerateDirection gd=new GenerateDirection(g, control.getMapElements(), new Random(), control.getPacman());
 			Direction turn=gd.generateDirection();
-			switch (turn) {
-			
-			case LEFT:
-				if(ugp.canTurnToDirection(Direction.LEFT)){
-				Vector2f newPosL=me[g.getCheckPointRow()][g.getCheckPointCol()-1].getPosition().copy();
-				Shape hitBoxL=g.getHitBox();
-				hitBoxL.setLocation(newPosL);
-				g.setHitBox(hitBoxL);
-				g.setCurrentPosition(newPosL);
-				g.setCurrentDirection(Direction.LEFT);
-				g.setCheckPointCol(g.getCheckPointCol()-1);}
-				break;
-			case RIGHT:
-				if(ugp.canTurnToDirection(Direction.RIGHT)){
-				Vector2f newPosR=me[g.getCheckPointRow()][g.getCheckPointCol()+1].getPosition().copy();
-				Shape hitBoxR=g.getHitBox();
-				hitBoxR.setLocation(newPosR);
-				g.setHitBox(hitBoxR);
-				g.setCurrentPosition(newPosR);
-				g.setCurrentDirection(Direction.RIGHT);
-				g.setCheckPointCol(g.getCheckPointCol()+1);
-				}
-				break;
-			case UP:
-				if(ugp.canTurnToDirection(Direction.UP)){
-				Vector2f newPosU=me[g.getCheckPointRow()-1][g.getCheckPointCol()].getPosition().copy();
-				Shape hitBoxU=g.getHitBox();
-				hitBoxU.setLocation(newPosU);
-				g.setHitBox(hitBoxU);
-				g.setCurrentPosition(newPosU);
-				g.setCurrentDirection(Direction.UP);
-				g.setCheckPointRow(g.getCheckPointRow()-1);
-				}
-				break;
-			case DOWN:
-				if(ugp.canTurnToDirection(Direction.DOWN)){
-				Vector2f newPosD=me[g.getCheckPointRow()+1][g.getCheckPointCol()].getPosition().copy();
-				Shape hitBoxD=g.getHitBox();
-				hitBoxD.setLocation(newPosD);
-				g.setHitBox(hitBoxD);
-				g.setCurrentPosition(newPosD);
-				g.setCurrentDirection(Direction.DOWN);
-				g.setCheckPointRow(g.getCheckPointRow()+1);
-				}
-				break;
-
-			default:
-				break;
-			}
-			if(!(me[g.getCheckPointRow()][g.getCheckPointCol()] instanceof Road))
-				System.out.println(me[g.getCheckPointRow()][g.getCheckPointCol()].toString());
+			updateFigur(g, turn);		
 			
 		}
 		
 		control.PacmanEatItem();//check if pacman has eaten dot 
-		if(!removeGhost)
+		if(!control.isGhostRemoved()){
 			 control.collisionDetect();
+			 pacman.setRespawning(false);
+		}
+	}
+	
+	/**
+	 * verschieb pacman ein Schritt nach blickrichtung
+	 * 
+	 * @param figur
+	 * @param direction turn to
+	 * @return
+	 */
+	private void updateFigur(Figur figur, Direction direction){
 		
+		//for checking if a given element walkable
+		UpdatePacmanPosition upp=new UpdatePacmanPosition(figur, control.getMapElements());
+		UpdateGhostPosition ugp=new UpdateGhostPosition(figur, control.getMapElements());
+
+		int delta=50;//time between 2 frames
+		switch (direction) {
+		case LEFT:				
+				int destinationColL=figur.getCheckPointCol();//ziel von pacman
+				if(upp.canTurnToDirection(Direction.LEFT))
+					destinationColL--;
+				if(destinationColL<0)
+					destinationColL=mapReader.getWidth()-1;
+				
+				while (figur.getCurrentPosition().x>destinationColL*35) {
+					
+					if(figur instanceof Pacman)
+						control.updatePacmanPosition(Direction.LEFT, delta);
+					else
+						ugp.update(direction, delta);
+					
+				}
+				figur.setCheckPointCol(destinationColL);
+				Vector2f positionL=new Vector2f(destinationColL*35, figur.getCurrentPosition().y);
+				figur.setCurrentPosition(positionL);			
+				Shape hitboxL=figur.getHitBox();
+				hitboxL.setLocation(positionL);
+				figur.setHitBox(hitboxL);
+				
+				break;
+		case RIGHT:				
+				int destinationColR=figur.getCheckPointCol();//ziel von pacman
+				if(upp.canTurnToDirection(Direction.RIGHT))
+					destinationColR++;
+				if(destinationColR>=mapReader.getWidth())
+					destinationColR=0;
+				
+				while (figur.getCurrentPosition().x<destinationColR*35) {
+					
+					if(figur instanceof Pacman)
+						control.updatePacmanPosition(Direction.RIGHT, delta);
+					else
+						ugp.update(direction, delta);
+					
+				}
+				figur.setCheckPointCol(destinationColR);
+				Vector2f positionR=new Vector2f(destinationColR*35, figur.getCurrentPosition().y);
+				figur.setCurrentPosition(positionR);			
+				Shape hitboxR=figur.getHitBox();
+				hitboxR.setLocation(positionR);
+				figur.setHitBox(hitboxR);
+				
+				break;
+		case UP:
+				int destinationRowU=figur.getCheckPointRow();//ziel von pacman
+				if(upp.canTurnToDirection(Direction.UP))
+					destinationRowU--;
+				if(destinationRowU<0)
+					destinationRowU=mapReader.height-1;
+				
+				while (figur.getCurrentPosition().y>destinationRowU*35) {
+					
+					if(figur instanceof Pacman)
+						control.updatePacmanPosition(Direction.UP, delta);
+					else
+						ugp.update(direction, delta);
+					
+				}
+				figur.setCheckPointRow(destinationRowU);
+				Vector2f positionU=new Vector2f(figur.getCurrentPosition().x, destinationRowU*35);
+				figur.setCurrentPosition(positionU);			
+				Shape hitboxU=figur.getHitBox();
+				hitboxU.setLocation(positionU);
+				figur.setHitBox(hitboxU);
+				
+				break;
+		case DOWN:
+				int destinationRowD=figur.getCheckPointRow();//ziel von pacman
+				if(upp.canTurnToDirection(Direction.DOWN))
+					destinationRowD++;
+				if(destinationRowD>=mapReader.getHeight())
+					destinationRowD=0;
+				
+				while (figur.getCurrentPosition().y<destinationRowD*35) {
+					
+					if(figur instanceof Pacman)
+						control.updatePacmanPosition(Direction.DOWN, delta);
+					else
+						ugp.update(direction, delta);
+					
+				}
+				figur.setCheckPointRow(destinationRowD);
+				Vector2f positionD=new Vector2f(figur.getCurrentPosition().x, destinationRowD*35);
+				figur.setCurrentPosition(positionD);			
+				Shape hitboxD=figur.getHitBox();
+				hitboxD.setLocation(positionD);
+				figur.setHitBox(hitboxD);
+				
+				break;
+		default:
+			System.out.println("position didn't updated");
+			break;
+		}
 		
 	}
 

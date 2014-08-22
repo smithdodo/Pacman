@@ -49,6 +49,8 @@ public class Control {
 	Music pacman_eat_dot_music;
 	Music pacman_eat_special_item_music;
 	Music ghost_die_music;
+	
+	boolean isGhostRemoved=false;//for test, if removed, collusion will never be considered
 
 	public Control(MapReader mr, List<Ghost> g, Pacman p, Random r) {
 		
@@ -240,6 +242,14 @@ public class Control {
 
 	public void setBlickRichtung(Direction blickRichtung) {
 		this.blickRichtung = blickRichtung;
+	}
+
+	public boolean isGhostRemoved() {
+		return isGhostRemoved;
+	}
+
+	public void setGhostRemoved(boolean isGhostRemoved) {
+		this.isGhostRemoved = isGhostRemoved;
 	}
 
 	

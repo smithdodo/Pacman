@@ -21,6 +21,7 @@ public class GenerateDirection {
 	
 	int checkPointRow, checkPointCol;
 	Direction currentDirection;
+	Direction chaseDirection;
 	
 	int width, height;
 
@@ -51,13 +52,14 @@ public class GenerateDirection {
 	 * 
 	 */
 	public Direction generateDirection() {
-		if (noticedPacman()) {
+		
+		if (noticedPacman()&&ghost.getCurrentPosition().x%35==0&&ghost.getCurrentPosition().y%35==0) {
 			if(pacman.isPowerUp()){
 				return runAway();
 			}else{
-				return this.currentDirection;
+				return chaseDirection;
 			}
-		}else if(ghost.getCurrentPosition().equals(mapElementArray[checkPointRow][checkPointCol].getPosition())){
+		}else if(ghost.getCurrentPosition().equals(mapElementArray[ghost.getCheckPointRow()][ghost.getCheckPointCol()].getPosition())){
 			return randomDirection();
 		}else {
 			return currentDirection;
@@ -66,7 +68,7 @@ public class GenerateDirection {
 	}
 	
 	/**
-	 * check if ghost has an eye on pacman, if yes, ghost will chase pacman
+	 * check if ghost has found pacman, if yes, it will chase pacman
 	 * @param pacman
 	 * @return
 	 */
@@ -80,12 +82,12 @@ public class GenerateDirection {
 					checkPointCol--;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().x<=pacman.getCurrentPosition().x){
 						result=true;
-						currentDirection=Direction.LEFT;
+						chaseDirection=Direction.LEFT;
 					}
 				}
 				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x<=pacman.getCurrentPosition().x){
 					result=true;
-					currentDirection=Direction.LEFT;
+					chaseDirection=Direction.LEFT;
 				}
 			}
 			
@@ -95,12 +97,12 @@ public class GenerateDirection {
 					checkPointCol++;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().x>=pacman.getCurrentPosition().x){
 						result=true;
-						currentDirection=Direction.RIGHT;
+						chaseDirection=Direction.RIGHT;
 					}
 				}
 				if(mapElementArray[checkPointRow][checkPointCol].getPosition().x>=pacman.getCurrentPosition().x){
 					result=true;
-					currentDirection=Direction.RIGHT;
+					chaseDirection=Direction.RIGHT;
 				}
 			}
 			
@@ -110,12 +112,12 @@ public class GenerateDirection {
 					checkPointRow--;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().y<=pacman.getCurrentPosition().y){
 						result=true;
-						currentDirection=Direction.UP;
+						chaseDirection=Direction.UP;
 					}
 				}
 				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y<=pacman.getCurrentPosition().y){
 					result=true;
-					currentDirection=Direction.UP;
+					chaseDirection=Direction.UP;
 				}
 			}
 			
@@ -125,12 +127,12 @@ public class GenerateDirection {
 					checkPointRow++;
 					if(((Road)mapElementArray[checkPointRow][checkPointCol]).getPosition().y>=pacman.getCurrentPosition().y){
 						result=true;
-						currentDirection=Direction.DOWN;
+						chaseDirection=Direction.DOWN;
 					}
 				}
 				if(mapElementArray[checkPointRow][checkPointCol].getPosition().y>=pacman.getCurrentPosition().y){
 					result=true;
-					currentDirection=Direction.DOWN;
+					chaseDirection=Direction.DOWN;
 				}
 			}
 			
@@ -144,10 +146,9 @@ public class GenerateDirection {
 	 */
 	public Direction randomDirection(){
 		
-		Direction turnDirection;
-		List<Direction> forks=new ArrayList<>();
+		List<Direction> forks;
 //		System.out.println("checkpoint r/c->"+checkPointRow+" "+checkPointCol+" element->"+mapElementArray[checkPointRow][checkPointCol]);
-		forks=((Road)mapElementArray[checkPointRow][checkPointCol]).getForksForGhost();
+		forks=((Road)mapElementArray[ghost.getCheckPointRow()][ghost.getCheckPointCol()]).getForksForGhost();
 //		System.out.println("choicie: "+forks.toString()+"@r/c: "+ checkPointRow+" "+checkPointCol);
 		int size=forks.size();
 		Direction aRandomDirection = null;
@@ -182,28 +183,50 @@ public class GenerateDirection {
 			aRandomDirection=forks.get(0);
 
 		}
-		turnDirection=aRandomDirection;
 		return aRandomDirection;
 	}
 	
+	
+	/**
+	 * run away means, ghost runs towards a random direction, which will not lead itself run towards pacman
+	 * @return
+	 */
 	private Direction runAway(){
 		
-		switch (currentDirection) {
+		List<Direction> forks=((Road)mapElementArray[(int)ghost.getCurrentPosition().y/35][(int)ghost.getCurrentPosition().x/35]).getForksForGhost();
+		int size=forks.size();
+		Direction runDirection=null;
+		if(size>1){
+		switch (chaseDirection) {
 		case LEFT:
-			return Direction.RIGHT;
-
+		do {
+			runDirection=forks.get(random.nextInt(size));
+		} while (runDirection==Direction.LEFT);
+		break;
 		case RIGHT:
-			return Direction.LEFT;
-			
+			do {
+				runDirection=forks.get(random.nextInt(size));
+			} while (runDirection==Direction.RIGHT);
+			break;
 		case UP:
-			return Direction.DOWN;
-			
+			do {
+				runDirection=forks.get(random.nextInt(size));
+			} while (runDirection==Direction.UP);
+			break;
 		case DOWN:
-			return Direction.UP;
-		
+			do {
+				runDirection=forks.get(random.nextInt(size));
+			} while (runDirection==Direction.DOWN);
+			break;
 		default:
-			return currentDirection;
+			return runDirection;
 		}
+	
+	}else
+		runDirection=forks.get(0);
+		
+		return runDirection;
 	}
+	
 
 }
