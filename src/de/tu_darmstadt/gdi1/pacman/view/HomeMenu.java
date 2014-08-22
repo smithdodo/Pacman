@@ -3,6 +3,7 @@ package de.tu_darmstadt.gdi1.pacman.view;
 
 import java.io.IOException;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -18,6 +19,7 @@ public class HomeMenu extends BasicGameState{
 	PButton ranking;
 	PButton exit;
 	Image backgroundImage;
+	Animation pacmanGif;
 	static Music backgroundMusic;
 	
 	@Override

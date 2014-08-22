@@ -11,7 +11,7 @@ public class Level1 extends Game{
 
 	public Level1() throws SlickException {
 		
-		this.mapFile = new File("res/levels/testMap.txt");
+		this.mapFile = new File("res/levels/Minimal.txt");
 		super.init(gContainer, sbGame);//reload the game with level 1 map
 		
 	}
