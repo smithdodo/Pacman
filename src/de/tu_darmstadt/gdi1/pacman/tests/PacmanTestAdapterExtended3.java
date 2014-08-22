@@ -27,25 +27,15 @@ public class PacmanTestAdapterExtended3 extends PacmanTestAdapterExtended2 imple
 		}
 		
 		MapReader mr;
+		
 		try {
+			
 			mr = new MapReader(new File("res/levels/randomMap.txt"));
 			return mr.toString();
-		} catch (ReachabilityException e) {
-			// TODO Auto-generated catch block
+		
+		} catch (Exception e){
+			
 			e.printStackTrace();
-		} catch (InvalidLevelCharacterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoGhostSpawnPointException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoPacmanSpawnPointException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoItemsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
 			return null;
 		}
 		

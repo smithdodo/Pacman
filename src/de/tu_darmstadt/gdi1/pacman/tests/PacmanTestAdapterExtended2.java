@@ -6,7 +6,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import de.tu_darmstadt.gdi1.pacman.control.Control;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
+import de.tu_darmstadt.gdi1.pacman.service.CheckTop20;
+import de.tu_darmstadt.gdi1.pacman.service.RefreshRecord;
 
 public class PacmanTestAdapterExtended2 extends PacmanTestAdapterExtended1 implements PacmanTestInterfaceExtended2{
 
@@ -16,7 +19,7 @@ public class PacmanTestAdapterExtended2 extends PacmanTestAdapterExtended1 imple
 
 	@Override
 	public void prepareHighscore() {
-		
+		//clear old record data
 		try {
 			File file=new File("res/levels/records.txt");
 			FileWriter fw=new FileWriter(file);
@@ -31,54 +34,49 @@ public class PacmanTestAdapterExtended2 extends PacmanTestAdapterExtended1 imple
 	@Override
 	public void addToHighscore(String name, int points) {
 		
-		Pacman pacman=control.getPacman();
-		pacman.setScore(points);
+		CheckTop20 cTop20=new CheckTop20();
 		try {
-			control.refreshRecord(name);
-		} catch (IOException e) {
-			e.printStackTrace();
+			//check if the given score is in top 20
+			if (cTop20.check(points)) {
+				RefreshRecord rr=new RefreshRecord();
+				rr.refresh(points, name);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 
 	}
 
 	@Override
 	public String[] getHighscoreNames() {
-		
-		String[] recordSummary=new String[10];
+		//a array, whos first element is the highst score, and from 2. element to end are playername, downgrade
+		String[] nameList=new String[20];
 		
 		try {
 			File file=new File("res/levels/records.txt");
 			FileReader fr=new FileReader(file);
 			BufferedReader br=new BufferedReader(fr);
+			
 			String line=br.readLine();
-			if(line!=null){
+			int i = 0;//index of players name
+			while(line!=null){
+				
 				//in our record data, first line is the highst score
 				//bsp:  1 60550 name
 				//from left to right are ranking, score, player name
 				String[] record=line.split(" ");
-				recordSummary[0]=record[1];
-				recordSummary[1]=record[2];
-			}else {
-				br.close();
-				return null;
-			}
-		
-			int i=3;//index of next name
-			while (line!=null) {
+				nameList[i++]=record[2];//best player
 				
-				String[] record=line.split(" ");
-				recordSummary[i++]=record[2];
 				line=br.readLine();
-				
 			}
-			br.close();
-			return recordSummary;
-		} catch (IOException e) {
+			
+			return nameList;
+		}catch(IOException e){
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
+	
 
 
 }

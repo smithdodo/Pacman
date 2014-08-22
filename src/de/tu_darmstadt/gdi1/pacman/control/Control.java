@@ -19,6 +19,7 @@ import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
 import de.tu_darmstadt.gdi1.pacman.model.SpeedUp;
 import de.tu_darmstadt.gdi1.pacman.service.ActivateItem;
+import de.tu_darmstadt.gdi1.pacman.service.CheckTop20;
 import de.tu_darmstadt.gdi1.pacman.service.CollusionDetect;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateDirection;
 import de.tu_darmstadt.gdi1.pacman.service.RefreshRecord;
@@ -154,6 +155,17 @@ public class Control {
 	}
 	
 	/**
+	 * check if player score is top 20
+	 * @return
+	 * @throws IOException
+	 */
+	public boolean isTop20() throws IOException {
+		
+		CheckTop20 ct=new CheckTop20();
+		return ct.check(this.pacman.getScore());
+		
+	}
+	/**
 	 * refresh the highscore records
 	 * score will be save in format like:
 	 * ranking score playerName
@@ -175,36 +187,7 @@ public class Control {
 		}
 		
 	}
-	
-	public boolean isTop20() throws IOException {
-		
-		FileReader fr=new FileReader(new File("res/levels/records.txt"));
-		BufferedReader br=new BufferedReader(fr);
-		//read all records into list
-		List<String> records=new LinkedList<>();
-		String line=br.readLine();
-		while(line!=null){
-			records.add(line);
-			line=br.readLine();
-		}
-		br.close();
-		
-		if(records.size()<20){
-			
-			return true;
-			
-		}else if(records.size()==20){
-			
-			String[] worstRecord = records.get(19).split(" ");
-			int worstScore = Integer.parseInt(worstRecord[1]);
-			
-			return pacman.getScore()>worstScore;
-		}else {
-			System.out.println("false----");
-			return false;
-		}
-		
-	}
+
 	
 	public void saveGame() throws IOException{
 		
