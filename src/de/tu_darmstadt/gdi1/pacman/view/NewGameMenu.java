@@ -27,7 +27,7 @@ public class NewGameMenu extends BasicGameState{
 		enterLevel1=new PButton(20, "Level 1");
 		enterLevel2=new PButton(70, "Level 2");
 		enterLevel3=new PButton(120, "Level 3");
-		randomButton=new PButton(170, "I'm feeling Lucky");
+		randomButton=new PButton(170, "I'm Pro!");
 		home = new PButton(350, "HOME");
 		home.set(450);
 		backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
@@ -50,7 +50,7 @@ public class NewGameMenu extends BasicGameState{
 		}
 		home.update(sbg, gc, Pacman.HOMEMENUE, true);
 		
-		if(!HomeMenu.backgroundMusic.playing()&&sbg.isAcceptingInput())
+		if(!HomeMenu.backgroundMusic.playing()&&sbg.isAcceptingInput()&&!this.backgroundMusic.playing())
 			backgroundMusic.play();
 		
 	}

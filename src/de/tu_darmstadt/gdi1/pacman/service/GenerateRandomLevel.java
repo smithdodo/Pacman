@@ -28,8 +28,12 @@ public class GenerateRandomLevel {
 		mapElement[6] = "U";
 		mapElement[7] = "T";
 		
-		int width = a.nextInt(10) + 1;
-		int height = a.nextInt(20) + 1;
+//		int width = a.nextInt(10) + 1;
+//		int height = a.nextInt(20) + 1;
+		
+		//Um keine unspielbaren Level zu bekommen, legen wir die Größe eines Levels auf 20x11 Kästchen fest.
+		int width=20;
+		int height=11;
 		
 		String[][] randomMap = new String[height][width];
 		
@@ -45,6 +49,8 @@ public class GenerateRandomLevel {
 			bw.newLine();
 		}
 		bw.close();
+		
+		//Die Level, die wir kreieren, sind wegen der hohen Anzahl der Geister meist schwierig zu spielen.
 		try {			
 			MapReader mr = new MapReader(new File(
 					"res/levels/randomMap.txt"));

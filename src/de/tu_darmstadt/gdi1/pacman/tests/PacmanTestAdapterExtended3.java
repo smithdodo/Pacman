@@ -12,7 +12,7 @@ import de.tu_darmstadt.gdi1.pacman.model.MapReader;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateRandomLevel;
 
 public class PacmanTestAdapterExtended3 extends PacmanTestAdapterExtended2 implements PacmanTestInterfaceExtended3{
-
+	
 	public PacmanTestAdapterExtended3() {
 	}
 
