@@ -261,9 +261,6 @@ public abstract class Game extends BasicGameState {
 			Ghost gs=ghosts.get(i);
 			Vector2f p=gs.getCurrentPosition();
 			g.setColor(Color.green);
-			g.translate(17.5f, 17.5f);
-			g.drawLine(p.x, p.y, gs.getCheckPointCol()*35, gs.getCheckPointRow()*35);
-			g.translate(-17.5f, -17.5f);
 			g.drawImage(ghostImages.get(i), p.x, p.y);
 			
 		}
