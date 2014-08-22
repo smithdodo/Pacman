@@ -40,7 +40,7 @@ public class AboutUs extends BasicGameState{
 		
 		nameBoard=new Image("res/pictures/theme1/ui/AboutUs_name.jpg");
 		
-		backtoHomeButton=new PButton(0, "Back");
+		backtoHomeButton=new PButton(0, "Back", "Zurück", "返回");
 		backtoHomeButton.set(0);
 		
 		bgm=new Music("res/soundboard/intro.wav");

@@ -24,11 +24,11 @@ public class NewGameMenu extends BasicGameState{
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		
-		enterLevel1=new PButton(20, "Level 1");
-		enterLevel2=new PButton(70, "Level 2");
-		enterLevel3=new PButton(120, "Level 3");
-		randomButton=new PButton(170, "I'm Pro!");
-		home = new PButton(350, "HOME");
+		enterLevel1=new PButton(20, "Level 1","Level 1","第一关");
+		enterLevel2=new PButton(70, "Level 2","Level 2","第二关");
+		enterLevel3=new PButton(120, "Level 3","Level 3","第三关");
+		randomButton=new PButton(170, "I'm Pro!","Alleskönner","卧槽!");
+		home = new PButton(350, "HOME","Hauptmenü","主菜单");
 		home.set(450);
 		backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
 		backgroundMusic=new Music("res/soundboard/intro.wav");

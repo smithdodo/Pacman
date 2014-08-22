@@ -20,6 +20,16 @@
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.view.Game"/>
     </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.view.RandomLevel" x="214" y="407">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.view.Game"/>
+    </Class>
     <Class name="de.tu_darmstadt.gdi1.pacman.view.NewGameMenu" x="639" y="463">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
@@ -33,10 +43,10 @@
             endpointName="enterLevel3" kind="Simple"/>
         <Association
             destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
-            endpointName="home" kind="Simple"/>
+            endpointName="enterLevel2" kind="Simple"/>
         <Association
             destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
-            endpointName="enterLevel2" kind="Simple"/>
+            endpointName="home" kind="Simple"/>
         <Association
             destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
             endpointName="enterLevel1" kind="Simple"/>
@@ -44,16 +54,6 @@
             destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
             endpointName="randomButton" kind="Simple"/>
         <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"/>
-    </Class>
-    <Class name="de.tu_darmstadt.gdi1.pacman.view.RandomLevel" x="214" y="407">
-        <AttributesDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="false"/>
-        <MethodDisplayFilter public-accepted="true"
-            private-accepted="false" protected-accepted="false"
-            default-accepted="false" static-accepted="false"
-            accessors-accepted="false" constructors-accepted="false"/>
-        <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.view.Game"/>
     </Class>
     <Class name="de.tu_darmstadt.gdi1.pacman.view.Level3" x="154" y="405">
         <AttributesDisplayFilter public-accepted="true"
@@ -65,7 +65,8 @@
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.view.Game"/>
     </Class>
-    <Class name="de.tu_darmstadt.gdi1.pacman.view.HomeMenu" x="675" y="-8">
+    <Class name="de.tu_darmstadt.gdi1.pacman.view.LanguageWindow"
+        x="747" y="244">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -75,17 +76,23 @@
             accessors-accepted="false" constructors-accepted="false"/>
         <Association
             destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
-            endpointName="newGame" kind="Simple"/>
+            endpointName="de" kind="Simple"/>
         <Association
             destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
-            endpointName="reloadGame" kind="Simple"/>
+            endpointName="cn" kind="Simple"/>
         <Association
             destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
-            endpointName="ranking" kind="Simple"/>
-        <Association
-            destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
-            endpointName="exit" kind="Simple"/>
+            endpointName="eng" kind="Simple"/>
         <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"/>
+    </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.view.Game" x="6" y="17">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
     </Class>
     <Class name="de.tu_darmstadt.gdi1.pacman.view.PButton" x="342" y="213">
         <AttributesDisplayFilter public-accepted="true"
@@ -96,7 +103,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
     </Class>
-    <Class name="de.tu_darmstadt.gdi1.pacman.view.Game" x="6" y="17">
+    <Class name="de.tu_darmstadt.gdi1.pacman.view.HomeMenu" x="675" y="-8">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -104,6 +111,25 @@
             private-accepted="false" protected-accepted="false"
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
+            endpointName="aboutButton" kind="Simple"/>
+        <Association
+            destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
+            endpointName="newGame" kind="Simple"/>
+        <Association
+            destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
+            endpointName="changeLanguageButton" kind="Simple"/>
+        <Association
+            destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
+            endpointName="reloadGame" kind="Simple"/>
+        <Association
+            destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
+            endpointName="ranking" kind="Simple"/>
+        <Association
+            destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"
+            endpointName="exit" kind="Simple"/>
+        <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.view.PButton"/>
     </Class>
     <Class name="de.tu_darmstadt.gdi1.pacman.view.GameMenu" x="349" y="-13">
         <AttributesDisplayFilter public-accepted="true"

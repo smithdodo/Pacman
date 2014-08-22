@@ -23,13 +23,17 @@ import de.tu_darmstadt.gdi1.pacman.service.Loader;
 public class PButton {
 
 	Shape button;
-	String buttonName;
+	String buttonName_eng;
+	String buttonName_de;
+	String buttonName_cn;
 	float y;// y coordinate
 
-	public PButton(float y, String name) {
+	public PButton(float y, String eng, String de, String cn) {
 
 		button = new Rectangle(260, y, 120, 40);
-		this.buttonName = name;
+		this.buttonName_eng = eng;
+		this.buttonName_de = de;
+		this.buttonName_cn= cn;
 		this.y = y;
 
 	}
@@ -52,7 +56,20 @@ public class PButton {
 		}
 
 		g.setColor(Color.black);
-		g.drawString(buttonName, button.getX() + 10, y + 10);
+		switch (Pacman.language) {
+		case 0:
+			g.drawString(buttonName_eng, button.getX() + 10, y + 10);
+			break;
+		case 1:
+			g.drawString(buttonName_de, button.getX() + 10, y + 10);
+			break;
+		case 2:
+			g.drawString(buttonName_cn, button.getX() + 10, y + 10);
+			break;
+
+		default:
+			break;
+		}
 
 	}
 
@@ -144,6 +161,17 @@ public class PButton {
 				.getMouseY())
 				&& gc.getInput().isMousePressed(0)) {
 			gc.exit();
+		}
+	}
+	
+	public void updateLanguange(int language,GameContainer gc, StateBasedGame sbg){
+		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
+				.getMouseY())
+				&& gc.getInput().isMousePressed(0)) {
+		
+		Pacman.language=language;
+		sbg.enterState(Pacman.HOMEMENUE, new FadeOutTransition(), new FadeInTransition());
+		
 		}
 	}
 

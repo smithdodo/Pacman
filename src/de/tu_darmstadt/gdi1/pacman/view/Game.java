@@ -223,7 +223,12 @@ public abstract class Game extends BasicGameState {
 		
 		if(startTimer>0){
 			g.setColor(Color.green);
-			g.drawString("Game start in "+(int)(startTimer/1000+1)+" seconds...", 230, 10);
+			if(Pacman.language==1)
+				g.drawString("Spiel startet in "+(int)(startTimer/1000+1)+" Sekunden...", 230, 10);
+			else
+				g.drawString("Game start in "+(int)(startTimer/1000+1)+" seconds...", 230, 10);
+			
+				
 		}
 		//draw life
 		for(int i=0;i<pacman.getLives();i++){
@@ -232,7 +237,10 @@ public abstract class Game extends BasicGameState {
 		
 		//draw score
 		g.setColor(Color.white);
-		g.drawString("Total Score: "+pacman.getScore().toString(), 520, 10);
+		if(Pacman.language==1)
+			g.drawString("Punkte: "+pacman.getScore().toString(), 520, 10);
+		else
+			g.drawString("Total Score: "+pacman.getScore().toString(), 520, 10);
 		
 		g.translate(setoff.x, setoff.y);
 		
@@ -307,7 +315,10 @@ public abstract class Game extends BasicGameState {
 		
 		if(pacman.isRespawning()&&pacman.getLives()>0){
 			g.setColor(Color.red);
-			g.drawString("respawn in "+((int)pacman.getRespawnTimer()/1000+1)+" seconds...", 250, 10);
+			if(Pacman.language==1)
+				g.drawString("Weiter geht's in "+((int)pacman.getRespawnTimer()/1000+1)+" Sekunden...", 240, 10);
+			else
+				g.drawString("respawn in "+((int)pacman.getRespawnTimer()/1000+1)+" seconds...", 250, 10);
 		}
 		
 				
@@ -317,7 +328,10 @@ public abstract class Game extends BasicGameState {
 			g.fill(bg);
 			
 			g.setColor(Color.yellow);
-			g.drawString("NEW TOP 10 SCORE!!\n\nEnter your name:", 280, 98);
+			if(Pacman.language==1)
+				g.drawString("NEUE TOP 10 BESTLEISTUNG\n\n Gib Deinen Namen ein:", 270, 98);
+			else
+				g.drawString("NEW TOP 10 SCORE!!\n\nEnter your name:", 280, 98);
 			textField.render(arg0, g);
 			
 		}

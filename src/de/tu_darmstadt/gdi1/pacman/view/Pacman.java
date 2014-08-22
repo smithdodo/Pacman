@@ -18,6 +18,10 @@ public final static int RANKING=5;
 public final static int NEWGAMEMENU=6;
 public final static int RANDOMLEVEL=7;
 public final static int ABOUTUS=8;
+public final static int LANGUAGEWINDOW=9;
+
+
+public static int language=0;//(0->english 1->deutsch 2->chinesisch)
 
 	public Pacman() throws SlickException
 	{
@@ -38,5 +42,6 @@ public final static int ABOUTUS=8;
 		addState(new NewGameMenu());
 		addState(new RandomLevel());
 		addState(new AboutUs());
+		addState(new LanguageWindow());
 	}
 }

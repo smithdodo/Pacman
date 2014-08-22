@@ -25,11 +25,11 @@ public class GameMenu extends BasicGameState {
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 
-		restartButton = new PButton(40,"Restart");
-		homeMenuButton = new PButton(95,"Home");
-		resumeButton = new PButton(150,"Resume");
-		saveButton = new PButton(205, "Save Game");
-		exit = new PButton(350,"EXIT");
+		restartButton = new PButton(40,"Restart","Neustart","重新开始");
+		homeMenuButton = new PButton(95,"Home","Hauptmenü","主菜单");
+		resumeButton = new PButton(150,"Resume","Fortsetzen","继续");
+		saveButton = new PButton(205, "Save Game","Speichern","保存");
+		exit = new PButton(350,"EXIT","Beenden","退出");
 		exit.set(450);
 		background = new Image("res/pictures/theme1/ui/background.jpg");
 	}

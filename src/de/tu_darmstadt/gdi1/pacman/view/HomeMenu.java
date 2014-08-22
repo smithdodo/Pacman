@@ -19,6 +19,7 @@ public class HomeMenu extends BasicGameState{
 	PButton ranking;
 	PButton exit;
 	PButton aboutButton;
+	PButton changeLanguageButton;
 	Image backgroundImage;
 	Image[] homeGif_split=new Image[26];
 	Animation homeGif;
@@ -28,12 +29,15 @@ public class HomeMenu extends BasicGameState{
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		
-		newGame=new PButton(20, "NEW GAME");
-		reloadGame=new PButton(70, "RELOAD");
-		ranking=new PButton(120, "HIGH SCORE");
-		exit = new PButton(350,"EXIT");
+		newGame=new PButton(20, "NEW GAME","Neues Spiel","新游戏");
+		reloadGame=new PButton(70, "RELOAD","Spiel laden","读取存档");
+		ranking=new PButton(120, "HIGH SCORE","Bestenliste","排行榜");
+		exit = new PButton(350,"EXIT","Beenden","退出");
 		exit.set(450);
-		aboutButton=new PButton(170, "About US");
+		aboutButton=new PButton(170, "About US","Über uns","关于我们");
+		changeLanguageButton = new PButton(20, "Language", "Sprache", "语言");
+		changeLanguageButton.set(450);
+		
 		
 		this.backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
 		
@@ -64,6 +68,7 @@ public class HomeMenu extends BasicGameState{
 		ranking.update(sbg, gc, Pacman.RANKING, true);
 		exit.updateExit(gc);
 		aboutButton.update(sbg, gc, Pacman.ABOUTUS, true);
+		changeLanguageButton.update(sbg, gc, Pacman.LANGUAGEWINDOW, false);
 		
 		if(!backgroundMusic.playing()&&sbg.isAcceptingInput())
 			backgroundMusic.play();
@@ -81,6 +86,7 @@ public class HomeMenu extends BasicGameState{
 		ranking.render(g, gc);
 		exit.render(g, gc);
 		aboutButton.render(g, gc);
+		changeLanguageButton.render(g, gc);
 		
 		g.drawAnimation(homeGif, -15, 315);
 	}

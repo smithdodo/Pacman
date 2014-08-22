@@ -59,8 +59,8 @@ public class Ranking extends BasicGameState{
 			e.printStackTrace();
 		}
 		
-		homeMenu = new PButton(350, "Home");
-		tryAgain = new PButton(350, "Try Again");
+		homeMenu = new PButton(350, "Home","Hauptmenü","主菜单");
+		tryAgain = new PButton(350, "Try Again","Nochmal spielen","再试一次");
 		homeMenu.set(200);
 		tryAgain.set(350);
 		
