@@ -38,7 +38,6 @@ public class RefreshRecord {
 		
 		System.out.println("controller-refresh->"+playerName);
 
-		// read all high scores into list for Sortierung
 		int ranking = 1;
 		// use cache list to avoid concurrent concurrentmodificationexception
 		List<String> cacheRecord = new ArrayList<>();
@@ -62,7 +61,7 @@ public class RefreshRecord {
 				records.add(ranking + " " + t[1] + " " + t[2]);
 
 		}
-		if (cacheRecord.size() == records.size()&&records.size()!=10) {
+		if (cacheRecord.size() == records.size()&&records.size()!=20) {
 			records.add(ranking + " " + score.toString() + " " + playerName);
 		}
 		System.out.println(records.get(0));
