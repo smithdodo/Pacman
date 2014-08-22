@@ -6,7 +6,6 @@ import org.newdawn.slick.geom.Vector2f;
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Figur;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
-import de.tu_darmstadt.gdi1.pacman.model.Road;
 
 public abstract class UpdateFigurPosition {
 

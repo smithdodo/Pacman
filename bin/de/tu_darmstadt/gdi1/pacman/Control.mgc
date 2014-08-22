@@ -2,7 +2,7 @@
 <ClassDiagram>
     <Class
         name="de.tu_darmstadt.gdi1.pacman.service.UpdateFigurPosition"
-        x="7" y="85">
+        x="9" y="97">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -42,6 +42,16 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
     </Class>
+    <Class name="de.tu_darmstadt.gdi1.pacman.service.RespawnTimer"
+        x="476" y="433">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
     <Class
         name="de.tu_darmstadt.gdi1.pacman.service.UpdatePacmanPosition"
         x="4" y="312">
@@ -53,16 +63,6 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="de.tu_darmstadt.gdi1.pacman.service.UpdateFigurPosition"/>
-    </Class>
-    <Class name="de.tu_darmstadt.gdi1.pacman.service.RespawnTimer"
-        x="476" y="433">
-        <AttributesDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="false"/>
-        <MethodDisplayFilter public-accepted="true"
-            private-accepted="false" protected-accepted="false"
-            default-accepted="false" static-accepted="false"
-            accessors-accepted="false" constructors-accepted="false"/>
     </Class>
     <Class name="de.tu_darmstadt.gdi1.pacman.service.Saver" x="493" y="251">
         <AttributesDisplayFilter public-accepted="true"
@@ -87,16 +87,6 @@
             accessors-accepted="false" constructors-accepted="false"/>
         <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.control.Control"/>
     </Class>
-    <Class name="de.tu_darmstadt.gdi1.pacman.service.UpdateSpeedUp"
-        x="509" y="126">
-        <AttributesDisplayFilter public-accepted="true"
-            private-accepted="true" protected-accepted="true"
-            default-accepted="true" static-accepted="false"/>
-        <MethodDisplayFilter public-accepted="true"
-            private-accepted="false" protected-accepted="false"
-            default-accepted="false" static-accepted="false"
-            accessors-accepted="false" constructors-accepted="false"/>
-    </Class>
     <Class name="de.tu_darmstadt.gdi1.pacman.service.UpdatePowerUp"
         x="504" y="18">
         <AttributesDisplayFilter public-accepted="true"
@@ -107,9 +97,8 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
     </Class>
-    <Class
-        name="de.tu_darmstadt.gdi1.pacman.service.GenerateRandomLevel"
-        x="40" y="375">
+    <Class name="de.tu_darmstadt.gdi1.pacman.service.UpdateSpeedUp"
+        x="509" y="126">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -130,7 +119,18 @@
         <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.service.RefreshRecord"/>
         <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.service.RespawnTimer"/>
         <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.service.Saver"/>
-        <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.service.UpdateSpeedUp"/>
         <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.service.UpdatePowerUp"/>
+        <Communication destinationClassName="de.tu_darmstadt.gdi1.pacman.service.UpdateSpeedUp"/>
+    </Class>
+    <Class
+        name="de.tu_darmstadt.gdi1.pacman.service.GenerateRandomLevel"
+        x="40" y="375">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
     </Class>
 </ClassDiagram>

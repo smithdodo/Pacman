@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import de.tu_darmstadt.gdi1.pacman.control.Control;
-import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 import de.tu_darmstadt.gdi1.pacman.service.CheckTop20;
 import de.tu_darmstadt.gdi1.pacman.service.RefreshRecord;
 

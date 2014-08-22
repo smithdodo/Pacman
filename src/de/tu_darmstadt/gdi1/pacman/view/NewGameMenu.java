@@ -44,7 +44,7 @@ public class NewGameMenu extends BasicGameState{
 		enterLevel2.update(sbg, gc, Pacman.Level2, true);
 		enterLevel3.update(sbg, gc, Pacman.Level3, true);
 		try {
-			randomButton.updateRandom(sbg, gc, Pacman.RANDOMLEVEL, true);
+			randomButton.updateRandom(sbg, gc);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

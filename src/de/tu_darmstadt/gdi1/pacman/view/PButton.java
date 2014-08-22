@@ -1,10 +1,6 @@
 package de.tu_darmstadt.gdi1.pacman.view;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -17,7 +13,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import de.tu_darmstadt.gdi1.pacman.control.Control;
-import de.tu_darmstadt.gdi1.pacman.model.MapReader;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateRandomLevel;
 import de.tu_darmstadt.gdi1.pacman.service.Loader;
 
@@ -91,17 +86,16 @@ public class PButton {
 
 	}
 
-	public void updateRandom(StateBasedGame sbg, GameContainer gc, int StateID,
-			boolean reinit) throws IOException, SlickException {
+	public void updateRandom(StateBasedGame sbg, GameContainer gc) throws IOException, SlickException {
 		if (button.contains(gc.getInput().getMouseX(), gc.getInput()
 				.getMouseY())
 				&& gc.getInput().isMousePressed(0)) {
+			
 			GenerateRandomLevel grl=new GenerateRandomLevel();
 			grl.generateRandomMap();
-			if (reinit)
-				sbg.getState(StateID).init(gc, sbg);
-
-			sbg.enterState(StateID, new FadeOutTransition(),
+			
+			sbg.getState(Pacman.RANDOMLEVEL).init(gc, sbg);
+			sbg.enterState(Pacman.RANDOMLEVEL, new FadeOutTransition(),
 					new FadeInTransition());
 		}
 	}

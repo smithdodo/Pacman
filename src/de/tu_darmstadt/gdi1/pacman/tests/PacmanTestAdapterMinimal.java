@@ -1,16 +1,11 @@
 package de.tu_darmstadt.gdi1.pacman.tests;
 
-import java.awt.Checkbox;
 import java.awt.Point;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.Random;
-
-import javax.print.attribute.standard.Copies;
 
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
@@ -28,10 +23,7 @@ import de.tu_darmstadt.gdi1.pacman.model.Ghost;
 import de.tu_darmstadt.gdi1.pacman.model.MapElement;
 import de.tu_darmstadt.gdi1.pacman.model.MapReader;
 import de.tu_darmstadt.gdi1.pacman.model.Pacman;
-import de.tu_darmstadt.gdi1.pacman.model.PowerUp;
-import de.tu_darmstadt.gdi1.pacman.model.Road;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateDirection;
-import de.tu_darmstadt.gdi1.pacman.service.UpdateFigurPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdateGhostPosition;
 import de.tu_darmstadt.gdi1.pacman.service.UpdatePacmanPosition;
 

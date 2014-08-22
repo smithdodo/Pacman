@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -24,6 +25,8 @@ public class Ranking extends BasicGameState{
 	PButton tryAgain;
 	
 	Image backgroundImage;
+	Image[] animation_split=new Image[45];
+	Animation animation;
 	Music backgroundMusic;
 	
 	int gameStateID;//game state that player come from
@@ -64,6 +67,13 @@ public class Ranking extends BasicGameState{
 		backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
 		backgroundMusic = new Music("res/soundboard/intermission.wav");
 		
+		for(int i=0; i<45;i++){
+			
+			animation_split[i]=new Image("res/pictures/theme1/ui/Ranking/"+i+".gif");
+			
+		}
+		animation=new Animation(animation_split, 30);
+		
 		
 	}
 
@@ -72,6 +82,7 @@ public class Ranking extends BasicGameState{
 			throws SlickException {
 		
 		g.drawImage(backgroundImage,0,0,700,435,0,0,1400,870);
+		g.drawAnimation(animation, 50, 50);
 		
 		g.setColor(Color.green);
 		

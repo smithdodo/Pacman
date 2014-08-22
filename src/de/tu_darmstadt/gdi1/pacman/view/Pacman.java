@@ -17,6 +17,7 @@ public final static int GAMEMENUE=4;
 public final static int RANKING=5;
 public final static int NEWGAMEMENU=6;
 public final static int RANDOMLEVEL=7;
+public final static int ABOUTUS=8;
 
 	public Pacman() throws SlickException
 	{
@@ -36,5 +37,6 @@ public final static int RANDOMLEVEL=7;
 		addState(new Ranking());
 		addState(new NewGameMenu());
 		addState(new RandomLevel());
+		addState(new AboutUs());
 	}
 }

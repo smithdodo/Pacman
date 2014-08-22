@@ -18,8 +18,10 @@ public class HomeMenu extends BasicGameState{
 	PButton reloadGame;
 	PButton ranking;
 	PButton exit;
+	PButton aboutButton;
 	Image backgroundImage;
-	Animation pacmanGif;
+	Image[] homeGif_split=new Image[26];
+	Animation homeGif;
 	static Music backgroundMusic;
 	
 	@Override
@@ -31,7 +33,18 @@ public class HomeMenu extends BasicGameState{
 		ranking=new PButton(120, "HIGH SCORE");
 		exit = new PButton(350,"EXIT");
 		exit.set(450);
-		backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
+		aboutButton=new PButton(170, "About US");
+		
+		this.backgroundImage=new Image("res/pictures/theme1/ui/background.jpg");
+		
+		//initate home background gif
+		for(int i=0;i<26;i++){
+			
+			homeGif_split[i]=new Image("res/pictures/theme1/ui/HomeGif/"+i+".gif");
+			
+		}
+		homeGif=new Animation(homeGif_split, 100);
+		
 		backgroundMusic=new Music("res/soundboard/intro.wav");
 
 	}
@@ -50,6 +63,7 @@ public class HomeMenu extends BasicGameState{
 		}
 		ranking.update(sbg, gc, Pacman.RANKING, true);
 		exit.updateExit(gc);
+		aboutButton.update(sbg, gc, Pacman.ABOUTUS, true);
 		
 		if(!backgroundMusic.playing()&&sbg.isAcceptingInput())
 			backgroundMusic.play();
@@ -60,12 +74,15 @@ public class HomeMenu extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g)
 			throws SlickException {
 	
-		g.drawImage(backgroundImage,0,0,700,435,0,0,1400,870);
+		g.drawImage(this.backgroundImage,0,0,700,435,0,0,1400,870);
 		
 		newGame.render(g, gc);
 		reloadGame.render(g, gc);
 		ranking.render(g, gc);
 		exit.render(g, gc);
+		aboutButton.render(g, gc);
+		
+		g.drawAnimation(homeGif, -15, 315);
 	}
 
 	@Override

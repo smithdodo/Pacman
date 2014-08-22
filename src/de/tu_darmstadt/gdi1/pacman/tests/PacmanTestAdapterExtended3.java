@@ -3,11 +3,6 @@ package de.tu_darmstadt.gdi1.pacman.tests;
 import java.io.File;
 import java.io.IOException;
 
-import de.tu_darmstadt.gdi1.pacman.exceptions.InvalidLevelCharacterException;
-import de.tu_darmstadt.gdi1.pacman.exceptions.NoGhostSpawnPointException;
-import de.tu_darmstadt.gdi1.pacman.exceptions.NoItemsException;
-import de.tu_darmstadt.gdi1.pacman.exceptions.NoPacmanSpawnPointException;
-import de.tu_darmstadt.gdi1.pacman.exceptions.ReachabilityException;
 import de.tu_darmstadt.gdi1.pacman.model.MapReader;
 import de.tu_darmstadt.gdi1.pacman.service.GenerateRandomLevel;
 

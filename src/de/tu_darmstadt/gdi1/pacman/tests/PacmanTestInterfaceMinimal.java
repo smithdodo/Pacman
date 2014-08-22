@@ -8,7 +8,6 @@ import de.tu_darmstadt.gdi1.pacman.exceptions.NoGhostSpawnPointException;
 import de.tu_darmstadt.gdi1.pacman.exceptions.NoItemsException;
 import de.tu_darmstadt.gdi1.pacman.exceptions.NoPacmanSpawnPointException;
 import de.tu_darmstadt.gdi1.pacman.exceptions.ReachabilityException;
-import de.tu_darmstadt.gdi1.pacman.model.Pacman;
 
 public interface PacmanTestInterfaceMinimal {
   /**

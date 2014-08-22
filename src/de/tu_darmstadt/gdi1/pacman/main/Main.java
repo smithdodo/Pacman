@@ -1,11 +1,8 @@
 package de.tu_darmstadt.gdi1.pacman.main;
 
-import java.io.File;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
-import de.tu_darmstadt.gdi1.pacman.model.MapReader;
 import de.tu_darmstadt.gdi1.pacman.view.Pacman;
 
 public class Main
@@ -13,7 +10,7 @@ public class Main
 	public static void main(String[] args) throws SlickException
 	{
 		// standardpfade initi		
-		//setPaths();
+//		setPaths();
 
 		// engine starten
 		Pacman game = new Pacman();
@@ -26,7 +23,7 @@ public class Main
 		app.start();
 	}
 
-	/*private static void setPaths()
+	private static void setPaths()
 	{
 		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("org.lwjgl.librarypath",
@@ -37,5 +34,5 @@ public class Main
 		else
 			System.setProperty("org.lwjgl.librarypath",
 			System.getProperty("user.dir") + "/native/" + System.getProperty("os.name").toLowerCase());
-	}*/
+	}
 }

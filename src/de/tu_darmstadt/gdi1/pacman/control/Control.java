@@ -54,7 +54,7 @@ public class Control {
 	boolean isGhostRemoved=false;//for test, if removed, collusion will never be considered
 
 	public Control(MapReader mr, List<Ghost> g, Pacman p, Random r) {
-		
+	
 		super();
 		this.mapReader = mr;
 		this.mapElements=mr.getMapData();

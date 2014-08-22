@@ -1,10 +1,7 @@
 package de.tu_darmstadt.gdi1.pacman.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
 
 import de.tu_darmstadt.gdi1.pacman.model.Direction;
 import de.tu_darmstadt.gdi1.pacman.model.Ghost;
