@@ -59,7 +59,7 @@ public class AboutUs extends BasicGameState{
 		g.fill(background);
 		
 		g.drawAnimation(aboutusGif, 45, 200);
-		g.drawImage(nameBoard, 0,5);
+		g.drawImage(nameBoard, -15,15);
 		backtoHomeButton.render(g, gc);
 	}
 

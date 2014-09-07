@@ -117,6 +117,7 @@ public class MapReader {
 
 		try {
 
+			@SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(new FileReader(mapFile));
 			
 			for (int row = 0; row < height; row++) {

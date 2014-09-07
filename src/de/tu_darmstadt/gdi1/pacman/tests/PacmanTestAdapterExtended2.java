@@ -53,6 +53,7 @@ public class PacmanTestAdapterExtended2 extends PacmanTestAdapterExtended1 imple
 		try {
 			File file=new File("res/levels/records.txt");
 			FileReader fr=new FileReader(file);
+			@SuppressWarnings("resource")
 			BufferedReader br=new BufferedReader(fr);
 			
 			String line=br.readLine();

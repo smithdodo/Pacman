@@ -59,6 +59,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 
 		try {
 
+			@SuppressWarnings("unused")
 			MapReader mr = new MapReader(new File("res/levels/testMap.txt"));
 
 		} catch (Exception e) {
@@ -87,6 +88,7 @@ public class PacmanTestAdapterMinimal implements PacmanTestInterfaceMinimal{
 		}
 
 		// will throw exceptions if not valid
+		@SuppressWarnings("unused")
 		MapReader mr = new MapReader(new File("res/levels/testMap.txt"));
 
 	}

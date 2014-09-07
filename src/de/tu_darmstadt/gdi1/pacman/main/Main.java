@@ -10,7 +10,7 @@ public class Main
 	public static void main(String[] args) throws SlickException
 	{
 		// standardpfade initi		
-//		setPaths();
+		setPaths();
 
 		// engine starten
 		Pacman game = new Pacman();
@@ -20,6 +20,7 @@ public class Main
 		app.setDisplayMode(700, 435, false);
 		app.setShowFPS(false);
 		app.setTargetFrameRate(60);
+		app.setIcon("res/icon.png");
 		app.start();
 	}
 
@@ -27,12 +28,12 @@ public class Main
 	{
 		if (System.getProperty("os.name").toLowerCase().contains("windows"))
 			System.setProperty("org.lwjgl.librarypath",
-			System.getProperty("user.dir") + "/native/windows");
+			System.getProperty("user.dir") + "/lwjgl-2.9.0/native/windows");
 		else if (System.getProperty("os.name").toLowerCase().contains("mac"))
 			System.setProperty("org.lwjgl.librarypath",
-			System.getProperty("user.dir") + "/native/macosx");
+			System.getProperty("user.dir") + "/lwjgl-2.9.0/native/macosx");
 		else
 			System.setProperty("org.lwjgl.librarypath",
-			System.getProperty("user.dir") + "/native/" + System.getProperty("os.name").toLowerCase());
+			System.getProperty("user.dir") + "/lwjgl-2.9.0/native/" + System.getProperty("os.name").toLowerCase());
 	}
 }

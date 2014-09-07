@@ -52,8 +52,10 @@ public class GenerateRandomLevel {
 		
 		//Die Level, die wir kreieren, sind wegen der hohen Anzahl der Geister meist schwierig zu spielen.
 		try {			
+			@SuppressWarnings("unused")
 			MapReader mr = new MapReader(new File(
 					"res/levels/randomMap.txt"));
+			
 		} catch (Exception e) {
 			this.generateRandomMap();
 		}			
