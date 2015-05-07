@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="levels/|levels/|pictures/theme1/entities/|pictures/theme1/map/|pictures/theme1/ui/|pictures/theme1/|pictures/" kind="src" path="src"/>
+	<classpathentry excluding="levels/|levels/|pictures/theme1/entities/|pictures/theme1/map/|pictures/theme1/ui/|pictures/theme1/|pictures/" kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/ham/Projects/Pacman_rebuid/lwjgl-2.9.0/native/linux"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="eea.jar"/>
