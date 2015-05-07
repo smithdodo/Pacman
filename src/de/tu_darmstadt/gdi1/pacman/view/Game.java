@@ -126,10 +126,10 @@ public abstract class Game extends BasicGameState {
 		}
 		
 		//texturs for pacman
-		pacmanImageUP=new Image("res/pictures/theme1/entities/P1_powerUp.png");
-		pacmanImageDP=new Image("res/pictures/theme1/entities/P3_powerUp.png");
-		pacmanImageLP=new Image("res/pictures/theme1/entities/P2_powerUp.png");
-		pacmanImageRP=new Image("res/pictures/theme1/entities/P0_powerUp.png");
+		pacmanImageUP=new Image("res/pictures/theme1/entities/P1_powerup.png");
+		pacmanImageDP=new Image("res/pictures/theme1/entities/P3_powerup.png");
+		pacmanImageLP=new Image("res/pictures/theme1/entities/P2_powerup.png");
+		pacmanImageRP=new Image("res/pictures/theme1/entities/P0_powerup.png");
 		pacmanImageU=new Image("res/pictures/theme1/entities/P1.png");
 		pacmanImageD=new Image("res/pictures/theme1/entities/P3.png");
 		pacmanImageL=new Image("res/pictures/theme1/entities/P2.png");
